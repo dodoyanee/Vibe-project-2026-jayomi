@@ -60,8 +60,12 @@
   --z-chat: 150;
   --z-header: 200;
   --z-menu: 300;
-  --duration-menu: 400ms;
-  --ease-menu: cubic-bezier(0.76, 0, 0.24, 1);
+  /* Reference: 0.8s, zero-bounce panel spring; links enter at x: 30px. */
+  --duration-menu: 800ms;
+  --ease-menu: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-menu-link: 800ms;
+  --delay-menu-link: 100ms;
+  --offset-menu-link: 30px;
   --hero-wordmark-top: 25%;
   --hero-copy-top: 59%;
   --hero-copy-right: 4%;

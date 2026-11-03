@@ -1,5 +1,5 @@
 const DESKTOP_QUERY = '(min-width: 1200px)';
-const CLOSE_FALLBACK_MS = 450;
+const TRANSITION_FALLBACK_BUFFER_MS = 50;
 
 const menuToggle = document.querySelector('[data-js="menu-toggle"]');
 const menuPanel = document.querySelector('[data-js="menu-panel"]');
@@ -7,10 +7,16 @@ const menuPanel = document.querySelector('[data-js="menu-panel"]');
 if (menuToggle && menuPanel) {
   const menuLinks = [...menuPanel.querySelectorAll('[data-js="menu-link"]')];
   const desktopQuery = window.matchMedia(DESKTOP_QUERY);
+  const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
   let isMenuOpen = false;
   let closeTimer = 0;
   let closeToken = 0;
   let pendingHash = '';
+
+  const getCloseFallbackMs = () => {
+    const duration = getComputedStyle(menuPanel, '::before').transitionDuration;
+    return parseFloat(duration) * 1000 + TRANSITION_FALLBACK_BUFFER_MS;
+  };
 
   const updateMenuState = (isOpen) => {
     menuToggle.setAttribute('aria-expanded', String(isOpen));
@@ -53,14 +59,14 @@ if (menuToggle && menuPanel) {
     closeToken += 1;
     const token = closeToken;
 
-    if (immediate || desktopQuery.matches) {
-      menuPanel.dataset.menuState = 'closed';
-      pendingHash = '';
+    menuPanel.dataset.menuState = 'closing';
+
+    if (immediate || desktopQuery.matches || reducedMotionQuery.matches) {
+      finishClosing(token);
       return;
     }
 
-    menuPanel.dataset.menuState = 'closing';
-    closeTimer = window.setTimeout(() => finishClosing(token), CLOSE_FALLBACK_MS);
+    closeTimer = window.setTimeout(() => finishClosing(token), getCloseFallbackMs());
   };
 
   const openMenu = () => {
@@ -82,7 +88,7 @@ if (menuToggle && menuPanel) {
         menuPanel.dataset.menuState = 'open';
       }
     });
-    menuLinks[0]?.focus();
+    menuLinks[0]?.focus({ preventScroll: true });
   };
 
   menuToggle.addEventListener('click', () => {
@@ -106,7 +112,7 @@ if (menuToggle && menuPanel) {
   });
 
   menuPanel.addEventListener('transitionend', (event) => {
-    if (event.target === menuPanel && event.propertyName === 'transform') {
+    if (event.target === menuPanel && event.pseudoElement === '::before' && event.propertyName === 'transform') {
       finishClosing(closeToken);
     }
   });

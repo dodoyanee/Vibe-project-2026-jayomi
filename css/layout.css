@@ -111,33 +111,49 @@
     z-index: 0;
     inset: 0;
     display: block;
+    isolation: isolate;
     overflow-y: auto;
     overscroll-behavior: contain;
     padding: calc(var(--header-h) + 24px) var(--gutter) 48px;
-    transform: translateY(-100%);
     visibility: hidden;
+    transition: visibility 0s linear var(--duration-menu);
+  }
+
+  /* Move the background independently so the text stays at its final height. */
+  .menu-panel::before {
+    position: fixed;
+    z-index: -1;
+    inset: 0;
+    transform: scaleY(0);
+    transform-origin: top;
     background: var(--color-bg);
-    transition:
-      transform var(--duration-menu) var(--ease-menu),
-      visibility 0s linear var(--duration-menu);
+    content: "";
+    transition: transform var(--duration-menu) var(--ease-menu);
   }
 
   .menu-panel[data-menu-state="opening"],
   .menu-panel[data-menu-state="open"] {
-    transform: translateY(0);
     visibility: visible;
     transition-delay: 0s;
   }
 
+  .menu-panel[data-menu-state="opening"]::before,
+  .menu-panel[data-menu-state="open"]::before {
+    transform: scaleY(1);
+  }
+
   .menu-panel[data-menu-state="closing"] {
-    transform: translateY(-100%);
     pointer-events: none;
     visibility: visible;
-    transition-delay: 0s, 0s;
+    transition-delay: 0s;
   }
 
   .menu-panel[data-menu-state="closed"] {
     pointer-events: none;
+    transition: none;
+  }
+
+  .menu-panel[data-menu-state="closed"]::before {
     transition: none;
   }
 
@@ -187,7 +203,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .menu-panel {
+  .menu-panel,
+  .menu-panel::before {
     transition-duration: 0.01ms;
     transition-delay: 0s;
   }
