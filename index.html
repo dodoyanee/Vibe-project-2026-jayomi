@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#000000">
+    <meta
+      name="description"
+      content="DRAFT.X — 하이엔드 전략과 심미적 안목으로 브랜드의 본질적인 변화를 만듭니다."
+    >
+    <title>DRAFT.X — Digital Design Agency</title>
+    <link rel="icon" type="image/png" href="./images/pngwing.com.png"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anta&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/tokens.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/utilities.css">
+    <link rel="stylesheet" href="css/main.css">
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">본문 바로가기</a>
+
+    <header class="outer-box outer-box--header">
+      <div class="inner-box">
+        <div class="part-box part-box--between site-header">
+          <a class="site-header__brand" href="#home" aria-label="DRAFT.X 홈">DRAFT.X</a>
+
+          <nav class="site-header__navigation" aria-label="주요 메뉴">
+            <a href="#home" aria-current="page">HOME</a>
+            <a href="#works">WORKS</a>
+            <a href="#lab-x">LAB.X</a>
+            <a href="#contact">CONTACT</a>
+          </nav>
+
+          <a class="site-header__award" href="#works">
+            <span>2026 GDWEB DESIGN AWARDS WINNER PRIZE //</span>
+            <span class="site-header__prize-mark" aria-hidden="true">
+              <span>W</span>
+              <span>WINNER<br>PRIZE</span>
+            </span>
+          </a>
+
+          <button
+            class="site-header__menu-toggle"
+            type="button"
+            aria-controls="mobile-menu"
+            aria-expanded="false"
+            data-js="menu-toggle"
+          >
+            MENU
+          </button>
+        </div>
+      </div>
+
+      <nav
+        class="menu-panel"
+        id="mobile-menu"
+        aria-label="메뉴"
+        aria-hidden="true"
+        inert
+        data-js="menu-panel"
+        data-menu-state="closed"
+      >
+        <div class="menu-panel__links">
+          <a class="menu-panel__link" href="#home" aria-current="page" data-js="menu-link">HOME</a>
+          <a class="menu-panel__link" href="#works" data-js="menu-link">WORKS</a>
+          <a class="menu-panel__link" href="#lab-x" data-js="menu-link">LAB.X</a>
+          <a class="menu-panel__link" href="#contact" data-js="menu-link">CONTACT</a>
+        </div>
+        <a class="menu-panel__award" href="#works" data-js="menu-link">
+          <span>2026 GDWEB DESIGN AWARDS WINNER PRIZE //</span>
+          <img
+            src="./images/menu/gdwebicon.jpg"
+            width="370"
+            height="510"
+            alt=""
+            aria-hidden="true"
+          >
+        </a>
+      </nav>
+    </header>
+
+    <main id="main-content">
+      <section class="outer-box outer-box--hero" id="home" aria-labelledby="hero-title">
+        <div class="inner-box">
+          <div class="part-box hero-stage">
+            <figure class="hero-tile hero-tile--one" aria-hidden="true">
+              <img src="./images/used/dfaftx-dt-1.png" width="429" height="341" alt="">
+            </figure>
+            <figure class="hero-tile hero-tile--two" aria-hidden="true">
+              <img src="./images/used/dfaftx-dt-20.webp" width="400" height="522" alt="">
+            </figure>
+            <figure class="hero-tile hero-tile--three" aria-hidden="true">
+              <img src="./images/used/dfaftx-dt-19.png" width="1392" height="752" alt="">
+            </figure>
+            <figure class="hero-tile hero-tile--four" aria-hidden="true">
+              <img src="./images/used/dfaftx-dt-6.webp" width="600" height="344" alt="">
+            </figure>
+            <figure class="hero-tile hero-tile--five" aria-hidden="true">
+              <img src="./images/used/dfaftx-dt-9.webp" width="600" height="341" alt="">
+            </figure>
+            <figure class="hero-tile hero-tile--six" aria-hidden="true">
+              <img src="./images/used/dfaftx-dt-21.webp" width="600" height="449" alt="">
+            </figure>
+            <figure class="hero-tile hero-tile--seven" aria-hidden="true">
+              <img src="./images/used/dfaftx-dt-19.png" width="1392" height="752" alt="">
+            </figure>
+            <figure class="hero-tile hero-tile--eight" aria-hidden="true">
+              <video
+                autoplay
+                muted
+                loop
+                playsinline
+                preload="metadata"
+                poster="./images/used/dfaftx-dt-19.png"
+              >
+                <source src="./images/used/01-banner-video.mp4" type="video/mp4">
+              </video>
+            </figure>
+
+            <p class="hero-wordmark" aria-hidden="true">DRAFT.X</p>
+
+            <div class="hero-copy">
+              <h1 class="hero-copy__title" id="hero-title">
+                <span>10+ years of aesthetic mastery meets</span>
+                <span>high-end strategy,</span>
+                <span>delivering essential changes</span>
+                <span>for your brand.</span>
+              </h1>
+              <p class="hero-copy__description">
+                축적된 심미적 안목이 하이엔드 전략과 만나,<br>
+                브랜드에 본질적인 변화를 선사합니다.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <aside class="hero-pagination" aria-label="슬라이드 1 / 4">
+      <span class="hero-pagination__track hero-pagination__track--active"></span>
+      <span class="hero-pagination__track"></span>
+      <span class="hero-pagination__track"></span>
+      <span class="hero-pagination__track"></span>
+    </aside>
+
+    <nav class="mobile-navigation" aria-label="모바일 빠른 메뉴">
+      <a class="mobile-navigation__item" href="#works">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M4 5h16M4 12h16M4 19h16"></path>
+        </svg>
+        <span>카테고리</span>
+      </a>
+      <a class="mobile-navigation__item" href="#search">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="10.8" cy="10.8" r="6.3"></circle>
+          <path d="m15.4 15.4 4.1 4.1"></path>
+        </svg>
+        <span>검색</span>
+      </a>
+      <a class="mobile-navigation__item mobile-navigation__item--home" href="#home" aria-current="page">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="m3.5 10.5 8.5-7 8.5 7"></path>
+          <path d="M5.5 9.5v11h13v-11M9.5 20.5v-7h5v7"></path>
+        </svg>
+        <span>홈</span>
+      </a>
+      <a class="mobile-navigation__item" href="#cart">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M4 5h2l2 11h10l2-8H7"></path>
+          <circle cx="10" cy="20" r="1"></circle>
+          <circle cx="17" cy="20" r="1"></circle>
+        </svg>
+        <span>장바구니</span>
+      </a>
+      <a class="mobile-navigation__item" href="#my">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="12" cy="8" r="3.5"></circle>
+          <path d="M4.5 20a7.5 7.5 0 0 1 15 0"></path>
+        </svg>
+        <span>마이</span>
+      </a>
+    </nav>
+
+    <aside class="floating-controls" aria-label="빠른 작업">
+      <a class="floating-control floating-control--top" href="#home" aria-label="맨 위로 이동">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="m6 14 6-6 6 6"></path>
+        </svg>
+      </a>
+      <a
+        class="floating-control floating-control--chat"
+        href="https://pf.kakao.com/_ANXIX/chat"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="카카오톡으로 상담하기 (새 창)"
+      >
+        <svg viewBox="0 0 31 29" aria-hidden="true">
+          <path d="M15.5 1C7.5 1 1 6.1 1 12.4c0 4 2.8 7.6 7.1 9.6l-1.6 5 6.1-3.3c.9.1 1.9.2 2.9.2 8 0 14.5-5.1 14.5-11.4S23.5 1 15.5 1Z" fill="currentColor"></path>
+          <text x="15.5" y="15.3" text-anchor="middle" fill="var(--color-surface-2)" font-size="7" font-weight="700">TALK</text>
+        </svg>
+      </a>
+    </aside>
+    <script type="module" src="./js/main.js"></script>
+  </body>
+</html>
