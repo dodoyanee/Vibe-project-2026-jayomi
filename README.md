@@ -1,1 +1,0 @@
-# Vibe-project-2026-jayomi
