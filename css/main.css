@@ -312,6 +312,17 @@
   object-fit: cover;
 }
 
+@media (prefers-reduced-motion: no-preference) {
+  /* Overscan stays inside the fixed card; controls and text never move with the video. */
+  .selected-media__video {
+    position: absolute;
+    top: var(--selected-parallax-top);
+    left: 0;
+    height: var(--selected-parallax-height);
+    will-change: transform;
+  }
+}
+
 .selected-media__toggle {
   position: absolute;
   right: var(--selected-control-offset);

@@ -3,6 +3,8 @@ import { SCROLL_MOTION } from '../config.js';
 const header = document.querySelector('[data-js="site-header"]');
 const section = document.querySelector('[data-scroll="selected-section"]');
 const media = document.querySelector('[data-js="selected-media"]');
+const selectedScreen = document.querySelector('[data-js="selected-screen"]');
+const parallaxVisual = media?.querySelector('[data-scroll="selected-parallax"]');
 const title = document.querySelector('[data-js="selected-title"]');
 const words = [...document.querySelectorAll('[data-js="selected-word"]')];
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -192,12 +194,36 @@ const initializeMotion = () => {
       });
     }
 
+    if (selectedScreen && media && parallaxVisual) {
+      const intensity = context.conditions.mobile ? SCROLL_MOTION.mediaParallaxMobile
+        : context.conditions.desktop ? SCROLL_MOTION.mediaParallaxDesktop : SCROLL_MOTION.mediaParallaxTablet;
+      // Clamp travel to the actual overscan so resizing cannot uncover either card edge.
+      const travel = () => Math.max(0,
+        (parallaxVisual.offsetHeight - media.clientHeight) / 2 - SCROLL_MOTION.mediaParallaxEdge
+      ) * intensity;
+
+      gsap.fromTo(parallaxVisual, { y: () => travel() }, {
+        y: () => -travel(),
+        ease: 'none',
+        force3D: true,
+        scrollTrigger: {
+          trigger: selectedScreen,
+          start: 'clamp(top bottom)',
+          // Section 2 is currently last; finish within the available page scroll range.
+          end: 'clamp(bottom top)',
+          scrub: SCROLL_MOTION.scrub,
+          invalidateOnRefresh: true,
+        },
+      });
+    }
+
     const refresh = () => {
       smoothScroll.resize();
       ScrollTrigger.refresh();
     };
     const resizeObserver = typeof ResizeObserver === 'function' ? new ResizeObserver(refresh) : null;
     if (section) resizeObserver?.observe(section);
+    if (media) resizeObserver?.observe(media);
     document.fonts?.ready.then(() => {
       if (lenis === smoothScroll) refresh();
     });

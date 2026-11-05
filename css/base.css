@@ -28,6 +28,13 @@ html.lenis body {
   height: auto;
 }
 
+/* Clipping sideways must not create a scroll ancestor for the sticky hero. */
+@supports (overflow: clip) {
+  body {
+    overflow-x: clip;
+  }
+}
+
 html.lenis {
   scroll-behavior: auto;
 }

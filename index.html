@@ -8,8 +8,8 @@
       name="description"
       content="DRAFT.X — 하이엔드 전략과 심미적 안목으로 브랜드의 본질적인 변화를 만듭니다."
     >
-    <title>DRAFT.X — Digital Design Agency</title>
-    <link rel="icon" type="image/png" href="./images/cat_favicon.png">
+    <title>DRAFT.X Portfolio</title>
+    <link rel="icon" type="image/png" href="./images/cat_favicon.png"/>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Anta&amp;display=swap" rel="stylesheet">
@@ -19,6 +19,12 @@
     <link rel="stylesheet" href="css/layout.css">
     <link rel="stylesheet" href="css/utilities.css">
     <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/components/work-grid.css">
+    <link rel="stylesheet" href="css/components/site-cursor.css">
+    <link rel="stylesheet" href="css/components/showcase.css">
+    <link rel="stylesheet" href="css/components/craft.css">
+    <link rel="stylesheet" href="css/components/narrative.css">
+    <link rel="stylesheet" href="css/components/closing-sections.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lenis@1.3.27/dist/lenis.css" integrity="sha384-gvLq/iOMNnPchdosgVym5huSVkKipHCQaqSw2Eg0V52Mzmlf169ZOsXcNc2cNu8x" crossorigin="anonymous">
     <script defer src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.1.18/dist/index.global.js" integrity="sha384-y0axVOJIfo0bJOmTOnyRyUjrqjUotl7L/k6mzSwu2SSrB3r7P+b0cSFkiod+js0X" crossorigin="anonymous"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" integrity="sha384-HOvlOYPIs/zjoIkWUGXkVmXsjr8GuZLV+Q+rcPwmJOVZVpvTSXQChiN4t9Euv9Vc" crossorigin="anonymous"></script>
@@ -38,6 +44,7 @@
             <a href="#works">WORKS</a>
             <a href="#lab-x">LAB.X</a>
             <a href="#contact">CONTACT</a>
+            <a href="pages/notice.html">NOTICE</a>
           </nav>
 
           <a class="site-header__award" href="#works">
@@ -74,6 +81,7 @@
           <a class="menu-panel__link" href="#works" data-js="menu-link">WORKS</a>
           <a class="menu-panel__link" href="#lab-x" data-js="menu-link">LAB.X</a>
           <a class="menu-panel__link" href="#contact" data-js="menu-link">CONTACT</a>
+          <a class="menu-panel__link" href="pages/notice.html" data-js="menu-link">NOTICE</a>
         </div>
         <a class="menu-panel__award" href="#works" data-js="menu-link">
           <span>2026 GDWEB DESIGN AWARDS WINNER PRIZE //</span>
@@ -89,64 +97,66 @@
     </header>
 
     <main id="main-content" tabindex="-1">
-      <section class="outer-box outer-box--hero" id="home" aria-labelledby="hero-title" data-js="screen-section">
-        <div class="inner-box">
-          <div class="part-box hero-stage">
-            <figure class="hero-tile hero-tile--one" aria-hidden="true">
-              <img src="./images/used/dfaftx-dt-1.png" width="429" height="341" alt="">
-            </figure>
-            <figure class="hero-tile hero-tile--two" aria-hidden="true">
-              <img src="./images/used/dfaftx-dt-21.webp" width="600" height="449" alt="">
-            </figure>
-            <figure class="hero-tile hero-tile--three" aria-hidden="true">
-              <img src="./images/used/dfaftx-dt-20.webp" width="400" height="522" alt="">
-            </figure>
-            <figure class="hero-tile hero-tile--four" aria-hidden="true">
-              <img src="./images/used/dfaftx-dt-6.webp" width="600" height="344" alt="">
-            </figure>
-            <figure class="hero-tile hero-tile--five" aria-hidden="true">
-              <img src="./images/used/dfaftx-dt-9.webp" width="600" height="341" alt="">
-            </figure>
-            <figure class="hero-tile hero-tile--six" aria-hidden="true">
-              <video autoplay muted loop playsinline preload="metadata">
-                <source src="./images/img-dt/03-video.mp4" type="video/mp4">
-              </video>
-            </figure>
-            <figure class="hero-tile hero-tile--seven" aria-hidden="true">
-              <img src="./images/used/dfaftx-dt-19.png" width="1392" height="752" alt="">
-            </figure>
-            <figure class="hero-tile hero-tile--eight" aria-hidden="true">
-              <video
-                autoplay
-                muted
-                loop
-                playsinline
-                preload="metadata"
-                poster="./images/used/dfaftx-dt-19.png"
-              >
-                <source src="./images/used/01-banner-video.mp4" type="video/mp4">
-              </video>
-            </figure>
+      <div class="hero-scroll-track" id="home" data-js="hero-scroll-track">
+        <section class="outer-box outer-box--hero" aria-labelledby="hero-title" data-js="screen-section" data-scroll="hero-section">
+          <div class="inner-box">
+            <div class="part-box hero-stage">
+              <figure class="hero-tile hero-tile--one" aria-hidden="true">
+                <img src="./images/used/dfaftx-dt-1.png" width="429" height="341" alt="">
+              </figure>
+              <figure class="hero-tile hero-tile--two" aria-hidden="true">
+                <img src="./images/used/dfaftx-dt-21.webp" width="600" height="449" alt="">
+              </figure>
+              <figure class="hero-tile hero-tile--three" aria-hidden="true">
+                <img src="./images/used/dfaftx-dt-20.webp" width="400" height="522" alt="">
+              </figure>
+              <figure class="hero-tile hero-tile--four" aria-hidden="true">
+                <img src="./images/used/dfaftx-dt-6.webp" width="600" height="344" alt="">
+              </figure>
+              <figure class="hero-tile hero-tile--five" aria-hidden="true">
+                <img src="./images/used/dfaftx-dt-9.webp" width="600" height="341" alt="">
+              </figure>
+              <figure class="hero-tile hero-tile--six" aria-hidden="true">
+                <video autoplay muted loop playsinline preload="metadata">
+                  <source src="./images/img-dt/03-video.mp4" type="video/mp4">
+                </video>
+              </figure>
+              <figure class="hero-tile hero-tile--seven" aria-hidden="true">
+                <img src="./images/used/dfaftx-dt-19.png" width="1392" height="752" alt="">
+              </figure>
+              <figure class="hero-tile hero-tile--eight" aria-hidden="true">
+                <video
+                  autoplay
+                  muted
+                  loop
+                  playsinline
+                  preload="metadata"
+                  poster="./images/used/dfaftx-dt-19.png"
+                >
+                  <source src="./images/used/01-banner-video.mp4" type="video/mp4">
+                </video>
+              </figure>
 
-            <p class="hero-wordmark" aria-hidden="true">DRAFT.X</p>
+              <p class="hero-wordmark" aria-hidden="true">DRAFT.X</p>
 
-            <div class="hero-copy">
-              <h1 class="hero-copy__title" id="hero-title">
-                <span>10+ years of aesthetic mastery meets</span>
-                <span>high-end strategy,</span>
-                <span>delivering essential changes</span>
-                <span>for your brand.</span>
-              </h1>
-              <p class="hero-copy__description">
-                축적된 심미적 안목이 하이엔드 전략과 만나,<br>
-                브랜드에 본질적인 변화를 선사합니다.
-              </p>
+              <div class="hero-copy">
+                <h1 class="hero-copy__title" id="hero-title">
+                  <span>10+ years of aesthetic mastery meets</span>
+                  <span>high-end strategy,</span>
+                  <span>delivering essential changes</span>
+                  <span>for your brand.</span>
+                </h1>
+                <p class="hero-copy__description">
+                  축적된 심미적 안목이 하이엔드 전략과 만나,<br>
+                  브랜드에 본질적인 변화를 선사합니다.
+                </p>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </div>
       <section class="outer-box outer-box--selected" id="works" aria-labelledby="selected-title" data-js="screen-section" data-scroll="selected-section">
-        <div class="inner-box selected-screen">
+        <div class="inner-box selected-screen" data-js="selected-screen">
           <div class="part-box selected-caption">
             <p class="selected-caption__label">© SELECTED WORKS 24/26</p>
             <p class="selected-caption__number">(DX. MASTERPIECE — 05)</p>
@@ -158,14 +168,305 @@
             <a class="selected-link" href="https://draftx.co.kr/work">SEE WORKS</a>
           </div>
           <figure class="selected-media" data-js="selected-media">
-            <video class="selected-media__video" autoplay muted loop playsinline preload="metadata" aria-label="디지털 브랜드 프로젝트 쇼케이스" data-js="selected-video">
+            <video class="selected-media__video" autoplay muted loop playsinline preload="metadata" aria-label="디지털 브랜드 프로젝트 쇼케이스" data-js="selected-video" data-scroll="selected-parallax">
               <source src="./images/img-dt/02-middle-video.mp4" type="video/mp4">
             </video>
             <button class="selected-media__toggle" type="button" aria-label="영상 일시정지" aria-pressed="false" data-js="video-toggle">Ⅱ</button>
           </figure>
         </div>
       </section>
+      <section class="outer-box outer-box--portfolio" id="portfolio" aria-labelledby="portfolio-title">
+        <div class="inner-box portfolio-screen">
+          <h2 class="visually-hidden" id="portfolio-title">포트폴리오 프로젝트</h2>
+          <div class="part-box portfolio-content">
+            <ul class="work-grid" role="list">
+              <li class="work-card">
+                <a class="work-card__link" href="https://draftx.co.kr/work/dra" data-js="work-card">
+                  <img class="work-card__image work-card__image--dra" src="./images/works/work-dra.webp" width="1654" height="1447" loading="lazy" decoding="async" alt="주황색 배경 위의 흰색 DR.A 오디오 시스템">
+                  <span class="visually-hidden">DR.A 프로젝트 보기</span>
+                </a>
+              </li>
+              <li class="work-card">
+                <a class="work-card__link" href="https://draftx.co.kr/work/muk" data-js="work-card">
+                  <img class="work-card__image" src="./images/works/work-muk.webp" width="1200" height="1050" loading="lazy" decoding="async" alt="벽돌 벽과 모델 위에 배치된 MUK 어반 스타일 그래픽">
+                  <span class="visually-hidden">MUK 프로젝트 보기</span>
+                </a>
+              </li>
+              <li class="work-card">
+                <a class="work-card__link" href="https://draftx.co.kr/work/arche" data-js="work-card">
+                  <img class="work-card__image work-card__image--arche" src="./images/works/work-arche.webp" width="1200" height="1050" loading="lazy" decoding="async" alt="목재 천장과 운동기구가 있는 Arche 퍼포먼스 스튜디오">
+                  <span class="visually-hidden">Arche 프로젝트 보기</span>
+                </a>
+              </li>
+              <li class="work-card">
+                <a class="work-card__link" href="https://draftx.co.kr/work/velo" data-js="work-card">
+                  <img class="work-card__image work-card__image--velo" src="./images/works/work-velo.png" width="1018" height="892" loading="lazy" decoding="async" alt="VELO 로고와 프리미엄 유모차 모바일 웹사이트 구성">
+                  <span class="visually-hidden">VELO 프로젝트 보기</span>
+                </a>
+              </li>
+              <li class="work-card">
+                <a class="work-card__link" href="https://draftx.co.kr/work/otium" data-js="work-card">
+                  <img class="work-card__image" src="./images/works/work-otium.webp" width="1200" height="1050" loading="lazy" decoding="async" alt="돌 위에 놓인 갈색 OTIUM 보태니컬 리추얼 스포이트 병">
+                  <span class="visually-hidden">OTIUM 프로젝트 보기</span>
+                </a>
+              </li>
+              <li class="work-card">
+                <a class="work-card__link" href="https://draftx.co.kr/work/aur.a" data-js="work-card">
+                  <img class="work-card__image" src="./images/works/work-aur-a.webp" width="1200" height="1050" loading="lazy" decoding="async" alt="빛과 그림자가 드리운 건축 외벽의 AUR.A 브랜드 그래픽">
+                  <span class="visually-hidden">AUR.A 프로젝트 보기</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+      <section class="outer-box outer-box--showcase" id="showcase" aria-labelledby="showcase-title">
+        <div class="inner-box">
+          <div class="part-box showcase-caption">
+            <p class="showcase-caption__label">© AUR. A</p>
+            <h2 class="showcase-caption__title" id="showcase-title">(05. LUXURY BRANDING)</h2>
+            <p class="showcase-caption__label showcase-caption__end">UNRIVALED ORIGINALITY</p>
+          </div>
+          <div class="part-box showcase-content">
+            <figure class="showcase-media" data-js="showcase-media" data-playback="loading">
+              <video
+                class="showcase-media__video"
+                data-js="showcase-video"
+                id="showcase-video"
+                width="930"
+                height="610"
+                autoplay
+                muted
+                loop
+                playsinline
+                preload="metadata"
+                aria-label="AUR. A 건축 브랜드 웹사이트 쇼케이스"
+              >
+                <source src="./images/showcase/aur-a-showcase.mp4" type="video/mp4">
+                브라우저에서 영상을 재생할 수 없습니다.
+              </video>
+              <button
+                class="showcase-media__toggle"
+                data-js="showcase-toggle"
+                type="button"
+                aria-label="쇼케이스 영상 일시정지"
+                aria-controls="showcase-video"
+                aria-pressed="false"
+                hidden
+              >
+                <span data-js="showcase-toggle-icon" aria-hidden="true">Ⅱ</span>
+              </button>
+              <p class="showcase-media__status" data-js="showcase-status" role="status" hidden></p>
+            </figure>
+          </div>
+        </div>
+      </section>
+      <section class="outer-box outer-box--craft" id="craft" aria-labelledby="craft-title">
+        <div class="inner-box">
+          <div class="part-box craft-layout">
+            <div class="craft-intro">
+              <p class="craft-label"><span class="brace" aria-hidden="true">{</span> High-end Digital Production <span class="brace" aria-hidden="true">}</span></p>
+              <h2 class="craft-title" id="craft-title"><span class="craft-title__line">How we craft</span> <span class="craft-title__line">essentials</span></h2>
+              <p class="craft-subtitle">DRAFT.X : 우리가 본질을 빚어내는 방식</p>
+              <figure class="selected-media craft-media">
+                <img class="selected-media__image" src="./images/img-dt/dfaftx-dt-23.webp" width="673" height="1064" loading="lazy" decoding="async" alt="어두운 건축 공간의 사선 빛 아래 서 있는 인물과 수면의 반영">
+              </figure>
+            </div>
+            <ul class="accordion" data-js="craft-accordion" role="list">
+              <li class="accordion__item" data-js="craft-item">
+                <h3 class="accordion__heading"><button class="accordion__trigger" id="craft-trigger-1" data-js="craft-trigger" type="button" aria-expanded="true" aria-controls="craft-panel-1"><span>직관과 데이터의 전략적 설계</span><span class="accordion__icon" aria-hidden="true"></span></button></h3>
+                <div class="accordion__panel" id="craft-panel-1" data-js="craft-panel" role="region" aria-labelledby="craft-trigger-1"><div class="accordion__body"><p class="accordion__description">20년간 축적된 심미적 직관에 AI 분석 전략을 더해, 장황한 기획 대신 브랜드에 즉각적으로 필요한 핵심 방향성만을 도출합니다.</p></div></div>
+              </li>
+              <li class="accordion__item" data-js="craft-item">
+                <h3 class="accordion__heading"><button class="accordion__trigger" id="craft-trigger-2" data-js="craft-trigger" type="button" aria-expanded="true" aria-controls="craft-panel-2"><span>고효율·고감도 디지털 빌드 시스템</span><span class="accordion__icon" aria-hidden="true"></span></button></h3>
+                <div class="accordion__panel" id="craft-panel-2" data-js="craft-panel" role="region" aria-labelledby="craft-trigger-2"><div class="accordion__body"><p class="accordion__description">제로 베이스의 비효율적 설계 대신 검증된 하이엔드 프레임워크를 기반으로 커스터마이징하여, 디자인 기획에 소요되는 시간과 비용을 혁신적으로 절감합니다.</p></div></div>
+              </li>
+              <li class="accordion__item" data-js="craft-item">
+                <h3 class="accordion__heading"><button class="accordion__trigger" id="craft-trigger-3" data-js="craft-trigger" type="button" aria-expanded="true" aria-controls="craft-panel-3"><span>독보적 서사를 담은 AI 비주얼 생성</span><span class="accordion__icon" aria-hidden="true"></span></button></h3>
+                <div class="accordion__panel" id="craft-panel-3" data-js="craft-panel" role="region" aria-labelledby="craft-trigger-3"><div class="accordion__body"><p class="accordion__description">세상에 존재하지 않는 브랜드 고유의 이미지를 AI 기술로 직접 생성하여, 기성 스톡 이미지로는 도달할 수 없는 압도적인 브랜드 서사와 몰입감을 완성합니다.</p></div></div>
+              </li>
+              <li class="accordion__item" data-js="craft-item">
+                <h3 class="accordion__heading"><button class="accordion__trigger" id="craft-trigger-4" data-js="craft-trigger" type="button" aria-expanded="true" aria-controls="craft-panel-4"><span>본질에 집중하는 콘텐츠 최적화</span><span class="accordion__icon" aria-hidden="true"></span></button></h3>
+                <div class="accordion__panel" id="craft-panel-4" data-js="craft-panel" role="region" aria-labelledby="craft-trigger-4"><div class="accordion__body"><p class="accordion__description">콘텐츠 분석부터 루틴 설계까지, 브랜드의 정체성이 디지털 환경에서 가장 강력한 힘을 발휘할 수 있도록 최적의 구현 방식을 제안합니다.</p></div></div>
+              </li>
+              <li class="accordion__item" data-js="craft-item">
+                <h3 class="accordion__heading"><button class="accordion__trigger" id="craft-trigger-5" data-js="craft-trigger" type="button" aria-expanded="true" aria-controls="craft-panel-5"><span>미세한 감각이 만드는 시각적 조화</span><span class="accordion__icon" aria-hidden="true"></span></button></h3>
+                <div class="accordion__panel" id="craft-panel-5" data-js="craft-panel" role="region" aria-labelledby="craft-trigger-5"><div class="accordion__body"><p class="accordion__description">폰트의 자간과 여백의 미세한 조정을 통해 시각적 피로도를 낮추고, 브랜드의 품격이 느껴지는 DRAFT.X만의 최상위 레이아웃을 구현합니다.</p></div></div>
+              </li>
+              <li class="accordion__item" data-js="craft-item">
+                <h3 class="accordion__heading"><button class="accordion__trigger" id="craft-trigger-6" data-js="craft-trigger" type="button" aria-expanded="true" aria-controls="craft-panel-6"><span>브랜드의 지속 가능한 성장 시스템</span><span class="accordion__icon" aria-hidden="true"></span></button></h3>
+                <div class="accordion__panel" id="craft-panel-6" data-js="craft-panel" role="region" aria-labelledby="craft-trigger-6"><div class="accordion__body"><p class="accordion__description">제작 이후에도 클라이언트가 직접 관리하고 확장할 수 있는 유연한 시스템을 제공하여, 브랜드가 멈추지 않고 지속적으로 성장하도록 돕습니다.</p></div></div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+      <section class="outer-box outer-box--about" id="brand-narrative" aria-labelledby="narrative-title">
+        <div class="inner-box">
+          <div class="part-box narrative-caption">
+            <p>© BRAND NARRATIVE</p><p>(DRAFT.X)</p><p class="narrative-caption__end">CORE PHILOSOPHY</p>
+          </div>
+          <div class="part-box narrative-content">
+            <figure class="narrative-media">
+              <video class="narrative-media__video" id="narrative-video" data-js="narrative-video" width="724" height="536" autoplay muted loop playsinline preload="metadata" poster="./images/img-dt/dfaftx-dt-4.webp" aria-label="검은 재킷을 입은 모델의 브랜드 내러티브 영상">
+                <source src="./images/narrative/brand-narrative.mp4" type="video/mp4">
+              </video>
+              <button class="narrative-media__toggle" data-js="narrative-toggle" type="button" aria-controls="narrative-video" aria-label="내러티브 영상 일시정지" aria-pressed="false">Ⅱ</button>
+              <p class="narrative-media__status" data-js="narrative-status" role="status" hidden>영상을 불러올 수 없습니다.</p>
+            </figure>
+            <h2 class="narrative-title" id="narrative-title" data-js="narrative-title"><span class="narrative-title__word" data-js="narrative-word">Blending</span> <span class="narrative-title__word" data-js="narrative-word">intuitive</span> <span class="narrative-title__word" data-js="narrative-word">art</span> <span class="narrative-title__word" data-js="narrative-word">and</span> <span class="narrative-title__word" data-js="narrative-word">AI</span> <span class="narrative-title__word" data-js="narrative-word">strategy</span> <span class="narrative-title__word" data-js="narrative-word">with</span> <span class="narrative-title__word" data-js="narrative-word">functional</span> <span class="narrative-title__word" data-js="narrative-word">clarity</span> <span class="narrative-title__word" data-js="narrative-word">and</span> <span class="narrative-title__word" data-js="narrative-word">creative</span> <span class="narrative-title__word" data-js="narrative-word">precision.</span> <span class="narrative-title__word" data-js="narrative-word">Delivering</span> <span class="narrative-title__word" data-js="narrative-word">thoughtful</span> <span class="narrative-title__word" data-js="narrative-word">digital</span> <span class="narrative-title__word" data-js="narrative-word">systems</span> <span class="narrative-title__word" data-js="narrative-word">that</span> <span class="narrative-title__word" data-js="narrative-word">define</span> <span class="narrative-title__word" data-js="narrative-word">the</span> <span class="narrative-title__word" data-js="narrative-word">essence</span> <span class="narrative-title__word" data-js="narrative-word">of</span> <span class="narrative-title__word" data-js="narrative-word">presence.</span></h2>
+            <div class="narrative-copy">
+              <p class="narrative-description">우리는 단순한 웹사이트 제작을 넘어, 브랜드가 시장의 빠른 흐름 속에서도 고유한 중심을 잃지 않도록 돕습니다. 20년의 숙련된 감각과 최첨단 AI 워크플로우를 결합하여, 가장 효율적인 방식으로 브랜드의 본질적 변화를 실현하는 최상위 디지털 경험을 설계합니다.</p>
+              <a class="narrative-link" href="#works">SEE WORKS</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="outer-box outer-box--awards" id="awards" aria-labelledby="awards-title">
+        <div class="inner-box">
+          <div class="part-box closing-caption closing-caption--awards">
+            <p class="closing-caption__start">© THE ESSENCE OF PRESENCE</p>
+            <p class="closing-caption__center">(STRATEGIC <span class="closing-caption__detail">INTELLIGENCE </span>— 27)</p>
+            <p class="closing-caption__end">FUNCTIONAL CLARITY</p>
+          </div>
+          <div class="part-box awards-heading">
+            <h2 class="awards-heading__title" id="awards-title">Awards</h2>
+            <span class="awards-heading__count" aria-label="총 27개">(27)</span>
+          </div>
+          <div class="part-box awards-content">
+            <table class="awards" role="table">
+              <caption class="visually-hidden">주요 수상 및 고객사</caption>
+              <thead class="visually-hidden"><tr><th scope="col">분류</th><th scope="col">클라이언트</th><th scope="col">수상 및 브랜드</th><th scope="col">연도</th></tr></thead>
+              <tbody role="rowgroup">
+                <tr class="awards__row " role="row">
+                  <td class="awards__category" role="cell">Awards</td>
+                  <th class="awards__client" scope="row" role="rowheader">히다랩</th>
+                  <td class="awards__description" role="cell">Red Dot, iF, IDEA Design Award</td>
+                  <td class="awards__year" role="cell">2021</td>
+                </tr>
+                <tr class="awards__row " role="row">
+                  <td class="awards__category" role="cell">Awards</td>
+                  <th class="awards__client" scope="row" role="rowheader">현대 한스톤</th>
+                  <td class="awards__description" role="cell">Hyundai Hanstone Construction/Architecture Grand Prize</td>
+                  <td class="awards__year" role="cell">2020</td>
+                </tr>
+                <tr class="awards__row awards__row--wide" role="row">
+                  <td class="awards__category" role="cell">Brands</td>
+                  <th class="awards__client" scope="row" role="rowheader">아모레퍼시픽</th>
+                  <td class="awards__description" role="cell">Aritaum, Mamonde, Innisfree, Etude, eSpoir</td>
+                  <td class="awards__year" role="cell">~2018</td>
+                </tr>
+                <tr class="awards__row " role="row">
+                  <td class="awards__category" role="cell">Awards</td>
+                  <th class="awards__client" scope="row" role="rowheader">LG그룹</th>
+                  <td class="awards__description" role="cell">LG Group Corporate Web Integrated Grand Prize</td>
+                  <td class="awards__year" role="cell">2012</td>
+                </tr>
+                <tr class="awards__row awards__row--mobile" role="row">
+                  <td class="awards__category" role="cell">Awards</td>
+                  <th class="awards__client" scope="row" role="rowheader">한국은행</th>
+                  <td class="awards__description" role="cell">Bank of Korea Public Finance Grand Prize</td>
+                  <td class="awards__year" role="cell">2012</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="outer-box outer-box--plans" id="investment" aria-labelledby="investment-title">
+        <div class="inner-box">
+          <div class="part-box plans-heading"><h2 class="plans-heading__title" id="investment-title">Investment for Excellence</h2></div>
+          <div class="part-box plans-content">
+            <article class="plan" aria-labelledby="plan-title-1">
+              <div class="plan__top">
+                <span class="plan__icon" aria-hidden="true"><svg viewBox="0 0 24 26"><path d="m20.6 3.5-4.4 16.2c-.3 1.2-2 1.3-2.4.1l-2.3-6.2-6.2-2.3c-1.2-.4-1.1-2.1.1-2.4l13.6-4.6c1.1-.4 2 .1 1.6 1.2Z"/></svg></span>
+                <p class="plan__badge">Essential</p>
+              </div>
+              <h3 class="plan__title" id="plan-title-1">본질에 집중한 강력한 첫인상</h3>
+              <ul class="plan__features">
+                <li class="plan__feature"><svg class="plan__check" viewBox="0 0 20 20" aria-hidden="true"><path d="m3 10 4.5 4.5L17 5"/></svg><span>원페이지 브랜드 런칭</span></li>
+                <li class="plan__feature"><svg class="plan__check" viewBox="0 0 20 20" aria-hidden="true"><path d="m3 10 4.5 4.5L17 5"/></svg><span>데스크탑/모바일 최적화</span></li>
+                <li class="plan__feature"><svg class="plan__check" viewBox="0 0 20 20" aria-hidden="true"><path d="m3 10 4.5 4.5L17 5"/></svg><span>커스텀 모션 적용</span></li>
+                <li class="plan__feature"><svg class="plan__check" viewBox="0 0 20 20" aria-hidden="true"><path d="m3 10 4.5 4.5L17 5"/></svg><span>Fast & Sharp</span></li>
+              </ul>
+            </article>
+            <article class="plan plan--signature" aria-labelledby="plan-title-2">
+              <div class="plan__top">
+                <span class="plan__icon" aria-hidden="true"><svg viewBox="0 0 24 26"><path d="m12 3 8 4.5v9L12 21l-8-4.5v-9L12 3Zm-8 4.5 8 4.7 8-4.7M12 12v9m4-6 2 2 4-4"/></svg></span>
+                <p class="plan__badge">Signature</p>
+              </div>
+              <h3 class="plan__title" id="plan-title-2">비즈니스의 가치를 증명하는 플랫폼</h3>
+              <ul class="plan__features">
+                <li class="plan__feature"><svg class="plan__check" viewBox="0 0 20 20" aria-hidden="true"><path d="m3 10 4.5 4.5L17 5"/></svg><span>멀티페이지(~10p)</span></li>
+                <li class="plan__feature"><svg class="plan__check" viewBox="0 0 20 20" aria-hidden="true"><path d="m3 10 4.5 4.5L17 5"/></svg><span>관리자 페이지(CMS) 연동</span></li>
+                <li class="plan__feature"><svg class="plan__check" viewBox="0 0 20 20" aria-hidden="true"><path d="m3 10 4.5 4.5L17 5"/></svg><span>몰입감을 높이는 모션 디테일</span></li>
+                <li class="plan__feature"><svg class="plan__check" viewBox="0 0 20 20" aria-hidden="true"><path d="m3 10 4.5 4.5L17 5"/></svg><span>Pure Intelligence</span></li>
+              </ul>
+            </article>
+            <article class="plan" aria-labelledby="plan-title-3">
+              <div class="plan__top">
+                <span class="plan__icon" aria-hidden="true"><svg viewBox="0 0 24 26"><path d="m12 3 9 5-9 5-9-5 9-5Zm-5 7.2L3 13l9 5 9-5-4-2.8M7 15.2 3 18l9 5 9-5-4-2.8"/></svg></span>
+                <p class="plan__badge">Masterpiece</p>
+              </div>
+              <h3 class="plan__title" id="plan-title-3">정갈한 품격의 하이엔드 브랜드</h3>
+              <ul class="plan__features">
+                <li class="plan__feature"><svg class="plan__check" viewBox="0 0 20 20" aria-hidden="true"><path d="m3 10 4.5 4.5L17 5"/></svg><span>멀티페이지(10p~)</span></li>
+                <li class="plan__feature"><svg class="plan__check" viewBox="0 0 20 20" aria-hidden="true"><path d="m3 10 4.5 4.5L17 5"/></svg><span>20년 경력 마스터 직접 디렉팅</span></li>
+                <li class="plan__feature"><svg class="plan__check" viewBox="0 0 20 20" aria-hidden="true"><path d="m3 10 4.5 4.5L17 5"/></svg><span>독점적 브랜드 경험 설계</span></li>
+                <li class="plan__feature"><svg class="plan__check" viewBox="0 0 20 20" aria-hidden="true"><path d="m3 10 4.5 4.5L17 5"/></svg><span>Absolute Value</span></li>
+              </ul>
+            </article>
+          </div>
+          <div class="part-box plans-guide"><a class="closing-pill" href="https://drive.google.com/file/d/1WmrWxu2CQlnFJfZUVAvDmdq-tIM_GLZ6/view" target="_blank" rel="noopener noreferrer" aria-label="MASTER PROCESS GUIDE (PDF, 새 창)">MASTER PROCESS GUIDE (PDF)</a></div>
+        </div>
+      </section>
+
+      <section class="outer-box outer-box--archive" id="archive" aria-labelledby="archive-title">
+        <div class="inner-box">
+          <div class="part-box closing-caption closing-caption--archive">
+            <p class="closing-caption__start">© DRAFT.X ARCHIVE</p>
+            <p class="closing-caption__center">(GLOBAL STUDIO — 20Y)</p>
+            <p class="closing-caption__end">BEYOND DIGITAL ESSENCE</p>
+          </div>
+          <div class="part-box archive-gallery" data-js="archive-gallery" data-paused="false">
+            <div class="archive-gallery__viewport" id="archive-marquee" data-js="archive-viewport" tabindex="0" role="region" aria-label="DRAFT.X 아카이브 이미지. 초점을 두면 이동이 멈춥니다.">
+              <div class="archive-gallery__track" data-js="archive-track">
+                <ul class="archive-gallery__set" data-js="archive-set">
+                  <li class="archive-gallery__card archive-gallery__card--fashion"><img class="archive-gallery__image" src="./images/archive/fashion.webp" width="800" height="805" loading="lazy" decoding="async" alt="검은 상의와 베이지 팬츠를 입은 패션 모델"></li>
+                  <li class="archive-gallery__card archive-gallery__card--skincare"><img class="archive-gallery__image" src="./images/archive/skincare.webp" width="1600" height="905" loading="lazy" decoding="async" alt="흰 조형물 사이의 스킨케어 제품"></li>
+                  <li class="archive-gallery__card archive-gallery__card--velo"><img class="archive-gallery__image" src="./images/archive/velo.webp" width="856" height="1510" loading="lazy" decoding="async" alt="스튜디오에서 선보이는 VELO 유모차"></li>
+                  <li class="archive-gallery__card archive-gallery__card--portrait"><img class="archive-gallery__image" src="./images/archive/portrait.webp" width="1000" height="624" loading="lazy" decoding="async" alt="파란 배경 앞 검은 재킷을 입은 모델"></li>
+                  <li class="archive-gallery__card archive-gallery__card--stroller"><img class="archive-gallery__image" src="./images/archive/stroller.webp" width="1000" height="570" loading="lazy" decoding="async" alt="돌담 옆에서 유모차를 밀고 걷는 모델"></li>
+                  <li class="archive-gallery__card archive-gallery__card--eyewear"><img class="archive-gallery__image" src="./images/archive/eyewear.webp" width="800" height="594" loading="lazy" decoding="async" alt="주황색 선글라스와 흰 셔츠를 착용한 모델"></li>
+                  <li class="archive-gallery__card archive-gallery__card--architecture"><img class="archive-gallery__image" src="./images/archive/architecture.webp" width="800" height="452" loading="lazy" decoding="async" alt="콘크리트 건축물과 넓은 야외 공간"></li>
+                  <li class="archive-gallery__card archive-gallery__card--otium"><img class="archive-gallery__image" src="./images/archive/otium.webp" width="1200" height="1050" loading="lazy" decoding="async" alt="바위 위에 놓인 OTIUM 세럼 제품"></li>
+                </ul>
+              </div>
+            </div>
+            <button class="archive-gallery__toggle" data-js="archive-toggle" type="button" aria-controls="archive-marquee" aria-pressed="false" aria-label="아카이브 이미지 이동 일시정지" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path class="archive-gallery__pause" d="M9 6v12M15 6v12"/><path class="archive-gallery__play" d="m9 6 9 6-9 6Z"/></svg></button>
+          </div>
+          <div class="part-box archive-closing">
+            <h2 class="archive-closing__title" id="archive-title">Defining the Essence, Designing the Future.</h2>
+            <blockquote class="archive-closing__quote"><span class="archive-closing__line">&quot;DRAFT.X의 20년 경험은 오직 당신의 브랜드가</span> <span class="archive-closing__line">세상에 가장 가치 있게 드러나는 순간에 기여하기 위해</span> <span class="archive-closing__line">존재합니다.&quot;</span></blockquote>
+            <a class="closing-pill closing-pill--top" href="#home" aria-label="페이지 최상단으로 이동">TOP</a>
+          </div>
+        </div>
+      </section>
     </main>
+
+    <footer class="outer-box outer-box--footer" id="contact" aria-label="DRAFT.X 회사 정보">
+      <div class="inner-box">
+        <div class="part-box footer-contact">
+          <p class="footer-contact__description">DRAFT.X | Remote Based Global Studio 20 Years of Heritage. Defining the Essence of Identity.</p>
+          <p class="footer-contact__email"><span class="footer-contact__brace" aria-hidden="true">{</span> <a class="footer-contact__link" href="mailto:draftx.co@gmail.com">Email : draftx.co@gmail.com</a> <span class="footer-contact__brace" aria-hidden="true">}</span></p>
+        </div>
+        <div class="part-box footer-brand"><p class="footer-brand__wordmark" aria-hidden="true">DRAFT.X</p></div>
+        <div class="part-box footer-legal"><p class="footer-legal__copyright">© 2026 DRAFT.X. All Rights Reserved.</p></div>
+      </div>
+    </footer>
+
 
     <nav class="mobile-navigation" aria-label="모바일 빠른 메뉴">
       <a class="mobile-navigation__item" href="#works">
@@ -219,6 +520,11 @@
         </svg>
       </a>
     </aside>
+    <div class="site-cursor" data-js="site-cursor" data-cursor-state="hidden" aria-hidden="true">
+      <span class="site-cursor__label">VIEW</span>
+    </div>
     <script type="module" src="./js/main.js"></script>
   </body>
 </html>
+
+

@@ -1,0 +1,158 @@
+/* Desktop first, then tablet and mobile, as requested for Section 4. */
+.outer-box--showcase {
+  --gutter: var(--showcase-gutter);
+  padding-block: var(--showcase-padding-top) var(--showcase-padding-bottom);
+  scroll-margin-block-start: var(--header-h);
+}
+
+.showcase-caption {
+  position: relative;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--showcase-caption-gap);
+  padding-block-end: var(--showcase-caption-padding);
+  font-size: var(--showcase-caption-size);
+  font-weight: var(--showcase-caption-weight);
+  line-height: var(--showcase-caption-leading);
+  letter-spacing: var(--showcase-caption-tracking);
+}
+
+.showcase-caption::after {
+  position: absolute;
+  inset: auto calc(-1 * var(--gutter)) 0;
+  height: var(--showcase-line-width);
+  background: var(--showcase-line-color);
+  content: "";
+}
+
+.showcase-caption__label,
+.showcase-caption__title {
+  flex: 1;
+  margin: 0;
+  font: inherit;
+  white-space: nowrap;
+}
+
+.showcase-caption__label {
+  color: var(--color-selected-muted);
+}
+
+.showcase-caption__title {
+  flex-grow: 0;
+  color: var(--showcase-title-color);
+  text-align: center;
+}
+
+.showcase-caption__end {
+  text-align: end;
+}
+
+.showcase-content {
+  gap: 0;
+  padding-block-start: var(--showcase-media-gap);
+}
+
+.showcase-media {
+  position: relative;
+  width: 100%;
+  height: var(--showcase-media-height);
+  margin: 0;
+  overflow: hidden;
+  border-radius: var(--showcase-media-radius);
+  background-color: var(--color-surface);
+  background-image: var(--showcase-background);
+  background-position: center;
+  background-size: var(--showcase-background-size);
+  background-repeat: no-repeat;
+  isolation: isolate;
+}
+
+/* The fixed-size recording is a media overlay, not a responsive HTML website. */
+.showcase-media__video {
+  position: absolute;
+  inset-block-start: var(--showcase-video-top);
+  inset-inline-start: 50%;
+  display: block;
+  width: var(--showcase-video-width);
+  height: var(--showcase-video-height);
+  max-width: none;
+  overflow: hidden;
+  border-radius: var(--showcase-video-radius);
+  object-fit: cover;
+  object-position: center;
+  transform: translateX(-50%);
+}
+
+.showcase-media__toggle {
+  position: absolute;
+  inset-block-end: var(--showcase-control-offset);
+  inset-inline-end: var(--showcase-control-offset);
+  display: inline-flex;
+  width: var(--hit-min);
+  height: var(--hit-min);
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: var(--showcase-line-width) solid var(--showcase-control-border);
+  border-radius: var(--radius-pill);
+  background: var(--showcase-control-background);
+  color: var(--color-text);
+  font: inherit;
+  cursor: pointer;
+}
+
+.showcase-media__toggle:focus-visible {
+  outline: var(--showcase-control-focus) solid var(--color-focus);
+  outline-offset: var(--showcase-control-focus);
+}
+
+.showcase-media__toggle:active {
+  transform: scale(var(--showcase-control-active));
+}
+
+.showcase-media__toggle:disabled {
+  cursor: default;
+}
+
+.showcase-media__status {
+  position: absolute;
+  inset-block-end: var(--showcase-control-offset);
+  inset-inline: var(--showcase-control-offset);
+  margin: 0;
+  padding: var(--space-sm);
+  border-radius: var(--radius-sm);
+  background: var(--showcase-control-background);
+  color: var(--color-text);
+  font-size: var(--fs-body);
+}
+
+.showcase-media__toggle[hidden],
+.showcase-media__status[hidden] {
+  display: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .showcase-media[data-playback="playing"] .showcase-media__toggle {
+    opacity: 0;
+  }
+
+  .showcase-media:hover .showcase-media__toggle,
+  .showcase-media:focus-within .showcase-media__toggle {
+    opacity: 1;
+  }
+
+  .showcase-media__toggle:hover {
+    background: var(--showcase-control-hover);
+  }
+}
+
+@media (max-width: 806px) {
+  .showcase-caption__title {
+    text-align: end;
+  }
+
+  .showcase-caption__end {
+    display: none;
+  }
+}

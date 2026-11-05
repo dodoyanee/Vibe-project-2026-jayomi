@@ -1,0 +1,45 @@
+.craft-intro { flex: 0 1 var(--craft-intro-width); min-width: 0; padding-top: var(--craft-intro-top); }
+.craft-label { margin: 0 0 var(--craft-label-gap); color: var(--color-text-muted); font-size: var(--fs-body); }
+.brace { color: var(--color-accent); font-family: var(--font-brace); font-weight: 600; }
+.craft-title { margin: 0; font-size: var(--craft-title-size); font-weight: 400; line-height: var(--craft-title-leading); letter-spacing: var(--craft-title-tracking); }
+.craft-title__line { display: block; }
+.craft-subtitle { margin: var(--craft-subtitle-gap) 0 0; font-family: var(--font-ko); color: var(--color-text-muted); font-size: var(--fs-body); }
+/* Keep section 2's selected-media frame and image sizing contract; only placement tokens change. */
+.craft-media {
+  --selected-media-top: auto;
+  --selected-media-right: auto;
+  --selected-media-width: var(--craft-media-width);
+  --selected-media-ratio: var(--craft-media-ratio);
+  position: relative;
+  margin: var(--craft-media-gap) 0 0 var(--craft-media-inset);
+  border-radius: 0;
+  background: var(--color-bg);
+}
+.selected-media__image { display: block; width: 100%; height: 100%; object-fit: cover; }
+.accordion { display: flex; flex: 1 1 0; flex-direction: column; gap: var(--accordion-gap); min-width: 0; padding: 0; margin: 0; list-style: none; }
+.accordion__item { overflow: hidden; border: var(--accordion-stroke) solid var(--color-border-soft); border-radius: var(--radius-lg); background: var(--color-surface); }
+.accordion__heading { margin: 0; font-size: inherit; }
+.accordion__trigger { display: flex; align-items: center; justify-content: space-between; gap: var(--space-md); width: 100%; min-height: var(--accordion-height); padding: var(--space-sm) var(--accordion-padding); border: 0; background: transparent; color: var(--color-text); cursor: pointer; text-align: start; font-family: var(--font-ko); font-size: var(--accordion-title-size); font-weight: 500; line-height: var(--lh-body); word-break: keep-all; overflow-wrap: anywhere; }
+.accordion__trigger:hover { background: var(--color-fill-soft); }
+.accordion__trigger:focus-visible { outline: var(--selected-border-width) solid var(--color-focus); outline-offset: calc(-1 * var(--selected-border-width)); border-radius: var(--radius-lg); }
+.accordion__trigger:active { background: var(--color-surface-2); }
+.accordion__trigger:disabled { opacity: var(--narrative-dim-opacity); cursor: default; }
+.accordion__icon { position: relative; display: block; flex: 0 0 var(--accordion-icon); height: var(--accordion-icon); border-radius: var(--radius-pill); background: var(--color-fill-soft); }
+.accordion__icon::before, .accordion__icon::after { position: absolute; inset: 50% auto auto 50%; width: var(--accordion-mark); height: var(--accordion-stroke); background: currentColor; content: ""; transform: translate(-50%,-50%); }
+.accordion__icon::after { transform: translate(-50%,-50%) rotate(90deg); transition: transform var(--duration-base) var(--ease-standard); }
+.accordion__trigger[aria-expanded="true"] .accordion__icon::after { transform: translate(-50%,-50%) rotate(0deg); }
+.accordion__panel { display: grid; grid-template-rows: 1fr; opacity: 1; transition: grid-template-rows var(--duration-slow) var(--ease-standard), opacity var(--duration-slow) var(--ease-standard); }
+.accordion__item[data-open="false"] .accordion__panel { grid-template-rows: 0fr; opacity: 0; }
+.accordion__body { min-height: 0; overflow: hidden; }
+.accordion__description { padding: 0 var(--accordion-padding) var(--accordion-padding); margin: 0; color: var(--color-text-muted); font-family: var(--font-ko); font-size: var(--accordion-body-size); line-height: var(--accordion-body-leading); word-break: keep-all; overflow-wrap: anywhere; }
+@media (max-width: 1199px) {
+  .craft-intro { flex-basis: auto; width: 100%; }
+  .craft-media { display: none; }
+  .accordion { flex-basis: auto; width: 100%; }
+}
+@media (max-width: 806px) {
+  .craft-title__line { display: inline; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .accordion__panel, .accordion__icon::after { transition: none; }
+}

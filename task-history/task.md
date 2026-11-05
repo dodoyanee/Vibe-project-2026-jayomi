@@ -137,3 +137,55 @@
 - 배경은 #000, 두 번째 섹션 회색은 #888로 적용하고 행간을 조정했다. 모션 수치/행간은 사용자 요청에 맞춘 이번 구현의 조정값이며 원본 사이트 실측값이 아니다. GSAP가 동적 인라인 transform/opacity를 쓰는 것은 요청된 라이브러리 동작에 필요한 예외로 코드에 설명했다.
 - `document/002-scroll-motion.md`에 HTML/CSS/JavaScript 코드 발췌와 설정값, 공식 문서 링크를 정리했다.
 - 검증: JS 문법과 Node 실행 검증에서 단일 GSAP ticker, Lenis 시간 단위, 세 가지 스크롤 모션, 헤더 방향/섹션 진입, 메뉴 잠금/해제, 앵커·포커스·이력, 반응형 정리, 모션 감소, 라이브러리 실패/지연 로딩, 단일 main/h1, 첫 화면 타일 8개와 로컬 경로를 확인했다. CDN 5개 응답과 무결성 해시를 확인했다. 실제 브라우저 모션·뷰포트 검수는 미실시다.
+
+## 2026-11-05 — Section 1 스크롤 축소·상향 이동·페이드 전환
+
+- 요청: 기존 .outer-box.outer-box--hero 전체에 sticky 기반 scale 1→0.7, translateY, opacity 1→0을 동시 적용하고, Section 2 진입과 역방향 스크롤을 연결했다. 원본 https://draftx.co.kr/ 의 전환 화면은 참고 자료로만 사용했다.
+- index.html: 기존 히어로 바깥에 hero-scroll-track을 추가하고 #home을 변형되지 않는 트랙으로 이동했다. 히어로 내부의 텍스트·이미지·영상과 Section 2 콘텐츠는 보존했다.
+- css/tokens.css, css/layout.css: 100svh(100vh 폴백) 히어로와 한 화면 길이의 고정 구간을 정의했다. Section 2를 고정 구간과 겹쳐 배치해 기존 섹션 시작 위치와 전체 페이지 높이를 유지했다. 겹침 중에는 투명 배경으로 히어로가 잘리지 않게 했다. 이 트랙·겹침 배치는 이번 sticky 전환 요청에 필요한 박스/마진 규약의 예외다.
+- css/base.css: overflow-x: clip 지원 환경에서 body의 가로 클리핑이 sticky의 스크롤 기준을 바꾸지 않도록 했다.
+- js/modules/hero-scroll.js 및 js/main.js: 네이티브 scroll 이벤트를 passive로 수신하고 requestAnimationFrame에서 한 번씩 갱신한다. 변형되지 않는 트랙의 위치와 실제 높이로 진행도를 계산해 공통 smoothstep 이징을 적용하며, CSS 변수로 hero 전체의 transform과 opacity를 변경한다. 스크롤을 멈추면 추가 보간 없이 해당 위치에 머물고, 반대로 스크롤하면 같은 값으로 복원된다. 리사이즈·폰트 로딩·페이지 복원 시 측정값을 갱신한다.
+- js/config.js: heroScale 0.7은 사용자 지정값이다. heroTravelDesktop 0.35 / heroTravelMobile 0.25는 히어로 높이 대비 위쪽 이동 비율이며 이번 구현의 조정값이다. 원본 사이트의 코드 실측값으로 주장하지 않는다.
+- 기존 Lenis/GSAP 모션과 함께 작동하며, 외부 라이브러리가 로드되지 않아도 새 히어로 전환은 독립적으로 동작한다. 새 라이브러리는 추가하지 않았다. prefers-reduced-motion에서는 고정·축소·페이드를 해제하고 기존 일반 문서 흐름으로 두 섹션을 표시한다. JavaScript가 꺼져도 모든 콘텐츠가 보인다.
+- 브라우저 검증: 1280×720 및 390×844에서 시작·중간·끝과 역방향을 확인했다. 중간 scale 0.85 / opacity 0.5, 끝 scale 0.7 / opacity 0. PC 이동은 높이의 35%, 모바일은 25%다. 360 / 390 / 768 / 1024 / 1440px에서 가로 넘침 없이 hero sticky 및 Section 2 시작 위치가 유지된다. 모바일 메뉴 열기와 HOME 선택 후 scrollY 0 / scale 1 복귀를 확인했다. 콘솔 오류·경고는 없었다.
+- 별도 검증: JavaScript 문법 검사 및 실행 검사에서 rAF 중복 방지, 역방향의 동일 진행도, 리사이즈, 모션 감소 전환, 페이지 복원, 상하단 overscroll 제한을 확인했다. 외부 GSAP/Lenis를 제외한 로컬 검수 페이지에서도 native 엔진의 scale 0.85 / opacity 0.5 / sticky를 확인했다. 변경 전후 히어로 내부/Section 2 콘텐츠가 같음을 비교했다. 이번 범위에서 Lighthouse 점수와 실제 iOS/Android 기기는 측정하지 않았다.
+
+## 2026-11-05 — Section 2 내부 영상 스크롤 패럴랙스
+
+- 요청에 따라 .selected-screen에 overflow: hidden을 적용했다. 기존 .selected-media 카드 크기·위치와 재생 버튼은 유지하고 내부 영상에만 높이 120%, top -10%를 적용해 확대 여유를 만들었다.
+- index.html에 selected-screen / selected-parallax JS 훅을 추가했다. css/tokens.css의 --selected-parallax-height / --selected-parallax-top, css/main.css의 영상 클리핑·will-change 설정, js/config.js의 mediaParallaxDesktop/Tablet/Mobile/Edge, js/modules/scroll-motion.js의 ScrollTrigger를 연결했다.
+- 기존 Lenis/GSAP ticker를 재사용한다. 새 ScrollTrigger는 Section 2 진입부터 페이지에서 스크롤 가능한 끝까지 clamp로 범위를 제한하고 scrub 0.65로 영상의 Y 이동을 연결한다. 이동 최대치는 실제 확대 여유에서 1px를 뺀 뒤 PC 0.85 / 태블릿 0.7 / 모바일 0.5를 곱해 계산한다. 이 강도는 이번 요청에 맞춘 조정값이다.
+- Section 2와 카드의 ResizeObserver, invalidateOnRefresh로 크기 변경 시 이동량을 재계산한다. 기존 카드 진입·제목·단어 리빌과 Section 1 전환은 보존했다. 모션 감소에서는 CSS 확대와 JS 패럴랙스를 해제하며 GSAP 컨텍스트 정리로 원래 스타일을 복원한다. 라이브러리가 없으면 확대된 정적 영상으로 콘텐츠와 제어를 유지한다.
+- 브라우저 검증: 1280×720에서 영상 Y 이동 +36.125px→-36.125px, 역방향 복원을 확인했다. 390×844에서는 +6.5px→0→-6.5px로 작은 이동 폭을 확인했다. 양 끝과 360/390/768/1024/1440px에서 카드의 상하 가장자리를 영상이 모두 덮고 가로 넘침이 없었다. 영상 일시정지 버튼을 확인했고 콘솔 오류·경고는 없었다.
+- 별도 실행 검사: 반응형 이동 계산, 리사이즈 시 재계산, 확대 여유가 없을 때 이동 0, 모션 감소 분기, ticker/Lenis 정리, HTML 콘텐츠 및 hero-scroll.js 보존을 확인했다. JS 문법과 CRLF를 고려한 변경 공백 검사를 통과했다. 실제 모바일 기기와 Lighthouse 점수는 측정하지 않았다.
+- 원본 이미지·영상은 수정하지 않았다. 다운로드용 코드 ZIP에는 현재 index.html, css, js와 적용방법.txt를 포함하며 기존 images 폴더를 재사용한다.
+
+## 2026-11-05 — Section 4 AUR. A 쇼케이스
+
+- 포트폴리오 다음에 #showcase를 추가했다. 실제 건축 이미지와 curr-task/004의 녹화 영상을 images/showcase에 복사해 사용하며 영상 안 UI는 HTML로 복제하지 않는다.
+- 데스크탑 기본 → max-width 1199px 태블릿 → max-width 806px 모바일 순서를 적용했다. 모바일은 마지막 캡션을 숨기고 기존 고정 헤더와 짧은 화면 높이를 고려해 미디어 높이를 제한한다. 세부 여백·크롭은 첨부 캡처 기준의 조정값이다.
+- 재생·정지, 모션 감소, 화면 밖/숨긴 탭 정지, 수동 정지 유지와 미디어 오류 안내를 추가했다. 새 라이브러리는 추가하지 않았다.
+- 360/390/768/806/807/1024/1199/1200/1440/1920px에서 가로 넘침과 전환 조건을 확인했다. 실제 영상 재생, 콘솔 오류·경고 부재, 영상 수명주기 17개 실행 검사와 JS 문법 검사를 통과했다.
+- 기존 Section 1~3과 관련 파일 보존, 자산 경로 및 ZIP 무결성을 확인했다. 실제 모바일 기기와 Lighthouse는 미측정이다.
+- 상세 변경 및 적용 방법: document/004-showcase.md, section-4-guide.txt.
+
+## 2026-11-05 — Section 7 / 8 / 9 + Footer
+
+- 수상 표, Investment 3단계 카드, 이미지 아카이브 마퀴와 단일 Footer를 기존 Section 6 다음에 추가했다. 사용자 지정 max-width 1199 / 806px과 정적 Signature 강조를 적용했다.
+- 원본의 CSS·PDF 링크·반응형 수상 데이터를 확인했다. 모바일은 한국은행, 데스크톱·태블릿은 아모레퍼시픽을 포함하고 분류는 Awards / Brands로 표시한다.
+- curr-task/009의 이미지 8장을 images/archive로 복사했다. 이 폴더에는 영상이 없었다. 로컬 이미지만 사용하며 무한 반복용 복제 세트는 aria-hidden + inert 처리했다.
+- 마퀴 일시정지 버튼, 포커스 중 정지, 화면 밖·숨긴 탭 정지, 모션 감소에서 정지 및 수동 가로 스크롤을 제공한다. TOP은 기존 Lenis / native 앵커 처리를 재사용하며 이메일과 PDF 링크도 실제 주소에 연결했다.
+- 푸터의 Anta 워드마크는 vw 기반이며 원본보다 낮은 대비의 회색 대신 접근성 우선 규칙에 따라 #a6a6a6을 적용했다. 중괄호만 연두색이다. 기존 TALK 버튼의 모바일 하단 위치를 화면 가장자리에 맞췄다.
+- 320~1920px 16개 폭에서 가로 넘침, 올바른 수상 4행, 카드 전환, 워드마크 폭을 확인했다. 1440 / 600 / 390px 화면을 직접 검수했다. 마퀴 이동·정지·포커스·모션 감소·세트 폭·이미지 로딩, TOP 복귀, JS 비활성 콘텐츠, 단일 h1/main/footer, 로컬 파일 요청 및 페이지 JS 오류 부재를 확인했고 문법 검사를 통과했다.
+- 기존 Section 1~6 본문과 관련 모듈은 보존했다. 실제 모바일 기기, Safari/Firefox와 Lighthouse는 미측정이다. 간격·40초 이동 시간·반응형 이미지 배율은 이번 구현의 조정값이다.
+- 변경·적용·검증 상세: document/009-closing-sections.md. ZIP은 수정·추가 파일만 포함하는 덮어쓰기 패키지다.
+
+
+## 2026-11-05 — NOTICE 게시판
+
+- 승인된 두 번째 Anta 디자인과 프롬프트를 기준으로 목록·상세·작성·수정 4개 정적 페이지를 추가했습니다.
+- 헤더·푸터와 모바일 메뉴를 재사용하고 HOME의 NOTICE 메뉴를 연결했습니다. 메뉴 코드는 site-navigation.js로 분리하며 다른 페이지 링크를 정상 이동하도록 보완했습니다.
+- 검색·분류·페이징 상태를 URL로 유지하고, 제목/내용 검색·7개씩 표시·이전/다음 글·필수 검증·안전한 본문 서식·첨부파일 저장 및 다운로드·수정 저장을 구현했습니다.
+- 새 데이터는 localStorage, 첨부 Blob은 IndexedDB에 저장합니다. 총 첨부 20MB, 제목 100자, 본문 20,000자 제한입니다. 실서버/인증은 연결하지 않은 브라우저 로컬 데모입니다.
+- 반응형은 810/1200px 전환이며 Anta/흰색 반전 pill/캡션·간격은 이번 승인 시안 값입니다. 작은 버튼은 접근성을 위해 44px 터치 영역을 사용했습니다. 기존 공통 토큰과 홈 섹션은 보존했습니다.
+- 검증 결과와 구현 상세: document/010-notice-board.md.

@@ -42,6 +42,12 @@
   --space-md: 16px;
   --space-lg: 24px;
   --hero-wordmark-scale: 1.13;
+  --hero-viewport: 100vh;
+  --hero-viewport: 100svh;
+  --hero-scroll-distance: var(--hero-viewport);
+  --hero-transform-origin: center top;
+  --z-hero: 0;
+  --z-selected: 1;
 
   --inner-max: 1440px;
   --gutter: 20px;
@@ -88,6 +94,8 @@
   --selected-media-right: 116px;
   --selected-media-width: 326px;
   --selected-media-ratio: 3 / 4;
+  --selected-parallax-height: 120%;
+  --selected-parallax-top: -10%;
   --selected-control-size: 44px;
   --selected-control-offset: 8px;
   --selected-border-width: 2px;
@@ -99,10 +107,76 @@
   --duration-header: 280ms;
   --ease-header: cubic-bezier(0.2, 0, 0, 1);
   --chat-lettering-width: 1.15px;
+
+  /* Section 3 follows the current brief rather than the earlier card measurements. */
+  --work-gutter: 40px;
+  --work-gap-x: 40px;
+  --work-gap-y: 65px;
+  --work-padding-top: 64px;
+  --work-padding-bottom: 112px;
+  --work-card-ratio: 1.3;
+  --work-card-radius: 12px;
+  --work-line-width: 1px;
+  --work-line-color: #262626;
+  --work-focus-width: 2px;
+  --work-focus-offset: 6px;
+  --work-dra-position: center 60%;
+  --work-velo-position: center 60%;
+
+  --cursor-size: 16px;
+  --cursor-view-width: 80px;
+  --cursor-view-height: 44px;
+  --cursor-view-bg: #111111;
+  --cursor-label-size: 0.9375rem;
+  --cursor-label-weight: 600;
+  --cursor-label-tracking: 0.02em;
+  --cursor-duration: 200ms;
+  --cursor-ease: cubic-bezier(0.2, 0, 0, 1);
+  --z-cursor: 1000;
+
+  /* Section 4: capture-based spacing; the reference keeps its video at 930 × 610. */
+  --showcase-padding-top: 72px;
+  --showcase-padding-bottom: 112px;
+  --showcase-gutter: 20px;
+  --showcase-caption-gap: 8px;
+  --showcase-caption-padding: 16px;
+  --showcase-caption-size: 0.8125rem;
+  --showcase-caption-leading: 16px;
+  --showcase-caption-weight: 600;
+  --showcase-caption-tracking: 0em;
+  --showcase-title-color: #c9c9c9;
+  --showcase-line-color: #1c1c1c;
+  --showcase-line-width: 1px;
+  --showcase-media-gap: 80px;
+  --showcase-media-height: 780px;
+  --showcase-media-radius: 10px;
+  --showcase-background: url("../../images/showcase/aur-a-architecture.png");
+  --showcase-background-size: auto 137%;
+  --showcase-video-width: 930px;
+  --showcase-video-height: 610px;
+  --showcase-video-top: 98px;
+  --showcase-video-radius: 8px;
+  --showcase-control-offset: 16px;
+  --showcase-control-background: rgba(0, 0, 0, 0.75);
+  --showcase-control-hover: #222222;
+  --showcase-control-border: #a6a6a6;
+  --showcase-control-focus: 2px;
+  --showcase-control-active: 0.96;
 }
 
 @media (max-width: 1199px) {
   :root {
+    --showcase-padding-top: 90px;
+    --showcase-padding-bottom: 96px;
+    --showcase-media-gap: 64px;
+    --showcase-media-height: 700px;
+    --showcase-media-radius: 20px;
+    --showcase-video-top: -24px;
+    --work-gutter: 28px;
+    --work-gap-x: 24px;
+    --work-gap-y: 48px;
+    --work-padding-top: 48px;
+    --work-padding-bottom: 96px;
     --selected-caption-top: 40svh;
     --selected-content-inset: 20px;
     --selected-title-size: clamp(2.25rem, 4.7vw, 3.5rem);
@@ -118,6 +192,21 @@
 
 @media (max-width: 806px) {
   :root {
+    --showcase-padding-top: 40px;
+    --showcase-padding-bottom: 64px;
+    --showcase-caption-padding: 14px;
+    --showcase-caption-size: clamp(0.625rem, 1.62vw, 0.8125rem);
+    --showcase-media-gap: 118px;
+    /* Reserve room for the existing fixed header when the viewport is short. */
+    --showcase-media-height: min(
+      clamp(260px, 45.9vw, 370px),
+      max(200px, calc(100svh - var(--header-h) - var(--space-md) - var(--showcase-caption-leading) - var(--showcase-caption-padding) - var(--showcase-line-width) - var(--showcase-media-gap) - var(--showcase-padding-bottom)))
+    );
+    --showcase-video-top: 0px;
+    --work-gutter: 18px;
+    --work-gap-y: 40px;
+    --work-padding-top: 32px;
+    --work-padding-bottom: 112px;
     --selected-caption-top: 27.3svh;
     --selected-content-inset: 2px;
     --selected-title-size: clamp(1.5rem, 4.5vw, 2.25rem);
@@ -149,5 +238,397 @@
     --selected-caption-top: 22svh;
     --selected-media-top: calc(var(--header-h) + var(--space-lg));
     --selected-caption-size: 0.625rem;
+  }
+}
+
+/* Sections 5–6: reference CSS and supplied captures; responsive sizes are capture-based.
+   User brief overrides PART 3's min-width / single-open defaults. */
+:root {
+  --color-accent: #8cff2e;
+  --color-border-soft: rgba(255,255,255,.08);
+  --color-fill-soft: rgba(255,255,255,.08);
+  --font-brace: "Manrope", "DM Sans", sans-serif;
+  --radius-lg: 24px;
+  --craft-max: 1440px;
+  --craft-gutter: 100px;
+  --craft-top: 200px;
+  --craft-bottom: 64px;
+  --craft-gap: 58px;
+  --craft-intro-width: 517px;
+  --craft-intro-top: 34px;
+  --craft-title-size: clamp(3.5rem, 6.11vw, 5.5rem);
+  --craft-title-leading: .9;
+  --craft-title-tracking: -.03em;
+  --craft-label-gap: 16px;
+  --craft-subtitle-gap: 36px;
+  --craft-media-gap: 118px;
+  --craft-media-width: 240px;
+  --craft-media-inset: 78px;
+  --craft-media-ratio: 240 / 253;
+  --accordion-gap: 8px;
+  --accordion-height: 76px;
+  --accordion-padding: 24px;
+  --accordion-title-size: 1rem;
+  --accordion-body-size: 1rem;
+  --accordion-body-leading: 1.5;
+  --accordion-icon: 28px;
+  --accordion-stroke: 1px;
+  --accordion-mark: 14px;
+  --duration-slow: 320ms;
+  --ease-standard: cubic-bezier(.2,0,0,1);
+  --narrative-top: 100px;
+  --narrative-bottom: 96px;
+  --narrative-content-top: 180px;
+  --narrative-title-size: clamp(3rem,5.49vw,4.9375rem);
+  --narrative-title-width: 1050px;
+  --narrative-title-inset: 180px;
+  --narrative-title-tracking: -.063em;
+  --narrative-copy-width: 480px;
+  --narrative-copy-inset: 660px;
+  --narrative-copy-gap: 96px;
+  --narrative-link-gap: 40px;
+  --narrative-link-size: 1.4375rem;
+  --narrative-link-padding: 18px;
+  --narrative-media-top: 116px;
+  --narrative-media-right: 190px;
+  --narrative-media-width: 460px;
+  --narrative-media-ratio: 460 / 505;
+  --narrative-dim-opacity: .66;
+  --narrative-blend: rgba(0,0,0,.2);
+}
+@media (max-width: 1199px) {
+  :root {
+    --craft-gutter: 48px;
+    --craft-top: 80px;
+    --craft-bottom: 64px;
+    --craft-gap: 56px;
+    --craft-intro-top: 0px;
+    --craft-title-size: 3.5rem;
+    --craft-subtitle-gap: 28px;
+    --accordion-height: 64px;
+    --accordion-padding: 20px;
+    --accordion-title-size: .875rem;
+    --accordion-body-size: .875rem;
+    --accordion-icon: 24px;
+    --narrative-top: 80px;
+    --narrative-content-top: 120px;
+    --narrative-title-size: clamp(2.25rem,4.7vw,3.5rem);
+    --narrative-title-width: 100%;
+    --narrative-title-inset: 48px;
+    --narrative-copy-width: 42%;
+    --narrative-copy-inset: 48%;
+    --narrative-copy-gap: 64px;
+    --narrative-media-top: 220px;
+    --narrative-media-right: 0px;
+    --narrative-media-width: 35%;
+    --narrative-media-ratio: 270 / 330;
+  }
+}
+@media (max-width: 806px) {
+  :root {
+    --craft-gutter: 22px;
+    --craft-top: 56px;
+    --craft-gap: 64px;
+    --craft-title-size: clamp(2.25rem,7vw,3.5rem);
+    --craft-subtitle-gap: 32px;
+    --accordion-height: 76px;
+    --accordion-padding: 24px;
+    --accordion-title-size: .875rem;
+    --accordion-body-size: .875rem;
+    --accordion-icon: 28px;
+    --narrative-top: 40px;
+    --narrative-content-top: 48px;
+    --narrative-title-size: clamp(1.5rem,4.6vw,2.25rem);
+    --narrative-title-inset: 0px;
+    --narrative-copy-width: 100%;
+    --narrative-copy-inset: 0px;
+    --narrative-copy-gap: 72px;
+    --narrative-link-gap: 32px;
+    --narrative-link-size: 1rem;
+    --narrative-media-width: 38%;
+    --narrative-media-ratio: 195 / 200;
+    --narrative-media-top: 200px;
+  }
+}
+
+/* Sections 7–9: source CSS values; responsive spacing follows the supplied captures.
+   The brief explicitly sets desktop-first breakpoints and a static Signature card. */
+:root {
+  --closing-line: 1px;
+  --closing-focus: 2px;
+  --closing-focus-offset: 4px;
+  --closing-caption-height: 16px;
+  --closing-caption-padding: 16px;
+  --closing-caption-size: .8125rem;
+  --closing-caption-weight: 500;
+  --closing-heading-weight: 500;
+  --closing-pill-weight: 700;
+  --closing-muted: #a6a6a6;
+  --closing-card-border: rgba(166, 166, 166, .3);
+  --closing-control-bg: rgba(0, 0, 0, .8);
+  --closing-disabled-opacity: .5;
+  --closing-active-opacity: .7;
+  --awards-top: 72px;
+  --awards-heading-padding: 80px;
+  --awards-heading-gap: 10px;
+  --awards-title-size: 10.375rem;
+  --awards-title-weight: 600;
+  --awards-title-leading: 1.1;
+  --awards-count-size: 2.75rem;
+  --awards-row-padding: 34px;
+  --awards-row-gap: 16px;
+  --awards-category-size: 1.0625rem;
+  --awards-body-size: 1rem;
+  --awards-category-width: 19%;
+  --awards-client-width: 27%;
+  --awards-description-width: 46%;
+  --awards-year-width: 8%;
+  --plans-top: 160px;
+  --plans-bottom: 120px;
+  --plans-gutter: 120px;
+  --plans-heading-size: 2.5rem;
+  --plans-heading-leading: 1.1;
+  --plans-content-gap: 50px;
+  --plans-card-gap: 20px;
+  --plan-padding: 20px;
+  --plan-padding-bottom: 57px;
+  --plan-min-height: 316.64px;
+  --plan-icon-size: 40px;
+  --plan-icon-drawing: 24px;
+  --plan-icon-stroke: 1.5px;
+  --plan-title-gap: 20px;
+  --plan-title-size: 1.375rem;
+  --plan-title-leading: 1.1;
+  --plan-title-tracking: -.04em;
+  --plan-features-gap: 42px;
+  --plan-feature-gap: 8px;
+  --plan-feature-size: .875rem;
+  --plan-feature-leading: 1.6;
+  --plan-check-size: 20px;
+  --plan-check-stroke: 1.2px;
+  --plan-badge-size: .875rem;
+  --plan-badge-leading: 1.2;
+  --plan-badge-padding-y: 8px;
+  --plan-badge-padding-x: 12px;
+  --closing-pill-size: 1.4375rem;
+  --closing-pill-leading: 1;
+  --closing-pill-padding-y: 8px;
+  --closing-pill-padding-x: 16px;
+  --closing-pill-border: 2px;
+  --archive-top: 72px;
+  --archive-max: 1440px;
+  --archive-gutter: 20px;
+  --archive-gallery-top: 48px;
+  --archive-gallery-bottom: 80px;
+  --archive-card-scale: 1.06;
+  --archive-card-gap: 10px;
+  --archive-model-width: 165px;
+  --archive-model-height: 245px;
+  --archive-skincare-width: 161.69px;
+  --archive-skincare-height: 115.5px;
+  --archive-velo-width: 150.84px;
+  --archive-velo-height: 224px;
+  --archive-portrait-width: 154px;
+  --archive-portrait-height: 124px;
+  --archive-stroller-width: 170px;
+  --archive-stroller-height: 171.5px;
+  --archive-eyewear-width: 142.94px;
+  --archive-eyewear-height: 209px;
+  --archive-building-width: 154px;
+  --archive-building-height: 110px;
+  --archive-otium-width: 150px;
+  --archive-otium-height: 193px;
+  --archive-duration: 40s;
+  --archive-loop-end: -50%;
+  --archive-toggle-size: 44px;
+  --archive-toggle-inset: 8px;
+  --archive-toggle-drawing: 20px;
+  --archive-toggle-stroke: 2px;
+  --archive-closing-size: 1.0625rem;
+  --archive-closing-leading: 1.2;
+  --archive-copy-gap: 16px;
+  --archive-quote-size: 1rem;
+  --archive-quote-leading: 1.4;
+  --archive-top-button-gap: 14px;
+  --archive-bottom: 60px;
+  --footer-gutter: 20px;
+  --footer-top: 9px;
+  --footer-bottom: 16px;
+  --footer-contact-gap: 20px;
+  --footer-description-size: .875rem;
+  --footer-description-leading: 1.2;
+  --footer-email-size: 1rem;
+  --footer-brace-size: .9375rem;
+  --footer-brace-weight: 600;
+  --footer-email-gap: 4px;
+  --footer-brand-top: 120px;
+  --footer-wordmark-size: min(calc((100vw - 2 * var(--footer-gutter)) * .24164), 338.3px);
+  --footer-wordmark-leading: .9;
+  --footer-wordmark-tracking: 0em;
+  --footer-legal-gap: 16px;
+  --footer-copyright-size: .875rem;
+}
+
+@media (max-width: 1199px) {
+  :root {
+    --awards-top: 96px;
+    --awards-title-size: 8.3125rem;
+    --awards-count-size: 2.1875rem;
+    --awards-row-padding: 24px;
+    --awards-row-gap: 10px;
+    --plans-top: 96px;
+    --plans-bottom: 96px;
+    --plans-gutter: 40px;
+    --plans-heading-size: 2.125rem;
+    --plans-content-gap: 48px;
+    --plans-card-gap: 20px;
+    --archive-gutter: 0px;
+    --archive-card-scale: .9;
+    --archive-gallery-bottom: 72px;
+    --footer-brand-top: 80px;
+  }
+}
+
+@media (max-width: 806px) {
+  :root {
+    --closing-caption-size: clamp(.5625rem, 1.9vw, .8125rem);
+    --closing-caption-padding: 16px;
+    --awards-top: 50px;
+    --awards-heading-padding: 57px;
+    --awards-heading-gap: 0px;
+    --awards-title-size: clamp(3.5rem, 13.35vw, 5.625rem);
+    --awards-count-size: clamp(1.25rem, 4.15vw, 1.75rem);
+    --awards-category-size: 1rem;
+    --awards-body-size: .875rem;
+    --awards-row-padding: 24px;
+    --awards-row-gap: 16px;
+    --plans-top: 80px;
+    --plans-bottom: 80px;
+    --plans-gutter: 20px;
+    --plans-heading-size: clamp(1.375rem, 5.1vw, 1.875rem);
+    --plans-content-gap: 40px;
+    --plans-card-gap: 20px;
+    --plan-padding: 20px;
+    --plan-padding-bottom: 48px;
+    --plan-title-size: clamp(1.125rem, 3.75vw, 1.375rem);
+    --plan-feature-size: .875rem;
+    --plan-min-height: 300px;
+    --closing-pill-size: 1rem;
+    --closing-pill-padding-y: 6px;
+    --closing-pill-padding-x: 14px;
+    --archive-top: 50px;
+    --archive-gallery-top: 60px;
+    --archive-card-scale: .8;
+    --archive-card-gap: 8px;
+    --archive-gallery-bottom: 60px;
+    --archive-closing-size: clamp(.875rem, 2.85vw, 1.0625rem);
+    --archive-quote-size: clamp(.75rem, 3.59vw, .875rem);
+    --archive-copy-gap: 16px;
+    --archive-bottom: 60px;
+    --footer-gutter: 16px;
+    --footer-description-size: .75rem;
+    --footer-email-size: .875rem;
+    --footer-contact-gap: 8px;
+    --footer-brand-top: 64px;
+    --footer-copyright-size: .75rem;
+    --footer-legal-gap: 48px;
+  }
+}
+
+/* NOTICE: approved Anta PNGs and 810/1200px transitions, scoped to this page family. */
+.notice-site {
+  --notice-white: #f5f5f3;
+  --notice-muted: #858585;
+  --notice-border: #282828;
+  --notice-field-bg: #090909;
+  --notice-field-border: #666666;
+  --notice-line: 1px;
+  --notice-focus: 2px;
+  --notice-focus-offset: 4px;
+  --notice-max: 1536px;
+  --notice-gutter: 20px;
+  --notice-kicker-top: 48px;
+  --notice-hero-top: 56px;
+  --notice-hero-bottom: 55px;
+  --notice-title-size: clamp(56px, 15vw, 120px);
+  --notice-title-leading: .92;
+  --notice-title-tracking: -.05em;
+  --notice-count-size: 18px;
+  --notice-count-top: 3px;
+  --notice-caption-size: 8px;
+  --notice-small-size: 10px;
+  --notice-ui-size: 12px;
+  --notice-body-size: 14px;
+  --notice-input-size: 16px;
+  --notice-subheading-size: 24px;
+  --notice-type-leading: 1.5;
+  --notice-body-leading: 2.1;
+  --notice-subtitle-gap: 28px;
+  --notice-subject-size: 13px;
+  --notice-subject-tracking: -.03em;
+  --notice-row-height: 91px;
+  --notice-row-desktop: 86px;
+  --notice-table-head: 48px;
+  --notice-number-width: 53px;
+  --notice-category-width: 12%;
+  --notice-date-width: 140px;
+  --notice-action-width: 48px;
+  --notice-button-height: 44px;
+  --notice-button-padding: 20px;
+  --notice-icon-size: 18px;
+  --notice-icon-stroke: 1.3px;
+  --notice-search-width: 340px;
+  --notice-search-select: 84px;
+  --notice-badge-padding: 4px;
+  --notice-count-width: 72px;
+  --notice-field-label: 150px;
+  --notice-select-width: 180px;
+  --notice-author-width: 205px;
+  --notice-editor-height: 320px;
+  --notice-body-max: 800px;
+  --notice-aside-width: 27%;
+  --notice-space-1: 4px;
+  --notice-space-2: 8px;
+  --notice-space-3: 12px;
+  --notice-space-4: 16px;
+  --notice-space-5: 20px;
+  --notice-space-6: 24px;
+  --notice-space-7: 28px;
+  --notice-space-8: 32px;
+  --notice-space-10: 40px;
+  --notice-space-12: 48px;
+  --notice-space-16: 64px;
+  --notice-space-20: 80px;
+  --notice-end-top: 66px;
+  --notice-button-duration: 180ms;
+  --notice-active-opacity: .75;
+  --notice-disabled-opacity: .4;
+  --notice-dialog-width: 560px;
+  --notice-backdrop: rgba(0, 0, 0, .85);
+  --notice-text-tracking: .04em;
+}
+
+@media (min-width: 810px) {
+  .notice-site {
+    --notice-gutter: 48px;
+    --notice-kicker-top: 87px;
+    --notice-hero-top: 68px;
+    --notice-hero-bottom: 76px;
+    --notice-title-size: 134px;
+    --notice-count-size: 27px;
+    --notice-count-top: 6px;
+    --notice-caption-size: 10px;
+    --notice-subject-size: 14px;
+    --notice-subheading-size: 29px;
+    --notice-number-width: 9%;
+    --notice-end-top: 100px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .notice-site {
+    --notice-title-size: 154px;
+    --notice-subject-size: 16px;
+    --notice-subheading-size: 34px;
   }
 }

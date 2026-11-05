@@ -1,0 +1,15 @@
+export const NOTICE_CONFIG = Object.freeze({
+  storageKey: 'draftx:notice:posts',
+  databaseName: 'draftx-notice-files',
+  fileStore: 'attachments',
+  pageSize: 7,
+  titleLimit: 100,
+  contentLimit: 20000,
+  fileLimit: 20 * 1024 * 1024,
+  categories: ['공지', '소식', '채용'],
+  author: 'DRAFT.X',
+  listPage: 'notice.html',
+  viewPage: 'notice-view.html',
+  writePage: 'notice-write.html',
+  editPage: 'notice-edit.html',
+});

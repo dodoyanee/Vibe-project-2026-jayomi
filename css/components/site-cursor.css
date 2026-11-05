@@ -1,0 +1,68 @@
+.site-cursor {
+  display: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .site-cursor {
+    position: fixed;
+    z-index: var(--z-cursor);
+    top: 0;
+    left: 0;
+    display: grid;
+    width: var(--cursor-size);
+    height: var(--cursor-size);
+    place-items: center;
+    border-radius: 50%;
+    background: var(--color-text);
+    color: var(--color-text);
+    transform: translate3d(var(--cursor-x, 0px), var(--cursor-y, 0px), 0) translate(-50%, -50%);
+    visibility: hidden;
+    pointer-events: none;
+    user-select: none;
+    /* Only this tiny fixed decoration morphs; pointer movement never interpolates. */
+    transition:
+      width var(--cursor-duration) var(--cursor-ease),
+      height var(--cursor-duration) var(--cursor-ease),
+      border-radius var(--cursor-duration) var(--cursor-ease),
+      background-color var(--cursor-duration) var(--cursor-ease);
+  }
+
+  .site-cursor[data-cursor-state="default"],
+  .site-cursor[data-cursor-state="view"] {
+    visibility: visible;
+  }
+
+  .site-cursor[data-cursor-state="view"] {
+    width: var(--cursor-view-width);
+    height: var(--cursor-view-height);
+    border-radius: var(--radius-pill);
+    background: var(--cursor-view-bg);
+  }
+
+  .site-cursor__label {
+    font-family: var(--font-sans);
+    font-size: var(--cursor-label-size);
+    font-weight: var(--cursor-label-weight);
+    line-height: 1;
+    letter-spacing: var(--cursor-label-tracking);
+    opacity: 0;
+    transition: opacity var(--cursor-duration) var(--cursor-ease);
+  }
+
+  .site-cursor[data-cursor-state="view"] .site-cursor__label {
+    opacity: 1;
+  }
+
+  /* Added only after a successful hit test and a ready, visible custom cursor. */
+  html.custom-cursor-ready,
+  html.custom-cursor-ready * {
+    cursor: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-cursor,
+  .site-cursor__label {
+    transition: none;
+  }
+}

@@ -1,4 +1,7 @@
 export const SCROLL_MOTION = {
+  heroScale: 0.7,
+  heroTravelDesktop: 0.35,
+  heroTravelMobile: 0.25,
   lerp: 0.085,
   headerDuration: 0.32,
   headerDirectionThreshold: 8,
@@ -8,6 +11,10 @@ export const SCROLL_MOTION = {
   mediaTravelTablet: 0.12,
   mediaTravelMobile: 0.06,
   mediaScale: 0.96,
+  mediaParallaxDesktop: 0.85,
+  mediaParallaxTablet: 0.7,
+  mediaParallaxMobile: 0.5,
+  mediaParallaxEdge: 1,
   titleTravel: 28,
   wordTravelPercent: 24,
   wordOpacity: 0.35,

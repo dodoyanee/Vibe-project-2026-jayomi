@@ -1,0 +1,96 @@
+.outer-box--portfolio {
+  padding-block: var(--work-padding-top) var(--work-padding-bottom);
+}
+
+.portfolio-screen {
+  padding-inline: var(--work-gutter);
+}
+
+.portfolio-content {
+  gap: 0;
+}
+
+/* Grid is confined to the content list; the existing outer/inner/part structure stays intact. */
+.work-grid {
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--work-gap-y) var(--work-gap-x);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.work-card {
+  position: relative;
+  min-width: 0;
+}
+
+/* One line per row, with no extra separator nodes or changes to reading order. */
+.work-card:nth-child(2n + 3)::before {
+  position: absolute;
+  top: calc(var(--work-gap-y) / -2);
+  left: 0;
+  width: calc(200% + var(--work-gap-x));
+  height: var(--work-line-width);
+  background: var(--work-line-color);
+  pointer-events: none;
+  content: "";
+}
+
+.work-card__link {
+  display: block;
+  width: 100%;
+  aspect-ratio: var(--work-card-ratio);
+  overflow: hidden;
+  border-radius: var(--work-card-radius);
+  background: var(--color-surface);
+}
+
+.work-card__link:focus-visible {
+  outline: var(--work-focus-width) solid var(--color-focus);
+  outline-offset: var(--work-focus-offset);
+}
+
+.work-card__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.work-card__image--dra {
+  object-position: var(--work-dra-position);
+}
+
+.work-card__image--velo {
+  object-position: var(--work-velo-position);
+}
+
+.work-card__image--arche {
+  object-position: center top;
+}
+
+@media (max-width: 1199px) {
+  .work-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 806px) {
+  .work-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .work-card:nth-child(n + 2)::before {
+    position: absolute;
+    top: calc(var(--work-gap-y) / -2);
+    left: 0;
+    width: 100%;
+    height: var(--work-line-width);
+    background: var(--work-line-color);
+    pointer-events: none;
+    content: "";
+  }
+}
