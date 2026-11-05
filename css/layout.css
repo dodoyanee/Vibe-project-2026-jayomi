@@ -30,6 +30,12 @@
   border-bottom: 1px solid var(--color-border);
 }
 
+/* An open fixed menu must keep the viewport as its containing block. */
+.menu-is-open .outer-box--header {
+  transform: none;
+  transition: none;
+}
+
 .outer-box--header .inner-box {
   height: var(--header-h);
 }
@@ -69,6 +75,61 @@
   background-size: cover;
 }
 
+.outer-box--selected {
+  padding-block: 0;
+  overflow: clip;
+}
+
+.selected-screen {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100svh;
+  padding-top: max(calc(var(--header-h) + var(--space-lg)), var(--selected-caption-top));
+  padding-bottom: var(--selected-bottom-space);
+}
+
+.selected-caption {
+  position: relative;
+  z-index: 1;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-xs);
+  padding-bottom: var(--selected-caption-padding);
+}
+
+.selected-caption::after {
+  position: absolute;
+  inset: auto calc(-1 * var(--gutter)) 0;
+  height: var(--selected-caption-line);
+  background: var(--color-border);
+  content: "";
+}
+
+.selected-content {
+  position: relative;
+  z-index: 1;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
+  padding-top: var(--selected-content-gap);
+  padding-left: var(--selected-content-inset);
+  pointer-events: none;
+}
+
+/* Independent decorative media follows the overlapping placement in the supplied screens. */
+.selected-media {
+  position: absolute;
+  top: var(--selected-media-top);
+  right: var(--selected-media-right);
+  width: var(--selected-media-width);
+  aspect-ratio: var(--selected-media-ratio);
+  margin: 0;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  background: var(--color-text);
+}
+
 .outer-box--hero .inner-box {
   height: 100%;
 }
@@ -78,17 +139,6 @@
   height: 100%;
   flex-wrap: nowrap;
   gap: 0;
-}
-
-.hero-pagination {
-  position: fixed;
-  z-index: var(--z-chat);
-  top: 50%;
-  right: var(--chat-offset);
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-sm);
-  transform: translateY(-50%);
 }
 
 .floating-controls {
@@ -111,49 +161,33 @@
     z-index: 0;
     inset: 0;
     display: block;
-    isolation: isolate;
     overflow-y: auto;
     overscroll-behavior: contain;
     padding: calc(var(--header-h) + 24px) var(--gutter) 48px;
+    transform: translateY(-100%);
     visibility: hidden;
-    transition: visibility 0s linear var(--duration-menu);
-  }
-
-  /* Move the background independently so the text stays at its final height. */
-  .menu-panel::before {
-    position: fixed;
-    z-index: -1;
-    inset: 0;
-    transform: scaleY(0);
-    transform-origin: top;
     background: var(--color-bg);
-    content: "";
-    transition: transform var(--duration-menu) var(--ease-menu);
+    transition:
+      transform var(--duration-menu) var(--ease-menu),
+      visibility 0s linear var(--duration-menu);
   }
 
   .menu-panel[data-menu-state="opening"],
   .menu-panel[data-menu-state="open"] {
+    transform: translateY(0);
     visibility: visible;
     transition-delay: 0s;
-  }
-
-  .menu-panel[data-menu-state="opening"]::before,
-  .menu-panel[data-menu-state="open"]::before {
-    transform: scaleY(1);
   }
 
   .menu-panel[data-menu-state="closing"] {
+    transform: translateY(-100%);
     pointer-events: none;
     visibility: visible;
-    transition-delay: 0s;
+    transition-delay: 0s, 0s;
   }
 
   .menu-panel[data-menu-state="closed"] {
     pointer-events: none;
-    transition: none;
-  }
-
-  .menu-panel[data-menu-state="closed"]::before {
     transition: none;
   }
 
@@ -188,10 +222,6 @@
     max-width: none;
   }
 
-  .hero-pagination {
-    right: var(--gutter);
-  }
-
   .floating-controls {
     right: var(--gutter);
     bottom: calc(var(--mobile-nav-h) + 16px);
@@ -203,8 +233,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .menu-panel,
-  .menu-panel::before {
+  .menu-panel {
     transition-duration: 0.01ms;
     transition-delay: 0s;
   }

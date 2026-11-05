@@ -1,0 +1,16 @@
+export const SCROLL_MOTION = {
+  lerp: 0.085,
+  headerDuration: 0.32,
+  headerDirectionThreshold: 8,
+  headerEntryRatio: 0.35,
+  headerHiddenPercent: -110,
+  mediaTravelDesktop: 0.18,
+  mediaTravelTablet: 0.12,
+  mediaTravelMobile: 0.06,
+  mediaScale: 0.96,
+  titleTravel: 28,
+  wordTravelPercent: 24,
+  wordOpacity: 0.35,
+  wordStagger: 0.08,
+  scrub: 0.65,
+};

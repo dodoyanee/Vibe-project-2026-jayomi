@@ -8,8 +8,8 @@
       name="description"
       content="DRAFT.X — 하이엔드 전략과 심미적 안목으로 브랜드의 본질적인 변화를 만듭니다."
     >
-    <title>DRAFT.X 최졍</title>
-    <link rel="icon" type="image/png" href="./images/pngwing.com.png"/>
+    <title>DRAFT.X — Digital Design Agency</title>
+    <link rel="icon" type="image/png" href="./images/catfavicon.png"/>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Anta&amp;display=swap" rel="stylesheet">
@@ -19,11 +19,16 @@
     <link rel="stylesheet" href="css/layout.css">
     <link rel="stylesheet" href="css/utilities.css">
     <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lenis@1.3.27/dist/lenis.css" integrity="sha384-gvLq/iOMNnPchdosgVym5huSVkKipHCQaqSw2Eg0V52Mzmlf169ZOsXcNc2cNu8x" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.1.18/dist/index.global.js" integrity="sha384-y0axVOJIfo0bJOmTOnyRyUjrqjUotl7L/k6mzSwu2SSrB3r7P+b0cSFkiod+js0X" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" integrity="sha384-HOvlOYPIs/zjoIkWUGXkVmXsjr8GuZLV+Q+rcPwmJOVZVpvTSXQChiN4t9Euv9Vc" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js" integrity="sha384-P8VzCVnT9NBUkMrpcIZrJbA7EBjJvh/fJS6PmP+4nLIM284DtsImIv8D0fFjIkeh" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/lenis@1.3.27/dist/lenis.min.js" integrity="sha384-R18XzqnxvVLEF+BYfhpmDx30v7eP83fAckyfoRzK7/Uf6nGqufcmsk0eAKo7S3RU" crossorigin="anonymous"></script>
   </head>
-  <body>
+  <body class="bg-black text-white">
     <a class="skip-link" href="#main-content">본문 바로가기</a>
 
-    <header class="outer-box outer-box--header">
+    <header class="outer-box outer-box--header" data-js="site-header" data-header-state="visible">
       <div class="inner-box">
         <div class="part-box part-box--between site-header">
           <a class="site-header__brand" href="#home" aria-label="DRAFT.X 홈">DRAFT.X</a>
@@ -38,8 +43,7 @@
           <a class="site-header__award" href="#works">
             <span>2026 GDWEB DESIGN AWARDS WINNER PRIZE //</span>
             <span class="site-header__prize-mark" aria-hidden="true">
-              <span>W</span>
-              <span>WINNER<br>PRIZE</span>
+              <img src="./images/menu/gdweblogo.svg" width="442" height="684" alt="">
             </span>
           </a>
 
@@ -63,6 +67,7 @@
         inert
         data-js="menu-panel"
         data-menu-state="closed"
+        data-lenis-prevent
       >
         <div class="menu-panel__links">
           <a class="menu-panel__link" href="#home" aria-current="page" data-js="menu-link">HOME</a>
@@ -83,18 +88,18 @@
       </nav>
     </header>
 
-    <main id="main-content">
-      <section class="outer-box outer-box--hero" id="home" aria-labelledby="hero-title">
+    <main id="main-content" tabindex="-1">
+      <section class="outer-box outer-box--hero" id="home" aria-labelledby="hero-title" data-js="screen-section">
         <div class="inner-box">
           <div class="part-box hero-stage">
             <figure class="hero-tile hero-tile--one" aria-hidden="true">
               <img src="./images/used/dfaftx-dt-1.png" width="429" height="341" alt="">
             </figure>
             <figure class="hero-tile hero-tile--two" aria-hidden="true">
-              <img src="./images/used/dfaftx-dt-20.webp" width="400" height="522" alt="">
+              <img src="./images/used/dfaftx-dt-21.webp" width="600" height="449" alt="">
             </figure>
             <figure class="hero-tile hero-tile--three" aria-hidden="true">
-              <img src="./images/used/dfaftx-dt-19.png" width="1392" height="752" alt="">
+              <img src="./images/used/dfaftx-dt-20.webp" width="400" height="522" alt="">
             </figure>
             <figure class="hero-tile hero-tile--four" aria-hidden="true">
               <img src="./images/used/dfaftx-dt-6.webp" width="600" height="344" alt="">
@@ -103,7 +108,9 @@
               <img src="./images/used/dfaftx-dt-9.webp" width="600" height="341" alt="">
             </figure>
             <figure class="hero-tile hero-tile--six" aria-hidden="true">
-              <img src="./images/used/dfaftx-dt-21.webp" width="600" height="449" alt="">
+              <video autoplay muted loop playsinline preload="metadata">
+                <source src="./images/img-dt/03-video.mp4" type="video/mp4">
+              </video>
             </figure>
             <figure class="hero-tile hero-tile--seven" aria-hidden="true">
               <img src="./images/used/dfaftx-dt-19.png" width="1392" height="752" alt="">
@@ -138,14 +145,27 @@
           </div>
         </div>
       </section>
+      <section class="outer-box outer-box--selected" id="works" aria-labelledby="selected-title" data-js="screen-section" data-scroll="selected-section">
+        <div class="inner-box selected-screen">
+          <div class="part-box selected-caption">
+            <p class="selected-caption__label">© SELECTED WORKS 24/26</p>
+            <p class="selected-caption__number">(DX. MASTERPIECE — 05)</p>
+            <p class="selected-caption__label selected-caption__end">STRATEGIC AESTHETICS</p>
+          </div>
+          <div class="part-box selected-content">
+            <h2 class="selected-title" id="selected-title" data-js="selected-title"><span class="selected-title__word selected-title__light" data-js="selected-word">Masterful</span> <span class="selected-title__word selected-title__light" data-js="selected-word">aesthetics,</span> <span class="selected-title__word" data-js="selected-word">strategic</span> <span class="selected-title__word" data-js="selected-word">precision.</span></h2>
+            <p class="selected-description">숙련된 감각이 빚어낸 미학,<br>비즈니스의 격을 높이는 정교한 전략.</p>
+            <a class="selected-link" href="https://draftx.co.kr/work">SEE WORKS</a>
+          </div>
+          <figure class="selected-media" data-js="selected-media">
+            <video class="selected-media__video" autoplay muted loop playsinline preload="metadata" aria-label="디지털 브랜드 프로젝트 쇼케이스" data-js="selected-video">
+              <source src="./images/img-dt/02-middle-video.mp4" type="video/mp4">
+            </video>
+            <button class="selected-media__toggle" type="button" aria-label="영상 일시정지" aria-pressed="false" data-js="video-toggle">Ⅱ</button>
+          </figure>
+        </div>
+      </section>
     </main>
-
-    <aside class="hero-pagination" aria-label="슬라이드 1 / 4">
-      <span class="hero-pagination__track hero-pagination__track--active"></span>
-      <span class="hero-pagination__track"></span>
-      <span class="hero-pagination__track"></span>
-      <span class="hero-pagination__track"></span>
-    </aside>
 
     <nav class="mobile-navigation" aria-label="모바일 빠른 메뉴">
       <a class="mobile-navigation__item" href="#works">
@@ -186,11 +206,6 @@
     </nav>
 
     <aside class="floating-controls" aria-label="빠른 작업">
-      <a class="floating-control floating-control--top" href="#home" aria-label="맨 위로 이동">
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="m6 14 6-6 6 6"></path>
-        </svg>
-      </a>
       <a
         class="floating-control floating-control--chat"
         href="https://pf.kakao.com/_ANXIX/chat"
@@ -200,7 +215,7 @@
       >
         <svg viewBox="0 0 31 29" aria-hidden="true">
           <path d="M15.5 1C7.5 1 1 6.1 1 12.4c0 4 2.8 7.6 7.1 9.6l-1.6 5 6.1-3.3c.9.1 1.9.2 2.9.2 8 0 14.5-5.1 14.5-11.4S23.5 1 15.5 1Z" fill="currentColor"></path>
-          <text x="15.5" y="15.3" text-anchor="middle" fill="var(--color-surface-2)" font-size="7" font-weight="700">TALK</text>
+          <path class="floating-control__chat-lettering" d="M5 9h4M7 9v6m3 0 2-6 2 6m-3.3-2h2.6M16 9v6h3m2-6v6m3-6-3 3 3 3"></path>
         </svg>
       </a>
     </aside>

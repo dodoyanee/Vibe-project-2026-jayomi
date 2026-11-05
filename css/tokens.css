@@ -14,7 +14,7 @@
   --overlay-hero-top: rgba(0, 0, 0, 0.94);
   --overlay-hero-middle: rgba(0, 0, 0, 0.9);
   --overlay-navigation: rgba(0, 0, 0, 0.94);
-  --hero-background: url("../images/used/dfaftx-dt-19.png");
+  --hero-background: none;
 
   --font-sans: "DM Sans", "Pretendard Variable", Pretendard, -apple-system,
     BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic",
@@ -24,7 +24,9 @@
   --font-logo: "Anta", "DM Sans", "Arial", sans-serif;
 
   --fs-header: 0.75rem;
+  --fs-header-navigation: 0.875rem;
   --fs-logo: 1.25rem;
+  --header-prize-width: 32px;
   --fs-wordmark-hero: clamp(5rem, 19.5vw, 17.25rem);
   --fs-hero-title: clamp(1.75rem, 2.65vw, 2.25rem);
   --fs-body: 1rem;
@@ -60,16 +62,75 @@
   --z-chat: 150;
   --z-header: 200;
   --z-menu: 300;
-  /* Reference: 0.8s, zero-bounce panel spring; links enter at x: 30px. */
-  --duration-menu: 800ms;
-  --ease-menu: cubic-bezier(0.16, 1, 0.3, 1);
-  --duration-menu-link: 800ms;
-  --delay-menu-link: 100ms;
-  --offset-menu-link: 30px;
+  --duration-menu: 400ms;
+  --ease-menu: cubic-bezier(0.76, 0, 0.24, 1);
   --hero-wordmark-top: 25%;
   --hero-copy-top: 59%;
   --hero-copy-right: 4%;
   --hero-copy-width: 47%;
+
+  /* Reference-screen measurements; responsive values follow the supplied images. */
+  --color-selected-dim: #888888;
+  --color-selected-muted: #888888;
+  --selected-caption-top: 34.3svh;
+  --selected-content-gap: 100px;
+  --selected-content-inset: 80px;
+  --selected-title-size: clamp(3.5rem, 4.6vw, 5.5rem);
+  --selected-title-width: 820px;
+  --selected-title-leading: 1.02;
+  --selected-title-tracking: -0.045em;
+  --selected-description-leading: 1.55;
+  --selected-description-gap: 32px;
+  --selected-link-gap: 82px;
+  --selected-link-size: 1.4375rem;
+  --selected-link-padding: 16px;
+  --selected-media-top: 17svh;
+  --selected-media-right: 116px;
+  --selected-media-width: 326px;
+  --selected-media-ratio: 3 / 4;
+  --selected-control-size: 44px;
+  --selected-control-offset: 8px;
+  --selected-border-width: 2px;
+  --selected-caption-padding: 16px;
+  --selected-caption-line: 1px;
+  --selected-caption-size: 0.8125rem;
+  --selected-bottom-space: 64px;
+  --duration-base: 200ms;
+  --duration-header: 280ms;
+  --ease-header: cubic-bezier(0.2, 0, 0, 1);
+  --chat-lettering-width: 1.15px;
+}
+
+@media (max-width: 1199px) {
+  :root {
+    --selected-caption-top: 40svh;
+    --selected-content-inset: 20px;
+    --selected-title-size: clamp(2.25rem, 4.7vw, 3.5rem);
+    --selected-title-width: 100%;
+    --selected-title-leading: 1;
+    --selected-description-gap: 36px;
+    --selected-media-top: var(--header-h);
+    --selected-media-right: 24px;
+    --selected-media-width: 270px;
+    --selected-media-ratio: 3 / 4;
+  }
+}
+
+@media (max-width: 806px) {
+  :root {
+    --selected-caption-top: 27.3svh;
+    --selected-content-inset: 2px;
+    --selected-title-size: clamp(1.5rem, 4.5vw, 2.25rem);
+    --selected-description-gap: 36px;
+    --selected-link-gap: 46px;
+    --selected-link-size: 1rem;
+    --selected-link-padding: 12px;
+    --selected-media-top: 27.3svh;
+    --selected-media-right: 16px;
+    --selected-media-width: clamp(100px, 21.2vw, 170px);
+    --selected-media-ratio: 170 / 241;
+    --selected-bottom-space: 112px;
+  }
 }
 
 @media (max-width: 768px) {
@@ -80,5 +141,13 @@
     --overlay-hero-top: rgba(0, 0, 0, 0.985);
     --overlay-hero-middle: rgba(0, 0, 0, 0.96);
     --hero-background: url("../images/used/dfaftx-dt-1.png");
+  }
+}
+
+@media (max-width: 600px) {
+  :root {
+    --selected-caption-top: 22svh;
+    --selected-media-top: calc(var(--header-h) + var(--space-lg));
+    --selected-caption-size: 0.625rem;
   }
 }
