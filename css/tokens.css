@@ -632,3 +632,108 @@
     --notice-subheading-size: 34px;
   }
 }
+/* ACCOUNT: approved Revision 03 PNG dimensions; shared values stay in existing tokens. */
+:root {
+  --account-auth-size: .875rem;
+  --account-auth-gap: 32px;
+  --account-auth-mobile-gap: 24px;
+  --account-auth-mobile-top: 28px;
+  --account-auth-error-width: 340px;
+  --account-auth-error-size: .75rem;
+  --account-opacity-active: .7;
+  --account-focus-width: 2px;
+  --account-focus-offset: 4px;
+}
+.account-site {
+  --account-form-width: 640px;
+  --account-aside-width: 40%;
+  --account-aside-sign-width: 320px;
+  --account-layout-top: 64px;
+  --account-layout-bottom: 64px;
+  --account-heading-size: 1.5rem;
+  --account-heading-leading: 1.4;
+  --account-aside-title-size: 1.75rem;
+  --account-aside-title-leading: 1.53;
+  --account-body-size: 1rem;
+  --account-description-size: 1.0625rem;
+  --account-description-leading: 1.88;
+  --account-caption-size: .6875rem;
+  --account-helper-size: .8125rem;
+  --account-small-size: .875rem;
+  --account-white: var(--notice-white);
+  --account-muted: var(--notice-muted);
+  --account-field-border: #666666;
+  --account-input-height: 56px;
+  --account-input-icon: 20px;
+  --account-eye-icon: 18px;
+  --account-field-gap: 34px;
+  --account-label-gap: 10px;
+  --account-label-leading: 22px;
+  --account-fields-top: 32px;
+  --account-icon-gap: 18px;
+  --account-input-pad: 14px;
+  --account-eye-hit: 44px;
+  --account-checkbox-size: 16px;
+  --account-check-gap: 13px;
+  --account-options-top: 34px;
+  --account-submit-top: 56px;
+  --account-button-height: 44px;
+  --account-button-width: 136px;
+  --account-signup-width: 152px;
+  --account-button-secondary-height: 40px;
+  --account-button-secondary-login: 116px;
+  --account-button-secondary-signup: 128px;
+  --account-button-size: .9375rem;
+  --account-button-secondary-size: .8125rem;
+  --account-button-icon: 16px;
+  --account-button-padding: 16px;
+  --account-button-gap: 6px;
+  --account-switch-top: 60px;
+  --account-switch-padding: 35px;
+  --account-form-caption-top: 54px;
+  --account-form-caption-bottom: 0px;
+  --account-terms-top: 56px;
+  --account-terms-title: 1.125rem;
+  --account-terms-all-top: 28px;
+  --account-terms-border-gap: 25px;
+  --account-terms-rows-gap: 30px;
+  --account-terms-items-top: 32px;
+  --account-terms-submit-top: 59px;
+  --account-helper-top: 12px;
+  --account-submit-helper-top: 39px;
+  --account-signup-switch-top: 30px;
+  --account-signup-switch-padding: 36px;
+  --account-aside-eyebrow-gap: 32px;
+  --account-aside-description-gap: 42px;
+  --account-aside-sign-gap: 52px;
+  --account-aside-sign-padding: 28px;
+  --account-end-row-height: 78px;
+  --account-end-policy-height: 64px;
+  --account-dialog-width: 720px;
+  --account-dialog-padding: 32px;
+  --account-dialog-backdrop: rgba(0, 0, 0, .85);
+  --account-dialog-blur: 6px;
+  --account-dialog-max-height: 85svh;
+  --account-focus-width: 2px;
+  --account-focus-offset: 4px;
+  --account-status-top: 24px;
+  --account-hero-gap: 36px;
+}
+@media (min-width: 810px) {
+  .account-site {
+    --account-layout-top: 80px;
+    --account-layout-bottom: 54px;
+    --account-heading-size: 1.625rem;
+    --account-aside-title-size: 2rem;
+    --notice-title-size: clamp(96px, 6.667vw, 128px);
+    --notice-subtitle-gap: 50px;
+    --notice-ui-size: 15px;
+    --notice-hero-top: 68px;
+    --notice-hero-bottom: 72px;
+    --account-hero-gap: 0px;
+    --footer-brand-top: 120px;
+    --footer-wordmark-size: min(calc((100vw - 96px) * .24164), 338.3px);
+    --footer-legal-gap: 16px;
+    --footer-bottom: 20px;
+  }
+}

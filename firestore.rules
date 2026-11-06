@@ -21,7 +21,7 @@ service cloud.firestore {
       allow create: if signedIn()
         && request.auth.uid == uid
         && request.resource.data.keys().hasOnly([
-          'name', 'username', 'usernameKey', 'email', 'role', 'createdAt'
+          'name', 'username', 'usernameKey', 'email', 'role', 'createdAt', 'agreements'
         ])
         && request.resource.data.name is string
         && request.resource.data.name.size() > 0
@@ -38,6 +38,13 @@ service cloud.firestore {
         && request.resource.data.email != 'admin.com@company.co.kr'
         && request.resource.data.role == 'ueser'
         && request.resource.data.createdAt == request.time
+        && (!('agreements' in request.resource.data)
+          || (request.resource.data.agreements is map
+            && request.resource.data.agreements.keys().hasAll(['terms', 'privacy', 'marketing'])
+            && request.resource.data.agreements.keys().hasOnly(['terms', 'privacy', 'marketing'])
+            && request.resource.data.agreements.terms == true
+            && request.resource.data.agreements.privacy == true
+            && request.resource.data.agreements.marketing is bool))
         && getAfter(/databases/$(database)/documents/usernames/$(request.resource.data.usernameKey)).data.uid == uid;
       allow update, delete: if false;
     }

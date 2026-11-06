@@ -25,6 +25,7 @@
     <link rel="stylesheet" href="css/components/craft.css">
     <link rel="stylesheet" href="css/components/narrative.css">
     <link rel="stylesheet" href="css/components/closing-sections.css">
+    <link rel="stylesheet" href="css/components/account.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lenis@1.3.27/dist/lenis.css" integrity="sha384-gvLq/iOMNnPchdosgVym5huSVkKipHCQaqSw2Eg0V52Mzmlf169ZOsXcNc2cNu8x" crossorigin="anonymous">
     <script defer src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.1.18/dist/index.global.js" integrity="sha384-y0axVOJIfo0bJOmTOnyRyUjrqjUotl7L/k6mzSwu2SSrB3r7P+b0cSFkiod+js0X" crossorigin="anonymous"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" integrity="sha384-HOvlOYPIs/zjoIkWUGXkVmXsjr8GuZLV+Q+rcPwmJOVZVpvTSXQChiN4t9Euv9Vc" crossorigin="anonymous"></script>
@@ -46,15 +47,15 @@
             <a href="#contact">CONTACT</a>
             <a href="pages/velo.html">VELO</a>
             <a href="pages/notice.html">NOTICE</a>
-            <span class="notice-auth" data-js="auth-control"><span class="notice-auth__greeting" data-js="auth-greeting" hidden></span><a class="notice-auth__link" data-js="auth-login" href="pages/notice-auth.html">로그인</a><button class="notice-auth__link" data-js="auth-logout" type="button" hidden>로그아웃</button><span class="notice-auth__error" data-js="auth-error" role="status" hidden></span></span>
           </nav>
 
-          <a class="site-header__award" href="#works">
-            <span>2026 GDWEB DESIGN AWARDS WINNER PRIZE //</span>
-            <span class="site-header__prize-mark" aria-hidden="true">
-              <img src="./images/menu/gdweblogo.svg" width="442" height="684" alt="">
-            </span>
-          </a>
+          <div class="notice-auth site-header__account" data-js="auth-control" aria-label="회원 메뉴">
+            <span class="notice-auth__greeting" data-js="auth-greeting" hidden></span>
+            <a class="notice-auth__link" data-js="auth-login" href="pages/login.html">로그인</a>
+            <a class="notice-auth__link" data-js="auth-signup" href="pages/signup.html">회원가입</a>
+            <button class="notice-auth__link notice-auth__logout" data-js="auth-logout" type="button" hidden>로그아웃</button>
+            <span class="notice-auth__error" data-js="auth-error" role="status" aria-live="polite" hidden></span>
+          </div>
 
           <button
             class="site-header__menu-toggle"
@@ -85,18 +86,14 @@
           <a class="menu-panel__link" href="#contact" data-js="menu-link">CONTACT</a>
           <a class="menu-panel__link" href="pages/velo.html" data-js="menu-link">VELO</a>
           <a class="menu-panel__link" href="pages/notice.html" data-js="menu-link">NOTICE</a>
-          <span class="notice-auth notice-auth--mobile" data-js="auth-control"><span class="notice-auth__greeting" data-js="auth-greeting" hidden></span><a class="menu-panel__link" data-js="auth-login" href="pages/notice-auth.html">로그인</a><button class="menu-panel__link notice-auth__logout" data-js="auth-logout" type="button" hidden>로그아웃</button><span class="notice-auth__error" data-js="auth-error" role="status" hidden></span></span>
+          <div class="notice-auth notice-auth--mobile" data-js="auth-control" aria-label="회원 메뉴">
+            <span class="notice-auth__greeting" data-js="auth-greeting" hidden></span>
+            <a class="notice-auth__link" data-js="auth-login" href="pages/login.html">로그인</a>
+            <a class="notice-auth__link" data-js="auth-signup" href="pages/signup.html">회원가입</a>
+            <button class="notice-auth__link notice-auth__logout" data-js="auth-logout" type="button" hidden>로그아웃</button>
+            <span class="notice-auth__error" data-js="auth-error" role="status" aria-live="polite" hidden></span>
+          </div>
         </div>
-        <a class="menu-panel__award" href="#works" data-js="menu-link">
-          <span>2026 GDWEB DESIGN AWARDS WINNER PRIZE //</span>
-          <img
-            src="./images/menu/gdwebicon.jpg"
-            width="370"
-            height="510"
-            alt=""
-            aria-hidden="true"
-          >
-        </a>
       </nav>
     </header>
 

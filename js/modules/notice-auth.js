@@ -1,6 +1,8 @@
 import { auth, firestore } from '../firebase.js';
 import {
-  createUserWithEmailAndPassword, deleteUser, onAuthStateChanged, signInWithEmailAndPassword, signOut,
+  browserLocalPersistence, browserSessionPersistence, createUserWithEmailAndPassword,
+  deleteUser, onAuthStateChanged, sendPasswordResetEmail, setPersistence,
+  signInWithEmailAndPassword, signOut,
 } from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js';
 import {
   collection, doc, getDoc, runTransaction, serverTimestamp,
@@ -38,23 +40,32 @@ export function watchNoticeAuth(onChange) {
     } catch (error) {
       if (currentGeneration === generation) onChange({ user, profile: null, error });
     }
+  }, (error) => {
+    generation += 1;
+    onChange({ user: auth.currentUser, profile: null, error });
   });
 }
 
-export async function registerNoticeUser({ name, username, email, password }) {
+export async function registerNoticeUser({ name, username = '', email, password, agreements }) {
   const cleanName = name.trim();
   const cleanUsername = username.trim().toLowerCase();
   const cleanEmail = email.trim().toLowerCase();
   if (!cleanName || cleanName.length > 40) throw new Error('이름을 1~40자로 입력해 주세요.');
-  const normalizedUsername = cleanUsername;
-  if (!USERNAME_PATTERN.test(cleanUsername)) {
+  
+  if (cleanUsername && !USERNAME_PATTERN.test(cleanUsername)) {
     throw new Error('아이디는 영문, 숫자, 점, 밑줄, 하이픈으로 3~20자 입력해 주세요.');
   }
   if (cleanUsername === RESERVED_USERNAME || cleanEmail === RESERVED_EMAIL) {
     throw new Error('해당 관리자 계정 정보는 회원가입에 사용할 수 없습니다.');
   }
   if (password.length < 6) throw new Error('비밀번호는 6자 이상 입력해 주세요.');
+  if (agreements && (!agreements.terms || !agreements.privacy)) {
+    throw new Error('필수 약관에 동의해 주세요.');
+  }
+  await setPersistence(auth, browserSessionPersistence);
   const credential = await createUserWithEmailAndPassword(auth, cleanEmail, password);
+  // The approved email-only form has no public username field. Keep the existing schema.
+  const normalizedUsername = cleanUsername || `u_${credential.user.uid.replace(/[^a-z0-9]/gi, '').toLowerCase().slice(0, 18)}`;
   try {
     await runTransaction(firestore, async (transaction) => {
       const usernameRef = doc(collection(firestore, 'usernames'), normalizedUsername);
@@ -67,6 +78,9 @@ export async function registerNoticeUser({ name, username, email, password }) {
         email: cleanEmail,
         role: 'ueser',
         createdAt: serverTimestamp(),
+        ...(agreements ? { agreements: {
+          terms: true, privacy: true, marketing: Boolean(agreements.marketing),
+        } } : {}),
       });
       transaction.set(usernameRef, { uid: credential.user.uid });
     });
@@ -81,7 +95,8 @@ export async function registerNoticeUser({ name, username, email, password }) {
   return credential.user;
 }
 
-export async function loginNoticeUser(email, password) {
+export async function loginNoticeUser(email, password, remember = false) {
+  await setPersistence(auth, remember ? browserLocalPersistence : browserSessionPersistence);
   const credential = await signInWithEmailAndPassword(auth, email.trim(), password);
   let profile;
   try {
@@ -101,52 +116,54 @@ export function logoutNoticeUser() {
   return signOut(auth);
 }
 
-export function setupNoticeAuthControls(onStateChanged) {
+export async function resetNoticePassword(email) {
+  auth.languageCode = 'ko';
+  return sendPasswordResetEmail(auth, email.trim());
+}
+
+export function setupNoticeAuthControls(onStateChanged = () => {}) {
   const controls = [...document.querySelectorAll('[data-js="auth-control"]')];
-  const returnTo = `${location.pathname}${location.search}${location.hash}`;
+  const nodes = controls.map((control) => ({
+    greeting: control.querySelector('[data-js="auth-greeting"]'),
+    login: control.querySelector('[data-js="auth-login"]'),
+    signup: control.querySelector('[data-js="auth-signup"]'),
+    logout: control.querySelector('[data-js="auth-logout"]'),
+    status: control.querySelector('[data-js="auth-error"]'),
+  }));
   const pagePrefix = location.pathname.includes('/pages/') ? '' : 'pages/';
-  const loginUrl = `${pagePrefix}notice-auth.html?return=${encodeURIComponent(returnTo)}`;
-  controls.forEach((control) => {
-    const login = control.querySelector('[data-js="auth-login"]');
-    if (login) login.href = loginUrl;
-  });
-  const showError = (error) => {
-    const message = error?.message || '인증 상태를 확인하지 못했습니다.';
-    controls.forEach((control) => {
-      const status = control.querySelector('[data-js="auth-error"]');
-      if (status) {
-        status.hidden = false;
-        status.textContent = message;
-      }
-    });
-  };
-  controls.forEach((control) => {
-    control.querySelector('[data-js="auth-logout"]')?.addEventListener('click', async () => {
-      try {
-        await logoutNoticeUser();
-        location.assign(`${pagePrefix}notice.html`);
-      } catch (error) {
-        showError(error);
-      }
+  const isAccount = /\/(?:login|signup|notice-auth)\.html$/.test(location.pathname);
+  const returnTo = isAccount ? new URLSearchParams(location.search).get('return')
+    : `${location.pathname}${location.search}${location.hash}`;
+  nodes.forEach(({ login, signup, logout, status }) => {
+    for (const [link, page] of [[login, 'login'], [signup, 'signup']]) {
+      if (!link) continue;
+      const url = new URL(`${pagePrefix}${page}.html`, location.href);
+      if (returnTo) url.searchParams.set('return', returnTo);
+      link.href = url.href;
+      if (location.pathname === url.pathname) link.setAttribute('aria-current', 'page');
+    }
+    logout?.addEventListener('click', async () => {
+      logout.disabled = true;
+      try { await logoutNoticeUser(); }
+      catch (error) {
+        if (status) { status.hidden = false; status.textContent = getAuthErrorMessage(error); }
+      } finally { logout.disabled = false; }
     });
   });
   return watchNoticeAuth((state) => {
-    controls.forEach((control) => {
-      const greeting = control.querySelector('[data-js="auth-greeting"]');
-      const login = control.querySelector('[data-js="auth-login"]');
-      const logout = control.querySelector('[data-js="auth-logout"]');
-      const status = control.querySelector('[data-js="auth-error"]');
-      const isSignedIn = Boolean(state.user && state.profile);
-      const hasAuthUser = Boolean(state.user);
+    nodes.forEach(({ greeting, login, signup, logout, status }) => {
+      const signedIn = Boolean(state.user);
+      const name = state.profile?.name || state.user?.displayName || '회원';
       if (greeting) {
-        greeting.hidden = !isSignedIn;
-        greeting.textContent = isSignedIn ? `${state.profile.name}님 환영합니다` : '';
+        greeting.hidden = !signedIn;
+        greeting.textContent = signedIn ? `${name}님 환영합니다` : '';
       }
-      if (login) login.hidden = hasAuthUser;
-      if (logout) logout.hidden = !hasAuthUser;
+      if (login) login.hidden = signedIn;
+      if (signup) signup.hidden = signedIn;
+      if (logout) logout.hidden = !signedIn;
       if (status) {
         status.hidden = !state.error;
-        status.textContent = state.error ? `로그인 정보를 확인할 수 없습니다. ${state.error.message}` : '';
+        status.textContent = state.error ? '회원 정보를 불러오지 못했습니다. 새로고침해 주세요.' : '';
       }
     });
     onStateChanged(state);
@@ -162,7 +179,7 @@ export function getAuthErrorMessage(error) {
     'auth/user-disabled': '사용이 중지된 계정입니다. 관리자에게 문의해 주세요.',
     'auth/too-many-requests': '요청이 잠시 제한되었습니다. 잠시 후 다시 시도해 주세요.',
     'auth/network-request-failed': '네트워크 연결을 확인한 뒤 다시 시도해 주세요.',
-    'permission-denied': 'Firebase Firestore 보안 규칙이 가입 요청을 허용하지 않습니다.',
+    'permission-denied': '회원 정보를 저장할 수 없습니다. 관리자에게 문의해 주세요.',
   };
   return messages[error?.code] ?? error?.message ?? '요청을 완료하지 못했습니다. 잠시 후 다시 시도해 주세요.';
 }

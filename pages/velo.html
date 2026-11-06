@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/components/closing-sections.css">
     <link rel="stylesheet" href="../css/components/notice.css">
+    <link rel="stylesheet" href="../css/components/account.css">
     <link rel="stylesheet" href="../css/utilities.css">
     <link rel="stylesheet" href="../css/components/velo.css">
     <script type="module" src="../js/velo.js"></script>
@@ -44,15 +45,15 @@
             <a href="../index.html#contact">CONTACT</a>
             <a href="velo.html" aria-current="page">VELO</a>
             <a href="notice.html">NOTICE</a>
-            <span class="notice-auth" data-js="auth-control"><span class="notice-auth__greeting" data-js="auth-greeting" hidden></span><a class="notice-auth__link" data-js="auth-login" href="notice-auth.html">로그인</a><button class="notice-auth__link" data-js="auth-logout" type="button" hidden>로그아웃</button><span class="notice-auth__error" data-js="auth-error" role="status" hidden></span></span>
           </nav>
 
-          <a class="site-header__award" href="../index.html#works">
-            <span>2026 GDWEB DESIGN AWARDS WINNER PRIZE //</span>
-            <span class="site-header__prize-mark" aria-hidden="true">
-              <img src="../images/menu/gdweblogo.svg" width="442" height="684" alt="">
-            </span>
-          </a>
+          <div class="notice-auth site-header__account" data-js="auth-control" aria-label="회원 메뉴">
+            <span class="notice-auth__greeting" data-js="auth-greeting" hidden></span>
+            <a class="notice-auth__link" data-js="auth-login" href="login.html">로그인</a>
+            <a class="notice-auth__link" data-js="auth-signup" href="signup.html">회원가입</a>
+            <button class="notice-auth__link notice-auth__logout" data-js="auth-logout" type="button" hidden>로그아웃</button>
+            <span class="notice-auth__error" data-js="auth-error" role="status" aria-live="polite" hidden></span>
+          </div>
 
           <button
             class="site-header__menu-toggle"
@@ -83,18 +84,14 @@
           <a class="menu-panel__link" href="../index.html#contact" data-js="menu-link">CONTACT</a>
           <a class="menu-panel__link" href="velo.html" aria-current="page" data-js="menu-link">VELO</a>
           <a class="menu-panel__link" href="notice.html" data-js="menu-link">NOTICE</a>
-          <span class="notice-auth notice-auth--mobile" data-js="auth-control"><span class="notice-auth__greeting" data-js="auth-greeting" hidden></span><a class="menu-panel__link" data-js="auth-login" href="notice-auth.html">로그인</a><button class="menu-panel__link notice-auth__logout" data-js="auth-logout" type="button" hidden>로그아웃</button><span class="notice-auth__error" data-js="auth-error" role="status" hidden></span></span>
+          <div class="notice-auth notice-auth--mobile" data-js="auth-control" aria-label="회원 메뉴">
+            <span class="notice-auth__greeting" data-js="auth-greeting" hidden></span>
+            <a class="notice-auth__link" data-js="auth-login" href="login.html">로그인</a>
+            <a class="notice-auth__link" data-js="auth-signup" href="signup.html">회원가입</a>
+            <button class="notice-auth__link notice-auth__logout" data-js="auth-logout" type="button" hidden>로그아웃</button>
+            <span class="notice-auth__error" data-js="auth-error" role="status" aria-live="polite" hidden></span>
+          </div>
         </div>
-        <a class="menu-panel__award" href="../index.html#works" data-js="menu-link">
-          <span>2026 GDWEB DESIGN AWARDS WINNER PRIZE //</span>
-          <img
-            src="../images/menu/gdwebicon.jpg"
-            width="370"
-            height="510"
-            alt=""
-            aria-hidden="true"
-          >
-        </a>
       </nav>
     </header>
     <main id="main-content" tabindex="-1"><section class="outer-box outer-box--notice" aria-labelledby="velo-heading"><div class="inner-box"><div class="part-box notice-layout">
