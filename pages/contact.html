@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#000000">
+    <meta name="description" content="DRAFT.X Contact 문의 게시판">
+    <title>Contact | DRAFT.X</title>
+    <link rel="icon" type="image/png" href="../images/cat_favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anta&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/tokens.css">
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/components/closing-sections.css">
+    <link rel="stylesheet" href="../css/components/notice.css">
+    <link rel="stylesheet" href="../css/components/account.css">
+    <link rel="stylesheet" href="../css/components/contact.css">
+    <link rel="stylesheet" href="../css/utilities.css">
+    <script type="module" src="../js/contact.js"></script>
+  </head>
+  <body class="notice-site contact-site" id="top">
+    <a class="skip-link" href="#main-content">본문 바로가기</a>
+    <svg class="notice-icons" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs>
+      <symbol id="notice-arrow" viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></symbol>
+      <symbol id="contact-lock" viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="12" rx="1"/><path d="M7 10V6a5 5 0 0 1 10 0v4"/></symbol>
+    </defs></svg>
+    <div data-js="site-header-mount"></div>
+    <main id="main-content" data-js="contact-root" data-contact-view="list" tabindex="-1">
+      <section class="outer-box outer-box--notice" aria-labelledby="contact-heading">
+        <div class="inner-box">
+          <div class="part-box notice-layout">
+            <div class="notice-caption"><p class="notice-caption__text">© THE ESSENCE OF PRESENCE</p><p class="notice-caption__center">(DRAFT.X CONTACT)</p><p class="notice-caption__end">QUESTIONS &amp; ANSWERS</p></div>
+            <div class="notice-hero"><h1 class="notice-hero__title" id="contact-heading">CONTACT<span class="notice-hero__count" data-js="contact-count">(00)</span></h1><p class="notice-hero__subtitle">궁금한 점을 남겨 주시면 확인 후 답변드리겠습니다.</p></div>
+            <div class="contact-status" data-js="contact-status" role="status" aria-live="polite" hidden></div>
+            <div class="contact-toolbar">
+              <div class="notice-filters" data-js="contact-filters" role="group" aria-label="문의 유형">
+                <button class="notice-button" type="button" data-contact-category="all" aria-pressed="true">ALL</button>
+                <button class="notice-button" type="button" data-contact-category="배송문의" aria-pressed="false">배송문의</button>
+                <button class="notice-button" type="button" data-contact-category="계정문의" aria-pressed="false">계정문의</button>
+                <button class="notice-button" type="button" data-contact-category="교환/환불" aria-pressed="false">교환/환불</button>
+                <button class="notice-button" type="button" data-contact-category="시스템오류" aria-pressed="false">시스템오류</button>
+                <button class="notice-button" type="button" data-contact-category="기타" aria-pressed="false">기타</button>
+              </div>
+              <form class="notice-search" role="search" data-js="contact-search">
+                <label class="visually-hidden" for="contact-search-input">문의 검색</label>
+                <input class="notice-search__input" id="contact-search-input" data-js="contact-search-input" type="search" maxlength="100" placeholder="문의 제목 또는 작성자 검색">
+                <button class="notice-button notice-button--circle" type="submit" aria-label="검색">↗</button>
+              </form>
+            </div>
+            <div class="contact-list-meta"><span data-js="contact-result">SHOWING 00 OF 00</span><a class="notice-button" data-js="contact-write-link" href="contact-write.html">문의하기 <svg class="notice-icon" aria-hidden="true"><use href="#notice-arrow"></use></svg></a></div>
+            <h2 class="visually-hidden" tabindex="-1">문의 목록</h2>
+            <table class="notice-table contact-table">
+              <caption class="visually-hidden">Contact 문의 목록</caption>
+              <thead class="notice-table__head"><tr class="notice-table__row notice-table__row--head"><th class="notice-table__number" scope="col">STATUS</th><th class="notice-table__category" scope="col">TYPE</th><th class="notice-table__subject" scope="col">SUBJECT</th><th class="notice-table__date" scope="col">DATE</th><th class="notice-table__action" scope="col"><span class="visually-hidden">상세보기</span></th></tr></thead>
+              <tbody class="notice-table__body" data-js="contact-rows"></tbody>
+            </table>
+            <div class="notice-empty" data-js="contact-empty" hidden><h2 class="notice-empty__title">등록된 문의가 없습니다.</h2><p class="notice-empty__text">첫 문의를 작성해 주세요.</p></div>
+            <nav class="notice-pagination" data-js="contact-pagination" aria-label="문의 목록 페이지"></nav>
+            <div class="notice-end"><p class="notice-end__text">QUESTIONS, ANSWERS &amp; CARE.</p><a class="notice-end__top" href="#top">BACK TO TOP ↑</a></div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <div data-js="site-footer-mount"></div>
+  </body>
+</html>

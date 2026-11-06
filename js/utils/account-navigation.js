@@ -7,7 +7,7 @@ export function getSafeAccountReturn(value, currentHref = location.href) {
     const target = new URL(value, current);
     const relative = target.pathname.startsWith(root) ? target.pathname.slice(root.length) : '';
     const allowed = relative === '' || relative === 'index.html'
-      || /^pages\/(?:notice(?:-view|-write|-edit)?|velo(?:-cart)?)\.html$/.test(relative);
+      || /^pages\/(?:notice(?:-view|-write|-edit)?|velo(?:-cart)?|contact(?:-view|-write)?)\.html$/.test(relative);
     return target.origin === current.origin && target.pathname.startsWith(root) && allowed
       ? `${target.pathname}${target.search}${target.hash}` : fallback;
   } catch {

@@ -34,6 +34,7 @@ FOOTER
 - 일반 회원은 자신의 프로필만 읽을 수 있고, 요청 명세에 맞춰 `role: "ueser"`로 가입됩니다. 관리자 전용 아이디와 이메일은 공개 가입에서 예약합니다. 공지 작성·수정·삭제는 화면에서 숨기는 것뿐 아니라 `firestore.rules`에서도 `users/{uid}.role == "admin"`일 때만 허용합니다. 역할 문서는 클라이언트가 수정할 수 없습니다.
 - 로그인 상태·환영 문구·로그아웃은 공통 사이트 헤더(전체 페이지)에 표시합니다. 로그인/회원가입 페이지는 로그인 전 진입했던 허용된 페이지로 돌아옵니다.
 - 사이트 공통 헤더와 푸터는 `components/site-header.html`, `components/site-footer.html`에서 관리하며 각 페이지는 마운트 지점만 제공합니다. `js/modules/site-chrome.js`가 현재 페이지에 맞는 메뉴 링크와 활성 메뉴를 설정합니다.
+- 문의 게시판의 구조와 보안 설정은 [012-contact-board.md](./012-contact-board.md)에 기록했습니다.
 - Firebase Console의 Authentication에서 Email/Password 제공업체를 활성화하고, Firestore Rules에 저장소의 `firestore.rules` 내용을 게시해야 합니다. Firebase Console에서 관리자를 수동 생성할 때는 Authentication에 관리자의 이메일 계정을 만든 뒤, 발급된 UID로 Firestore에 `users/{uid}` (필드: `name`, `username`, `usernameKey`, `email`, `role: "admin"`, `createdAt`)와 `usernames/admin` (`uid`)를 생성합니다. `createdAt`은 타임스탬프로 입력합니다. 제공된 초기 비밀번호는 Firebase 최소 길이보다 짧으므로 Console에서 6자 이상의 임시 비밀번호를 설정하고 첫 테스트 후 교체해야 합니다. 비밀번호는 코드나 Firestore에 저장하지 않습니다.
 - 첨부 총합 20MB, 필수 입력·용량 초과·저장소 차단·글 없음·검색 결과 없음 상태를 처리합니다.
 - 본문은 안전한 태그와 http/https/mailto 링크만 렌더링하고, 사용자 데이터는 textContent/DOM으로 삽입합니다.

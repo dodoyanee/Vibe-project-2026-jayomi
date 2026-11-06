@@ -153,8 +153,6 @@ const initializeMotion = () => {
     }
 
     if (section && media && title) {
-      const travelRatio = context.conditions.mobile ? SCROLL_MOTION.mediaTravelMobile
-        : context.conditions.desktop ? SCROLL_MOTION.mediaTravelDesktop : SCROLL_MOTION.mediaTravelTablet;
       const entryTrigger = {
         trigger: section,
         start: 'top bottom',
@@ -162,15 +160,6 @@ const initializeMotion = () => {
         scrub: SCROLL_MOTION.scrub,
         invalidateOnRefresh: true,
       };
-      gsap.fromTo(media, {
-        y: () => window.innerHeight * travelRatio,
-        scale: SCROLL_MOTION.mediaScale,
-      }, {
-        y: 0,
-        scale: 1,
-        ease: 'none',
-        scrollTrigger: { ...entryTrigger },
-      });
       gsap.fromTo(title, { y: SCROLL_MOTION.titleTravel }, {
         y: 0,
         ease: 'none',
@@ -192,6 +181,40 @@ const initializeMotion = () => {
           invalidateOnRefresh: true,
         },
       });
+      const selectedDim = getComputedStyle(document.documentElement)
+        .getPropertyValue('--color-selected-dim').trim() || '#888888';
+      const textColor = getComputedStyle(document.documentElement)
+        .getPropertyValue('--color-text').trim() || '#ffffff';
+      gsap.fromTo(words, { color: selectedDim }, {
+        color: textColor,
+        ease: 'none',
+        stagger: SCROLL_MOTION.wordStagger,
+        scrollTrigger: {
+          trigger: section,
+          start: 'top 82%',
+          end: 'top 12%',
+          scrub: SCROLL_MOTION.scrub,
+          invalidateOnRefresh: true,
+        },
+      });
+    }
+
+    if (selectedScreen && media) {
+      gsap.fromTo(media, {
+        y: () => window.innerHeight * SCROLL_MOTION.mediaScrollStart,
+        scale: SCROLL_MOTION.mediaScale,
+      }, {
+        y: () => -window.innerHeight * SCROLL_MOTION.mediaScrollEnd,
+        scale: 1,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: selectedScreen,
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: SCROLL_MOTION.scrub,
+          invalidateOnRefresh: true,
+        },
+      });
     }
 
     if (selectedScreen && media && parallaxVisual) {
@@ -209,7 +232,7 @@ const initializeMotion = () => {
         scrollTrigger: {
           trigger: selectedScreen,
           start: 'clamp(top bottom)',
-          // Section 2 is currently last; finish within the available page scroll range.
+          // Keep the inner visual parallax within the selected section's scroll range.
           end: 'clamp(bottom top)',
           scrub: SCROLL_MOTION.scrub,
           invalidateOnRefresh: true,

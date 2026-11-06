@@ -264,10 +264,6 @@
   line-height: var(--selected-title-leading);
 }
 
-.selected-title__light {
-  color: var(--color-text);
-}
-
 .selected-title__word {
   display: inline-block;
 }

@@ -108,7 +108,7 @@
 }
 
 .outer-box--selected {
-  padding-block: 0;
+  padding-block: 0 32px;
   overflow: clip;
 }
 

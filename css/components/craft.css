@@ -31,7 +31,7 @@
 .accordion__panel { display: grid; grid-template-rows: 1fr; opacity: 1; transition: grid-template-rows var(--duration-slow) var(--ease-standard), opacity var(--duration-slow) var(--ease-standard); }
 .accordion__item[data-open="false"] .accordion__panel { grid-template-rows: 0fr; opacity: 0; }
 .accordion__body { min-height: 0; overflow: hidden; }
-.accordion__description { padding: 0 var(--accordion-padding) var(--accordion-padding); margin: 0; color: var(--color-text-muted); font-family: var(--font-ko); font-size: var(--accordion-body-size); line-height: var(--accordion-body-leading); word-break: keep-all; overflow-wrap: anywhere; }
+.accordion__description { padding: var(--accordion-padding); margin: 0; color: var(--color-text-muted); font-family: var(--font-ko); font-size: var(--accordion-body-size); line-height: var(--accordion-body-leading); word-break: keep-all; overflow-wrap: anywhere; }
 @media (max-width: 1199px) {
   .craft-intro { flex-basis: auto; width: 100%; }
   .craft-media { display: none; }

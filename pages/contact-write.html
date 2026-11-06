@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#000000">
+    <meta name="description" content="DRAFT.X Contact 문의 작성">
+    <title>문의 작성 | Contact · DRAFT.X</title>
+    <link rel="icon" type="image/png" href="../images/cat_favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anta&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/tokens.css">
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/components/closing-sections.css">
+    <link rel="stylesheet" href="../css/components/notice.css">
+    <link rel="stylesheet" href="../css/components/account.css">
+    <link rel="stylesheet" href="../css/components/contact.css">
+    <link rel="stylesheet" href="../css/utilities.css">
+    <script type="module" src="../js/contact.js"></script>
+  </head>
+  <body class="notice-site contact-site" id="top">
+    <a class="skip-link" href="#main-content">본문 바로가기</a>
+    <svg class="notice-icons" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs>
+      <symbol id="notice-arrow" viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></symbol>
+      <symbol id="contact-lock" viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="12" rx="1"/><path d="M7 10V6a5 5 0 0 1 10 0v4"/></symbol>
+    </defs></svg>
+    <div data-js="site-header-mount"></div>
+    <main id="main-content" data-js="contact-root" data-contact-view="form" tabindex="-1">
+      <section class="outer-box outer-box--notice" aria-labelledby="contact-heading">
+        <div class="inner-box"><div class="part-box notice-layout">
+          <div class="part-box notice-caption"><p class="notice-caption__text">© THE ESSENCE OF PRESENCE</p><p class="notice-caption__center">(DRAFT.X CONTACT)</p><p class="notice-caption__end">QUESTIONS &amp; ANSWERS</p></div>
+          <div class="notice-hero"><h1 class="notice-hero__title" id="contact-heading">CONTACT</h1><p class="notice-hero__subtitle">문의 내용을 작성해 주세요.</p></div>
+          <div class="contact-status" data-js="contact-status" role="status" aria-live="polite" hidden></div>
+          <div class="notice-bar"><span class="notice-bar__label">CONTACT / WRITE</span><span>* REQUIRED FIELDS</span></div>
+          <form class="contact-form" data-js="contact-form">
+            <h2 class="notice-editor__title" data-js="contact-form-title">문의 작성</h2>
+            <div class="contact-field"><label class="notice-field__label" for="contact-category">질문 유형 *</label><select class="notice-select" id="contact-category" name="category" required><option value="">질문 유형을 선택해 주세요</option><option>배송문의</option><option>계정문의</option><option>교환/환불</option><option>시스템오류</option><option>기타</option></select></div>
+            <div class="contact-field"><label class="notice-field__label" for="contact-title-input">제목 *</label><input class="notice-input" id="contact-title-input" name="title" type="text" maxlength="100" required></div>
+            <div class="contact-field"><label class="notice-field__label" for="contact-body-input">문의 내용 *</label><textarea class="notice-input contact-textarea" id="contact-body-input" name="body" maxlength="20000" required></textarea></div>
+            <label class="notice-check"><input class="notice-check__input" type="checkbox" name="isPrivate"><span>비공개 문의로 작성 (작성자와 관리자만 내용을 볼 수 있습니다.)</span></label>
+            <div class="notice-actions"><a class="notice-button" href="contact.html">취소</a><button class="notice-button" type="submit"><span data-js="contact-submit-label">등록하기</span> <svg class="notice-icon" aria-hidden="true"><use href="#notice-arrow"></use></svg></button></div>
+          </form>
+          <div class="notice-end"><p class="notice-end__text">QUESTIONS, ANSWERS &amp; CARE.</p><a class="notice-end__top" href="#top">BACK TO TOP ↑</a></div>
+        </div></div>
+      </section>
+    </main>
+    <div data-js="site-footer-mount"></div>
+  </body>
+</html>

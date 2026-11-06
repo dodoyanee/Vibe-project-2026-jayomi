@@ -15,7 +15,7 @@ function configureLinks(header) {
     home: isHome ? '#home' : `${home}#home`,
     works: isHome ? '#works' : `${home}#works`,
     lab: isHome ? '#lab-x' : `${home}#lab-x`,
-    contact: isHome ? '#contact' : `${home}#contact`,
+    contact: `${root}pages/contact.html`,
     velo: `${root}pages/velo.html`,
     notice: `${root}pages/notice.html`,
   };
@@ -25,6 +25,7 @@ function configureLinks(header) {
   const page = location.pathname.split('/').pop();
   const activeKey = page === 'index.html' || page === '' ? 'home'
     : /^notice(?:-view|-write|-edit)?\.html$/.test(page) ? 'notice'
+      : /^contact(?:-view|-write)?\.html$/.test(page) ? 'contact'
       : /^velo(?:-cart)?\.html$/.test(page) ? 'velo' : '';
   if (activeKey) {
     header.querySelectorAll(`[data-nav-key="${activeKey}"]`).forEach((link) => {

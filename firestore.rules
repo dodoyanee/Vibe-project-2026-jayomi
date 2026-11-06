@@ -10,9 +10,144 @@ service cloud.firestore {
         && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
     }
 
+    function contactQuestionPath(questionId) {
+      return /databases/$(database)/documents/contactQuestions/$(questionId);
+    }
+
+    function contactQuestionExists(questionId) {
+      return exists(contactQuestionPath(questionId));
+    }
+
+    function isContactOwner(questionId) {
+      return signedIn()
+        && contactQuestionExists(questionId)
+        && get(contactQuestionPath(questionId)).data.uid == request.auth.uid;
+    }
+
+    function canReadContactBody(questionId) {
+      return contactQuestionExists(questionId)
+        && (!get(contactQuestionPath(questionId)).data.isPrivate
+          || isContactOwner(questionId)
+          || isAdmin());
+    }
+
+    function isOwnerDeletingContact(questionId) {
+      return isContactOwner(questionId)
+        && !existsAfter(contactQuestionPath(questionId));
+    }
+
     match /notices/{noticeId} {
       allow read: if true;
       allow create, update, delete: if isAdmin();
+    }
+
+    match /contactQuestions/{questionId} {
+      allow get, list: if true;
+      allow create: if signedIn()
+        && request.resource.data.keys().hasAll([
+          'uid', 'authorName', 'category', 'title', 'isPrivate',
+          'answered', 'createdAt', 'updatedAt'
+        ])
+        && request.resource.data.keys().hasOnly([
+          'uid', 'authorName', 'category', 'title', 'isPrivate',
+          'answered', 'createdAt', 'updatedAt'
+        ])
+        && request.resource.data.uid == request.auth.uid
+        && request.resource.data.authorName is string
+        && request.resource.data.authorName.size() > 0
+        && request.resource.data.authorName.size() <= 40
+        && request.resource.data.authorName
+          == get(/databases/$(database)/documents/users/$(request.auth.uid)).data.name
+        && request.resource.data.category in [
+          '배송문의', '계정문의', '교환/환불', '시스템오류', '기타'
+        ]
+        && request.resource.data.title is string
+        && request.resource.data.title.size() > 0
+        && request.resource.data.title.size() <= 100
+        && request.resource.data.isPrivate is bool
+        && request.resource.data.answered == false
+        && request.resource.data.createdAt == request.time
+        && request.resource.data.updatedAt == request.time;
+      allow update: if (
+        isContactOwner(questionId)
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly([
+            'category', 'title', 'isPrivate', 'updatedAt'
+          ])
+          && request.resource.data.uid == resource.data.uid
+          && request.resource.data.answered == resource.data.answered
+          && request.resource.data.category in [
+            '배송문의', '계정문의', '교환/환불', '시스템오류', '기타'
+          ]
+          && request.resource.data.title is string
+          && request.resource.data.title.size() > 0
+          && request.resource.data.title.size() <= 100
+          && request.resource.data.isPrivate is bool
+          && request.resource.data.updatedAt == request.time
+        )
+        || (
+          isAdmin()
+            && request.resource.data.diff(resource.data).affectedKeys().hasOnly([
+              'answered', 'updatedAt'
+            ])
+            && request.resource.data.answered is bool
+            && request.resource.data.updatedAt == request.time
+        );
+      allow delete: if isContactOwner(questionId);
+
+      match /content/{contentId} {
+        allow get, list: if contentId == 'question' && canReadContactBody(questionId);
+        allow create: if contentId == 'question'
+          && signedIn()
+          && existsAfter(contactQuestionPath(questionId))
+          && getAfter(contactQuestionPath(questionId)).data.uid == request.auth.uid
+          && request.resource.data.keys().hasOnly(['body', 'updatedAt'])
+          && request.resource.data.body is string
+          && request.resource.data.body.size() > 0
+          && request.resource.data.body.size() <= 20000
+          && request.resource.data.updatedAt == request.time;
+        allow update: if contentId == 'question'
+          && isContactOwner(questionId)
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['body', 'updatedAt'])
+          && request.resource.data.body is string
+          && request.resource.data.body.size() > 0
+          && request.resource.data.body.size() <= 20000
+          && request.resource.data.updatedAt == request.time;
+        allow delete: if contentId == 'question'
+          && isOwnerDeletingContact(questionId);
+      }
+
+      match /answers/{answerId} {
+        allow get, list: if answerId == 'response' && canReadContactBody(questionId);
+        allow create: if answerId == 'response'
+          && isAdmin()
+          && request.resource.data.keys().hasAll([
+            'body', 'adminUid', 'adminName', 'createdAt', 'updatedAt'
+          ])
+          && request.resource.data.keys().hasOnly([
+            'body', 'adminUid', 'adminName', 'createdAt', 'updatedAt'
+          ])
+          && request.resource.data.body is string
+          && request.resource.data.body.size() > 0
+          && request.resource.data.body.size() <= 20000
+          && request.resource.data.adminUid == request.auth.uid
+          && request.resource.data.adminName is string
+          && request.resource.data.adminName.size() > 0
+          && request.resource.data.adminName.size() <= 40
+          && request.resource.data.adminName
+            == get(/databases/$(database)/documents/users/$(request.auth.uid)).data.name
+          && exists(contactQuestionPath(questionId))
+          && request.resource.data.createdAt == request.time
+          && request.resource.data.updatedAt == request.time;
+        allow update: if answerId == 'response'
+          && isAdmin()
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['body', 'updatedAt'])
+          && request.resource.data.body is string
+          && request.resource.data.body.size() > 0
+          && request.resource.data.body.size() <= 20000
+          && request.resource.data.updatedAt == request.time;
+        allow delete: if answerId == 'response'
+          && (isAdmin() || isOwnerDeletingContact(questionId));
+      }
     }
 
     match /users/{uid} {

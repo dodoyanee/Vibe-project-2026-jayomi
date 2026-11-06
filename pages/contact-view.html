@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#000000">
+    <meta name="description" content="DRAFT.X Contact 문의 내용">
+    <title>문의 내용 | Contact · DRAFT.X</title>
+    <link rel="icon" type="image/png" href="../images/cat_favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anta&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/tokens.css">
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/components/closing-sections.css">
+    <link rel="stylesheet" href="../css/components/notice.css">
+    <link rel="stylesheet" href="../css/components/account.css">
+    <link rel="stylesheet" href="../css/components/contact.css">
+    <link rel="stylesheet" href="../css/utilities.css">
+    <script type="module" src="../js/contact.js"></script>
+  </head>
+  <body class="notice-site contact-site" id="top">
+    <a class="skip-link" href="#main-content">본문 바로가기</a>
+    <svg class="notice-icons" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs>
+      <symbol id="notice-arrow" viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></symbol>
+      <symbol id="contact-lock" viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="12" rx="1"/><path d="M7 10V6a5 5 0 0 1 10 0v4"/></symbol>
+    </defs></svg>
+    <div data-js="site-header-mount"></div>
+    <main id="main-content" data-js="contact-root" data-contact-view="detail" tabindex="-1">
+      <section class="outer-box outer-box--notice" aria-labelledby="contact-heading">
+        <div class="inner-box"><div class="part-box notice-layout">
+          <div class="part-box notice-caption"><p class="notice-caption__text">© THE ESSENCE OF PRESENCE</p><p class="notice-caption__center">(DRAFT.X CONTACT)</p><p class="notice-caption__end">QUESTIONS &amp; ANSWERS</p></div>
+          <div class="notice-hero"><h1 class="notice-hero__title" id="contact-heading">CONTACT</h1><p class="notice-hero__subtitle">문의 내용과 답변을 확인합니다.</p></div>
+          <div class="contact-status" data-js="contact-status" role="status" aria-live="polite" hidden></div>
+          <div class="notice-bar"><span class="notice-bar__label">CONTACT / VIEW</span><span>PRIVATE QUESTIONS ARE PROTECTED</span></div>
+          <article class="notice-article contact-article">
+            <div class="notice-article__heading">
+              <span class="notice-badge" data-js="contact-category"></span>
+              <span class="contact-private-label" data-js="contact-private-label" hidden>🔒 비공개</span>
+              <h2 class="notice-article__title" data-js="contact-title"></h2>
+              <div class="notice-article__meta"><span data-js="contact-author"></span><time data-js="contact-date"></time></div>
+            </div>
+            <div class="contact-question-body" data-js="contact-question-body"></div>
+            <div class="contact-locked" data-js="contact-locked" hidden><h3>비공개 문의입니다.</h3><p>작성자와 관리자만 문의 내용을 확인할 수 있습니다.</p></div>
+          </article>
+          <section class="contact-answer" data-js="contact-answer-section" aria-labelledby="contact-answer-heading" hidden>
+            <div class="contact-answer__heading"><span class="notice-badge">답변완료</span><h2 id="contact-answer-heading">답변</h2><div class="notice-article__meta"><span data-js="contact-answer-author">관리자</span><time data-js="contact-answer-date"></time></div></div>
+            <div class="contact-answer__body" data-js="contact-answer-body"></div>
+          </section>
+          <section class="contact-answer-admin" data-js="contact-answer-area" aria-labelledby="contact-answer-admin-heading" hidden>
+            <h2 id="contact-answer-admin-heading">관리자 답변 작성</h2>
+            <form data-js="contact-answer-form">
+              <label class="visually-hidden" for="contact-answer-input">답변 내용</label>
+              <textarea class="notice-input contact-textarea" id="contact-answer-input" data-js="contact-answer-input" name="answer" maxlength="20000" required></textarea>
+              <div class="notice-actions"><button class="notice-button" data-js="contact-answer-remove" type="button" hidden>답변 삭제</button><button class="notice-button" data-js="contact-answer-submit" type="submit">답변 등록</button></div>
+            </form>
+          </section>
+          <div class="notice-actions contact-actions" data-js="contact-actions"></div>
+          <div class="notice-end"><p class="notice-end__text">QUESTIONS, ANSWERS &amp; CARE.</p><a class="notice-end__top" href="#top">BACK TO TOP ↑</a></div>
+        </div></div>
+      </section>
+    </main>
+    <div data-js="site-footer-mount"></div>
+  </body>
+</html>
