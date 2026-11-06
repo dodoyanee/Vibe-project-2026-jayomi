@@ -55,6 +55,12 @@
 
 .site-header__menu-toggle {
   display: none;
+  padding: 0;
+  border: 0 solid currentColor;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
 }
 
 .outer-box--hero {

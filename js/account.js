@@ -1,6 +1,8 @@
 import { initSiteNavigation } from './modules/site-navigation.js';
 import { getSafeAccountReturn } from './utils/account-navigation.js';
+import { initSiteChrome } from './modules/site-chrome.js';
 
+await initSiteChrome();
 initSiteNavigation();
 
 const form = document.querySelector('[data-js="login-form"], [data-js="register-form"]');
@@ -74,7 +76,8 @@ form.addEventListener('submit', async (event) => {
     const api = await authModule;
     if (isSignup) {
       await api.registerNoticeUser({
-        name: values.get('name'), email: values.get('email'), password: values.get('password'),
+        name: values.get('name'), username: values.get('username'),
+        email: values.get('email'), password: values.get('password'),
         agreements: { terms: values.has('terms'), privacy: values.has('privacy'), marketing: values.has('marketing') },
       });
     } else {

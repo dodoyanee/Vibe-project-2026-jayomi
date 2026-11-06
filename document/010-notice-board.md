@@ -30,12 +30,10 @@ FOOTER
 - Firebase Web SDK는 브라우저 ES Module CDN으로 불러옵니다. 실제 Firestore 읽기·쓰기 권한은 Firebase Console의 보안 규칙에 따릅니다. 로그인 없는 전체 공개 쓰기 규칙은 제3자가 게시글을 변경하거나 삭제할 수 있으므로 운영 DB에 설정하지 않습니다. 규칙을 준비하지 못한 경우 데이터 연결 오류를 화면에 표시합니다.
 - Firebase 웹 API 키는 클라이언트에서 노출되는 식별자이며 비밀 키가 아닙니다. Firebase 프로젝트에서 사용할 웹사이트의 HTTP referrer 제한을 설정하고, 데이터 접근은 반드시 Firestore 보안 규칙으로 통제합니다.
 - 로컬 전용 테스트용 Firestore Emulator 연결은 `js/firebase.js`의 `USE_FIRESTORE_EMULATOR`를 `true`로 바꾸고 Emulator를 실행했을 때만 사용합니다. 이 설정은 `localhost`에서만 적용됩니다. Emulator용 규칙은 Emulator에만 적용하고 실제 Firebase Console에 배포하지 않습니다.
-- 로그인은 Firebase Authentication 이메일/비밀번호 방식을 사용합니다. 가입 시 이름·아이디·비밀번호·이메일을 받고, 이메일 중복은 Authentication이, 아이디 중복은 Firestore `usernames/{소문자아이디}` 문서가 검사합니다. Firebase 기본 로그인 정책상 비밀번호는 6자 이상이어야 합니다. 이메일 인증·비밀번호 재설정은 별도 구현 범위입니다.
+- 로그인은 Firebase Authentication 이메일/비밀번호 방식을 사용합니다. 가입 시 이름·아이디·이메일·비밀번호를 받고, 이메일 중복은 Authentication이, 아이디 중복은 Firestore `usernames/{소문자아이디}` 문서가 검사합니다. Firebase 기본 로그인 정책상 비밀번호는 6자 이상이어야 합니다. 비밀번호 재설정은 이메일 링크 방식입니다.
 - 일반 회원은 자신의 프로필만 읽을 수 있고, 요청 명세에 맞춰 `role: "ueser"`로 가입됩니다. 관리자 전용 아이디와 이메일은 공개 가입에서 예약합니다. 공지 작성·수정·삭제는 화면에서 숨기는 것뿐 아니라 `firestore.rules`에서도 `users/{uid}.role == "admin"`일 때만 허용합니다. 역할 문서는 클라이언트가 수정할 수 없습니다.
-- 로그인 상태·환영 문구·로그아웃은 공통 사이트 헤더(홈, NOTICE, VELO)에 표시합니다. 로그인/회원가입 페이지는 전용 NOTICE 디자인을 적용하지 않고 공통 사이트 스타일을 사용하며, 로그인 전 진입했던 허용된 페이지로 돌아옵니다.
-- Firebase Console의 Authentication에서 Email/Password 제공업체를 활성화하고, Firestore Rules에 저장소의 `firestore.rules` 내용을 게시해야 합니다. Firebase Console에서 관리자를 수동 생성할 때는 Authentication에 관리자의 이메일 계정을 만든 뒤, 발급된 UID로 Firestore에 `users/{uid}` (필드: `name`, `username`, `usernameKey`, `email`, `role: "admin"`, `createdAt`)와 `usernames/admin` (`uid`)를 생성합니다. `createdAt`은 타임스탬프로 입력합니다. 제공된 초기 비밀번호는 Firebase 최소 길이보다 짧으므로 Console에서 6자 이상의 임시 비밀번호를 설정하고 첫 테스트 후 교체해야 합니다. 비밀번호는 코드나 Firestore에 저장하지 않습니다.
-- 로그인은 Firebase Authentication 이메일/비밀번호 방식을 사용합니다. 가입 시 이름·아이디·비밀번호·이메일을 받고, 이메일 중복은 Authentication이, 아이디 중복은 Firestore `usernames/{소문자아이디}` 문서가 검사합니다. Firebase 기본 로그인 정책상 비밀번호는 6자 이상이어야 합니다. 이메일 인증·비밀번호 재설정은 별도 구현 범위입니다.
-- 일반 회원은 자신의 프로필만 읽을 수 있고, `role: "user"`로만 가입됩니다. 공지 작성·수정·삭제는 화면에서 숨기는 것뿐 아니라 `firestore.rules`에서도 `users/{uid}.role == "admin"`일 때만 허용합니다. 역할 문서는 클라이언트가 수정할 수 없습니다.
+- 로그인 상태·환영 문구·로그아웃은 공통 사이트 헤더(전체 페이지)에 표시합니다. 로그인/회원가입 페이지는 로그인 전 진입했던 허용된 페이지로 돌아옵니다.
+- 사이트 공통 헤더와 푸터는 `components/site-header.html`, `components/site-footer.html`에서 관리하며 각 페이지는 마운트 지점만 제공합니다. `js/modules/site-chrome.js`가 현재 페이지에 맞는 메뉴 링크와 활성 메뉴를 설정합니다.
 - Firebase Console의 Authentication에서 Email/Password 제공업체를 활성화하고, Firestore Rules에 저장소의 `firestore.rules` 내용을 게시해야 합니다. Firebase Console에서 관리자를 수동 생성할 때는 Authentication에 관리자의 이메일 계정을 만든 뒤, 발급된 UID로 Firestore에 `users/{uid}` (필드: `name`, `username`, `usernameKey`, `email`, `role: "admin"`, `createdAt`)와 `usernames/admin` (`uid`)를 생성합니다. `createdAt`은 타임스탬프로 입력합니다. 제공된 초기 비밀번호는 Firebase 최소 길이보다 짧으므로 Console에서 6자 이상의 임시 비밀번호를 설정하고 첫 테스트 후 교체해야 합니다. 비밀번호는 코드나 Firestore에 저장하지 않습니다.
 - 첨부 총합 20MB, 필수 입력·용량 초과·저장소 차단·글 없음·검색 결과 없음 상태를 처리합니다.
 - 본문은 안전한 태그와 http/https/mailto 링크만 렌더링하고, 사용자 데이터는 textContent/DOM으로 삽입합니다.

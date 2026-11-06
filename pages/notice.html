@@ -32,67 +32,7 @@
 <symbol id="notice-close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
 <symbol id="notice-download" viewBox="0 0 24 24"><path d="M12 3v12m-5-5 5 5 5-5M5 17v4h14v-4"/></symbol>
 </defs></svg>
-    <header class="outer-box outer-box--header" data-js="site-header" data-header-state="visible">
-      <div class="inner-box">
-        <div class="part-box part-box--between site-header">
-          <a class="site-header__brand" href="../index.html#home" aria-label="DRAFT.X 홈">DRAFT.X</a>
-
-          <nav class="site-header__navigation" aria-label="주요 메뉴">
-            <a href="../index.html#home">HOME</a>
-            <a href="../index.html#works">WORKS</a>
-            <a href="../index.html#lab-x">LAB.X</a>
-            <a href="../index.html#contact">CONTACT</a>
-            <a href="velo.html">VELO</a>
-            <a href="notice.html" aria-current="page">NOTICE</a>
-          </nav>
-
-          <div class="notice-auth site-header__account" data-js="auth-control" aria-label="회원 메뉴">
-            <span class="notice-auth__greeting" data-js="auth-greeting" hidden></span>
-            <a class="notice-auth__link" data-js="auth-login" href="login.html">로그인</a>
-            <a class="notice-auth__link" data-js="auth-signup" href="signup.html">회원가입</a>
-            <button class="notice-auth__link notice-auth__logout" data-js="auth-logout" type="button" hidden>로그아웃</button>
-            <span class="notice-auth__error" data-js="auth-error" role="status" aria-live="polite" hidden></span>
-          </div>
-
-          <button
-            class="site-header__menu-toggle"
-            type="button"
-            aria-controls="mobile-menu"
-            aria-expanded="false"
-            data-js="menu-toggle"
-          >
-            MENU
-          </button>
-        </div>
-      </div>
-
-      <nav
-        class="menu-panel"
-        id="mobile-menu"
-        aria-label="메뉴"
-        aria-hidden="true"
-        inert
-        data-js="menu-panel"
-        data-menu-state="closed"
-        data-lenis-prevent
-      >
-        <div class="menu-panel__links">
-          <a class="menu-panel__link" href="../index.html#home" data-js="menu-link">HOME</a>
-          <a class="menu-panel__link" href="../index.html#works" data-js="menu-link">WORKS</a>
-          <a class="menu-panel__link" href="../index.html#lab-x" data-js="menu-link">LAB.X</a>
-          <a class="menu-panel__link" href="../index.html#contact" data-js="menu-link">CONTACT</a>
-          <a class="menu-panel__link" href="velo.html" data-js="menu-link">VELO</a>
-          <a class="menu-panel__link" href="notice.html" aria-current="page" data-js="menu-link">NOTICE</a>
-          <div class="notice-auth notice-auth--mobile" data-js="auth-control" aria-label="회원 메뉴">
-            <span class="notice-auth__greeting" data-js="auth-greeting" hidden></span>
-            <a class="notice-auth__link" data-js="auth-login" href="login.html">로그인</a>
-            <a class="notice-auth__link" data-js="auth-signup" href="signup.html">회원가입</a>
-            <button class="notice-auth__link notice-auth__logout" data-js="auth-logout" type="button" hidden>로그아웃</button>
-            <span class="notice-auth__error" data-js="auth-error" role="status" aria-live="polite" hidden></span>
-          </div>
-        </div>
-      </nav>
-    </header>
+    <div data-js="site-header-mount"></div>
     <main id="main-content" data-js="notice-root" data-notice-view="list" tabindex="-1">
       <section class="outer-box outer-box--notice" aria-labelledby="notice-heading">
         <div class="inner-box">
@@ -116,16 +56,7 @@
         </div>
       </section>
     </main>
-    <footer class="outer-box outer-box--footer" id="contact" aria-label="DRAFT.X 회사 정보">
-      <div class="inner-box">
-        <div class="part-box footer-contact">
-          <p class="footer-contact__description">DRAFT.X | Remote Based Global Studio 20 Years of Heritage. Defining the Essence of Identity.</p>
-          <p class="footer-contact__email"><span class="footer-contact__brace" aria-hidden="true">{</span> <a class="footer-contact__link" href="mailto:draftx.co@gmail.com">Email : draftx.co@gmail.com</a> <span class="footer-contact__brace" aria-hidden="true">}</span></p>
-        </div>
-        <div class="part-box footer-brand"><p class="footer-brand__wordmark" aria-hidden="true">DRAFT.X</p></div>
-        <div class="part-box footer-legal"><p class="footer-legal__copyright">© 2026 DRAFT.X. All Rights Reserved.</p></div>
-      </div>
-    </footer>
+    <div data-js="site-footer-mount"></div>
     <aside class="floating-controls" aria-label="빠른 작업">
       <a
         class="floating-control floating-control--chat"

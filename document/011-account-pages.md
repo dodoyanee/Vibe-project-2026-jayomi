@@ -11,6 +11,7 @@
 ## 페이지와 변경 지점
 
 - `pages/login.html`, `pages/signup.html`: 승인 시안의 계정 페이지.
+- `components/site-header.html`, `components/site-footer.html`, `js/modules/site-chrome.js`: 각 페이지에서 공통 헤더·푸터를 한 번만 정의하고 경로별 메뉴를 구성.
 - `css/components/account.css`, `css/tokens.css`: 공통 회원 메뉴, 폼, 반응형과 버튼 크기.
 - `js/account.js`: 입력 확인, 비밀번호 표시, 전체 동의, 약관 안내, 로그인 유지, 비밀번호 재설정.
 - `js/modules/notice-auth.js`: 기존 Firebase 회원가입·로그인·로그아웃 연결 및 공통 헤더 상태.
@@ -22,11 +23,11 @@
 
 ## 기존 Firebase와의 호환
 
-새 인증 서비스나 브라우저에 비밀번호를 저장하는 별도 인증 구현을 추가하지 않았다. 기존 `js/firebase.js`의 프로젝트, Firebase Authentication, Firestore `users`/`usernames`를 사용한다. 시안에 없는 공개 아이디 입력은 추가하지 않고 새 Firebase UID에서 내부 아이디를 만들어 기존 스키마에 맞춘다. 기존 일반 회원 역할 값 `ueser`도 현재 보안 규칙과 호환되도록 유지한다.
+새 인증 서비스나 브라우저에 비밀번호를 저장하는 별도 인증 구현을 추가하지 않았다. 기존 `js/firebase.js`의 프로젝트, Firebase Authentication, Firestore `users`/`usernames`를 사용한다. 회원가입에서 이름·아이디·이메일·비밀번호를 받아 아이디 중복을 트랜잭션으로 확인하고, 기존 일반 회원 역할 값 `ueser` 및 프로필 스키마를 유지한다.
 
 ‘로그인 상태 유지’를 선택하면 Firebase의 브라우저 영구 유지, 선택하지 않으면 해당 탭 세션을 사용한다. 가입 시에도 탭 세션을 사용한다. 프로필 쓰기가 실패하면 방금 생성한 Auth 계정만 정리하던 기존 동작을 유지한다. 다른 회원이나 기존 데이터를 삭제하지 않는다.
 
-신규 가입의 약관 동의 항목은 `users/{uid}.agreements`에 저장한다. 이 필드를 저장하려면 포함한 `firestore.rules`를 기존 Firebase 프로젝트에 적용해야 한다. 사이트의 HTML/CSS/JS 업로드와 Firestore 규칙 배포는 별개다. 이 작업에서는 실제 서비스의 규칙을 원격 배포하지 않았다.
+신규 가입의 아이디·약관 동의 항목은 `users/{uid}` 및 `usernames/{usernameKey}`에 저장한다. 이 필드를 저장하려면 포함한 `firestore.rules`를 기존 Firebase 프로젝트에 적용해야 한다. 사이트의 HTML/CSS/JS 업로드와 Firestore 규칙 배포는 별개다. 이 작업에서는 실제 서비스의 규칙을 원격 배포하지 않았다.
 
 ## 약관 문서
 

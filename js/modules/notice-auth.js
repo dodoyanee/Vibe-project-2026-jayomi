@@ -51,8 +51,7 @@ export async function registerNoticeUser({ name, username = '', email, password,
   const cleanUsername = username.trim().toLowerCase();
   const cleanEmail = email.trim().toLowerCase();
   if (!cleanName || cleanName.length > 40) throw new Error('이름을 1~40자로 입력해 주세요.');
-  
-  if (cleanUsername && !USERNAME_PATTERN.test(cleanUsername)) {
+  if (!USERNAME_PATTERN.test(cleanUsername)) {
     throw new Error('아이디는 영문, 숫자, 점, 밑줄, 하이픈으로 3~20자 입력해 주세요.');
   }
   if (cleanUsername === RESERVED_USERNAME || cleanEmail === RESERVED_EMAIL) {
@@ -64,8 +63,7 @@ export async function registerNoticeUser({ name, username = '', email, password,
   }
   await setPersistence(auth, browserSessionPersistence);
   const credential = await createUserWithEmailAndPassword(auth, cleanEmail, password);
-  // The approved email-only form has no public username field. Keep the existing schema.
-  const normalizedUsername = cleanUsername || `u_${credential.user.uid.replace(/[^a-z0-9]/gi, '').toLowerCase().slice(0, 18)}`;
+  const normalizedUsername = cleanUsername;
   try {
     await runTransaction(firestore, async (transaction) => {
       const usernameRef = doc(collection(firestore, 'usernames'), normalizedUsername);

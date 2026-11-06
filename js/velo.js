@@ -1,6 +1,8 @@
 import { initSiteNavigation } from './modules/site-navigation.js';
 import { products } from './data/velo-products.js';
+import { initSiteChrome } from './modules/site-chrome.js';
 
+await initSiteChrome();
 initSiteNavigation();
 import('./modules/notice-auth.js')
   .then(({ setupNoticeAuthControls }) => setupNoticeAuthControls(() => {}))
