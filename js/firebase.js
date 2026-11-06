@@ -1,5 +1,6 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js';
 import { connectFirestoreEmulator, getFirestore } from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js';
+import { getAuth } from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyBSOd1h3E3NUhdPA_RjDWcYNWdE3l8IOdw',
@@ -13,6 +14,7 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 export const firestore = getFirestore(app);
+export const auth = getAuth(app);
 
 const USE_FIRESTORE_EMULATOR = false;
 

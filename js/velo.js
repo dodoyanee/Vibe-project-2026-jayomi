@@ -2,6 +2,14 @@ import { initSiteNavigation } from './modules/site-navigation.js';
 import { products } from './data/velo-products.js';
 
 initSiteNavigation();
+import('./modules/notice-auth.js')
+  .then(({ setupNoticeAuthControls }) => setupNoticeAuthControls(() => {}))
+  .catch(() => {
+    document.querySelectorAll('[data-js="auth-error"]').forEach((status) => {
+      status.hidden = false;
+      status.textContent = '로그인 기능을 불러오지 못했습니다. 페이지를 새로고침해 주세요.';
+    });
+  });
 const CART_KEY = 'draftx.velo.cart.v1';
 const WISH_KEY = 'draftx.velo.wishlist.v1';
 const byId = new Map(products.map(product => [product.id, product]));

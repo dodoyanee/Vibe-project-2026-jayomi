@@ -8,7 +8,7 @@ export function initSiteNavigation() {
   const menuPanel = document.querySelector('[data-js="menu-panel"]');
 
   if (menuToggle && menuPanel) {
-    const menuLinks = [...menuPanel.querySelectorAll('[data-js="menu-link"]')];
+    const menuLinks = [...menuPanel.querySelectorAll('a[href], button:not(:disabled)')];
     const desktopQuery = window.matchMedia(DESKTOP_QUERY);
     let isMenuOpen = false;
     let closeTimer = 0;
@@ -102,7 +102,7 @@ export function initSiteNavigation() {
     });
 
     menuPanel.addEventListener('click', (event) => {
-      const link = event.target.closest('[data-js="menu-link"]');
+      const link = event.target.closest('a[href]');
 
       if (!link || !menuPanel.contains(link)) {
         return;

@@ -1,5 +1,7 @@
 import { NOTICE_CONFIG as config } from '../notice-config.js';
-import { readPosts, savePost, getListState, getVisiblePosts, getPageUrl, formatDate, formatFileSize, updateFiles, getFile } from './notice-store.js';
+import { readPosts, savePost, removePost, getListState, getVisiblePosts, getPageUrl, formatDate, formatFileSize, updateFiles, getFile } from './notice-store.js';
+import { auth } from '../firebase.js';
+import { getUserProfile, waitForAuthReady } from './notice-auth.js';
 import { NOTICE_POSTS } from '../data/notice-data.js';
 import { getSafeContent, formatSelection, getSafeLink, insertText } from './notice-rich-text.js';
 
@@ -165,14 +167,36 @@ async function downloadFile(id, signal) {
   } catch (error) { showMessage(`${error.message} 다시 시도하거나 작성자에게 문의해 주세요.`, true); }
 }
 
-function initDetail(post, posts, signal) {
+function initDetail(post, posts, signal, isAdmin) {
   hook('notice-article-title').textContent = post.title;
   hook('notice-article-badge').textContent = `${post.category}${post.pinned ? ' · PINNED' : ''}`;
   hook('notice-article-date').textContent = post.date;
   hook('notice-article-date').dateTime = post.date.replaceAll('.', '-');
   hook('notice-article-views').textContent = `조회수 ${post.views}`;
   hook('notice-article-body').replaceChildren(getSafeContent(post));
-  hook('notice-edit-link').href = getPageUrl(config.editPage, { id: post.id });
+  const editLink = hook('notice-edit-link');
+  editLink.href = getPageUrl(config.editPage, { id: post.id });
+  editLink.hidden = !isAdmin;
+  const deleteButton = hook('notice-delete');
+  deleteButton.hidden = !isAdmin;
+  deleteButton.addEventListener('click', async () => {
+    if (!window.confirm('이 공지사항을 삭제할까요? 삭제한 글은 복구할 수 없습니다.')) return;
+    deleteButton.disabled = true;
+    try {
+      await removePost(post);
+      try {
+        await updateFiles({ remove: post.attachments.map((file) => file.id) });
+      } catch (error) {
+        showMessage(`글은 삭제했지만 이 브라우저의 첨부파일 정리에 실패했습니다. ${error.message}`, true);
+        deleteButton.disabled = false;
+        return;
+      }
+      location.assign(getPageUrl(config.listPage, { saved: 'deleted' }));
+    } catch (error) {
+      showMessage(`공지 삭제에 실패했습니다. 관리자 권한과 Firestore 보안 규칙을 확인해 주세요. ${error.message}`, true);
+      deleteButton.disabled = false;
+    }
+  }, { signal });
   const files = hook('notice-article-files');
   files.replaceChildren(...post.attachments.map((file) => makeAttachment(file)));
   hook('notice-attachments').hidden = !post.attachments.length;
@@ -353,32 +377,62 @@ export function initNoticeBoard() {
   const lifecycle = new AbortController();
   const { signal } = lifecycle;
   root.setAttribute('aria-busy', 'true');
+  if (root.dataset.noticeView === 'write' || root.dataset.noticeView === 'edit') {
+    hook('notice-page').hidden = true;
+  }
   document.querySelectorAll('[data-notice-list-link]').forEach((element) => { element.href = getPageUrl(config.listPage); });
-  readPosts().then((posts) => {
+  const loadBoard = async () => {
+    await waitForAuthReady();
+    const profile = await getUserProfile(auth.currentUser);
+    const isAdmin = profile?.role === 'admin';
+    const posts = await readPosts();
     if (signal.aborted) return;
     const params = new URLSearchParams(location.search);
     const page = root.dataset.noticeView;
     const post = posts.find((item) => item.id === params.get('id'));
-    if (page === 'list') initList(posts, signal);
+    const writeLink = hook('notice-write-link');
+    if (writeLink) writeLink.hidden = !isAdmin;
+    if ((page === 'write' || page === 'edit') && !isAdmin) {
+      showMessage('공지 작성과 수정은 관리자 계정으로 로그인해야 사용할 수 있습니다.');
+      const login = make('a', 'notice-button', '관리자 로그인');
+      login.href = `notice-auth.html?return=${encodeURIComponent(`${location.pathname}${location.search}`)}`;
+      hook('notice-status').append(document.createTextNode(' '), login);
+    } else if (page === 'list') initList(posts, signal);
     else if (page !== 'write' && !post) showNotFound();
-    else if (page === 'detail') initDetail(post, posts, signal);
-    else initEditor(page === 'edit' ? post : null, signal);
+    else if (page === 'detail') initDetail(post, posts, signal, isAdmin);
+    else {
+      hook('notice-page').hidden = false;
+      initEditor(page === 'edit' ? post : null, signal);
+    }
     if (params.has('saved')) {
-      showMessage(params.get('saved') === 'edited' ? '수정한 글이 Firestore에 저장되었습니다.' : '새 글이 Firestore에 저장되었습니다.');
+      const savedMessage = {
+        edited: '수정한 글이 Firestore에 저장되었습니다.',
+        created: '새 글이 Firestore에 저장되었습니다.',
+        deleted: '공지사항을 삭제했습니다.',
+      }[params.get('saved')];
+      if (savedMessage) showMessage(savedMessage);
       params.delete('saved');
       history.replaceState(null, '', `${location.pathname}?${params}`);
     }
     root.setAttribute('aria-busy', 'false');
-  }).catch((error) => {
+  };
+  loadBoard().catch((error) => {
     if (signal.aborted) return;
     showMessage(`공지 데이터를 불러오지 못했습니다. Firestore 연결과 보안 규칙을 확인해 주세요. ${error.message}`, true);
     const params = new URLSearchParams(location.search);
     const page = root.dataset.noticeView;
     const post = NOTICE_POSTS.find((item) => item.id === params.get('id'));
-    if (page === 'list') initList(NOTICE_POSTS, signal);
-    else if (page !== 'write' && !post) showNotFound();
-    else if (page === 'detail') initDetail(post, NOTICE_POSTS, signal);
-    else initEditor(page === 'edit' ? post : null, signal);
+    if (page === 'list') {
+      const writeLink = hook('notice-write-link');
+      if (writeLink) writeLink.hidden = true;
+      initList(NOTICE_POSTS, signal);
+    } else if ((page === 'write' || page === 'edit')) {
+      showMessage('공지 작성과 수정은 관리자 계정으로 로그인해야 사용할 수 있습니다.');
+      const login = make('a', 'notice-button', '관리자 로그인');
+      login.href = `notice-auth.html?return=${encodeURIComponent(`${location.pathname}${location.search}`)}`;
+      hook('notice-status').append(document.createTextNode(' '), login);
+    } else if (page !== 'write' && !post) showNotFound();
+    else if (page === 'detail') initDetail(post, NOTICE_POSTS, signal, false);
     root.setAttribute('aria-busy', 'false');
   });
   window.addEventListener('pagehide', (event) => { if (!event.persisted) lifecycle.abort(); }, { once: true });

@@ -1,8 +1,9 @@
 import { NOTICE_CONFIG as config } from '../notice-config.js';
 import { NOTICE_POSTS } from '../data/notice-data.js';
-import { firestore } from '../firebase.js';
+import { auth, firestore } from '../firebase.js';
+import { waitForAuthReady } from './notice-auth.js';
 import {
-  collection, doc, getDocs, setDoc, writeBatch,
+  collection, deleteDoc, doc, getDoc, getDocs, setDoc, writeBatch,
 } from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js';
 
 export function normalizePost(value) {
@@ -49,9 +50,14 @@ async function writeMissingPosts(posts, existingIds) {
 }
 
 async function initializePosts() {
+  await waitForAuthReady();
   const postsRef = collection(firestore, config.collectionName);
   const snapshot = await getDocs(postsRef);
   const existingIds = new Set(snapshot.docs.map((item) => item.id));
+  const user = auth.currentUser;
+  const profile = user ? await getDoc(doc(firestore, 'users', user.uid)) : null;
+  const isAdmin = profile?.exists() && profile.data().role === 'admin';
+  if (!isAdmin) return;
   const legacyPosts = window.localStorage.getItem(config.migrationKey) === 'done' ? [] : getLegacyPosts();
   const seeds = snapshot.empty ? NOTICE_POSTS : [];
   const candidates = new Map([...seeds, ...legacyPosts].map((post) => [post.id, post]));
@@ -64,6 +70,7 @@ async function initializePosts() {
 export async function readPosts() {
   await initializePosts();
   const snapshot = await getDocs(collection(firestore, config.collectionName));
+  if (snapshot.empty) return NOTICE_POSTS.map((post) => ({ ...post }));
   const posts = snapshot.docs.map((item) => normalizePost({ ...item.data(), id: item.id }));
   if (posts.some((post) => !post)) throw new Error('Firestore 공지 데이터 일부가 올바르지 않습니다.');
   return posts.sort((a, b) => Number(b.pinned) - Number(a.pinned)
@@ -74,6 +81,10 @@ export async function savePost(post) {
   const valid = normalizePost(post);
   if (!valid) throw new Error('제목과 본문을 확인한 뒤 다시 저장해 주세요.');
   await setDoc(doc(firestore, config.collectionName, valid.id), valid);
+}
+
+export async function removePost(post) {
+  await deleteDoc(doc(firestore, config.collectionName, post.id));
 }
 
 export function getListState(search = location.search) {

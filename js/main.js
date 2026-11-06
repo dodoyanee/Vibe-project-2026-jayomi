@@ -19,3 +19,11 @@ initHeroScroll();
 initShowcaseVideo();
 
 initSiteNavigation();
+import('./modules/notice-auth.js')
+  .then(({ setupNoticeAuthControls }) => setupNoticeAuthControls(() => {}))
+  .catch(() => {
+    document.querySelectorAll('[data-js="auth-error"]').forEach((status) => {
+      status.hidden = false;
+      status.textContent = '로그인 기능을 불러오지 못했습니다. 페이지를 새로고침해 주세요.';
+    });
+  });
