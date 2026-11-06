@@ -1,0 +1,31 @@
+
+[공지사항 DB 마이그레이션 하기]
+
+1. 공지사항 페이지 구현시 현재 로컬스토리지로 데이터를 저장하고 있어.
+firebase로 마이그레이션 하려고해. 지금 firebase를 생성하여 DB까지 만든 상태야. 진행방법 및 다음 순서를 알려줘.
+
+2. 첨부파일은 기존 방식을 유지하고 보안 설정도 별도의 admin없이 테스트용이므로 쉽게 연결되도록 설정해줘.
+내가 다음 스탭을 시작할때 제공해 줘야하는게 뭔지 말해.
+
+3. SDK 코드를 줄게. 진행해.
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyBSOd1h3E3NUhdPA_RjDWcYNWdE3l8IOdw",
+  authDomain: "jayomi-web-project.firebaseapp.com",
+  projectId: "jayomi-web-project",
+  storageBucket: "jayomi-web-project.firebasestorage.app",
+  messagingSenderId: "682059995568",
+  appId: "1:682059995568:web:a6fde8958c03725c205e75",
+  measurementId: "G-RXYLK5X6W1"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);

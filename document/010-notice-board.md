@@ -24,7 +24,11 @@ FOOTER
 - 순수 정적 프로젝트이므로 프롬프트의 /notice 라우트를 위 HTML 파일과 쿼리로 매핑합니다. HTTP 서버에서 프로젝트 루트를 열어 사용합니다. ES Modules와 첨부파일 저장을 위해 file:// 직접 실행은 권장하지 않습니다.
 
 ## 저장 및 보안
-- 게시글은 localStorage draftx:notice:posts, 첨부파일은 IndexedDB draftx-notice-files에 저장합니다. 서버·다른 기기와 공유되는 관리자 게시판은 아닙니다. 브라우저 데이터 삭제 시 로컬 데이터도 삭제됩니다.
+- 게시글은 Firebase 프로젝트 `jayomi-web-project`의 Firestore `notices` 컬렉션에 저장합니다. 최초 접속 시 컬렉션이 비어 있으면 기본 공지 27개를 등록합니다. 이전 브라우저의 `localStorage` `draftx:notice:posts` 데이터는 Firestore에 없는 글만 한 차례 이전하며, 기존 Firestore 문서는 덮어쓰지 않습니다. 이전 표식은 해당 브라우저의 localStorage에 남습니다.
+- 첨부파일 본체는 기존처럼 IndexedDB `draftx-notice-files`에 저장하고 Firestore에는 파일 메타데이터만 보관합니다. 따라서 첨부파일은 글을 올린 브라우저에서만 내려받을 수 있으며, 다른 브라우저·기기에서 사용할 수 없습니다. 기존 로컬 데이터와 첨부파일은 수동 백업 전까지 삭제하지 않습니다.
+- Firebase Web SDK는 브라우저 ES Module CDN으로 불러옵니다. 실제 Firestore 읽기·쓰기 권한은 Firebase Console의 보안 규칙에 따릅니다. 로그인 없는 전체 공개 쓰기 규칙은 제3자가 게시글을 변경하거나 삭제할 수 있으므로 운영 DB에 설정하지 않습니다. 규칙을 준비하지 못한 경우 데이터 연결 오류를 화면에 표시합니다.
+- Firebase 웹 API 키는 클라이언트에서 노출되는 식별자이며 비밀 키가 아닙니다. Firebase 프로젝트에서 사용할 웹사이트의 HTTP referrer 제한을 설정하고, 데이터 접근은 반드시 Firestore 보안 규칙으로 통제합니다.
+- 로컬 전용 테스트용 Firestore Emulator 연결은 `js/firebase.js`의 `USE_FIRESTORE_EMULATOR`를 `true`로 바꾸고 Emulator를 실행했을 때만 사용합니다. 이 설정은 `localhost`에서만 적용됩니다. Emulator용 규칙은 Emulator에만 적용하고 실제 Firebase Console에 배포하지 않습니다.
 - 첨부 총합 20MB, 필수 입력·용량 초과·저장소 차단·글 없음·검색 결과 없음 상태를 처리합니다.
 - 본문은 안전한 태그와 http/https/mailto 링크만 렌더링하고, 사용자 데이터는 textContent/DOM으로 삽입합니다.
 - rich editor: 선택한 텍스트를 굵게/기울임/밑줄/목록으로 변환, 링크 입력 대화상자, 붙여넣기는 일반 텍스트로 처리합니다.
@@ -43,4 +47,4 @@ FOOTER
 - 시안과의 차이: 입력 테두리는 UI 대비 3:1 이상을 위해 #666666, 입력 글자는 모바일 확대 방지를 위해 16px, 작은 버튼 터치 영역은 44px입니다. 기존 프로젝트의 헤더·푸터와 모바일 메뉴를 사용합니다. 원본 서식에 있던 가상의 PDF는 실제 파일이 없으므로 넣지 않고, 사용자가 첨부한 파일만 표시합니다.
 - 기존 프로젝트는 unlayered CSS를 사용하므로 notice.css도 동일한 우선순위를 유지합니다. 색·타입·간격 값은 notice-site 범위의 tokens.css 변수로 분리했습니다.
 - 정적 페이지의 기존/기본 목록과 첫 공지 본문은 JS 없이도 표시됩니다. 검색·다른 글 조회·작성·수정·첨부 저장은 JavaScript가 필요합니다.
-- 실기기 Safari/Firefox 및 Lighthouse 수치는 측정하지 않았습니다. 서버 저장·권한·실제 서비스 게시물은 연결하지 않았습니다.
+- NOTICE UI 검증 시점에는 서버 저장소를 연결하지 않았습니다. Firebase 마이그레이션 단계에서는 변경한 모듈의 JavaScript 문법과 `git diff --check`를 통과했습니다. Firebase Console의 Firestore 보안 규칙이 아직 확인되지 않아 실제 프로젝트의 읽기·쓰기, 데이터 이전, 브라우저 간 첨부파일 다운로드는 검증하지 않았습니다.

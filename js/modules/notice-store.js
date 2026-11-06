@@ -1,5 +1,9 @@
 import { NOTICE_CONFIG as config } from '../notice-config.js';
 import { NOTICE_POSTS } from '../data/notice-data.js';
+import { firestore } from '../firebase.js';
+import {
+  collection, doc, getDocs, setDoc, writeBatch,
+} from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js';
 
 export function normalizePost(value) {
   if (!value || typeof value !== 'object') return null;
@@ -23,25 +27,53 @@ function isAttachment(file) {
     && Number.isFinite(file.size) && file.size >= 0 && file.size <= config.fileLimit;
 }
 
-export function readPosts(storage = window.localStorage) {
-  const raw = storage.getItem(config.storageKey);
-  const saved = raw ? JSON.parse(raw) : [];
-  if (!Array.isArray(saved)) throw new Error('저장된 게시글 형식을 읽을 수 없습니다.');
-  const valid = saved.map(normalizePost);
-  if (valid.some((post) => !post)) throw new Error('저장된 게시글 일부가 손상되었습니다.');
-  const merged = new Map(NOTICE_POSTS.map((post) => [post.id, { ...post }]));
-  valid.forEach((post) => merged.set(post.id, post));
-  return [...merged.values()].sort((a, b) => Number(b.pinned) - Number(a.pinned)
+function getLegacyPosts() {
+  const raw = window.localStorage.getItem(config.storageKey);
+  if (!raw) return [];
+  const saved = JSON.parse(raw);
+  if (!Array.isArray(saved)) throw new Error('기존 로컬 공지 데이터의 형식을 읽을 수 없습니다.');
+  const posts = saved.map(normalizePost);
+  if (posts.some((post) => !post)) throw new Error('기존 로컬 공지 데이터 일부가 손상되었습니다.');
+  return posts;
+}
+
+async function writeMissingPosts(posts, existingIds) {
+  const missing = posts.filter((post) => !existingIds.has(post.id));
+  for (let offset = 0; offset < missing.length; offset += 400) {
+    const batch = writeBatch(firestore);
+    missing.slice(offset, offset + 400).forEach((post) => {
+      batch.set(doc(firestore, config.collectionName, post.id), post);
+    });
+    await batch.commit();
+  }
+}
+
+async function initializePosts() {
+  const postsRef = collection(firestore, config.collectionName);
+  const snapshot = await getDocs(postsRef);
+  const existingIds = new Set(snapshot.docs.map((item) => item.id));
+  const legacyPosts = window.localStorage.getItem(config.migrationKey) === 'done' ? [] : getLegacyPosts();
+  const seeds = snapshot.empty ? NOTICE_POSTS : [];
+  const candidates = new Map([...seeds, ...legacyPosts].map((post) => [post.id, post]));
+  await writeMissingPosts([...candidates.values()], existingIds);
+  if (window.localStorage.getItem(config.migrationKey) !== 'done') {
+    window.localStorage.setItem(config.migrationKey, 'done');
+  }
+}
+
+export async function readPosts() {
+  await initializePosts();
+  const snapshot = await getDocs(collection(firestore, config.collectionName));
+  const posts = snapshot.docs.map((item) => normalizePost({ ...item.data(), id: item.id }));
+  if (posts.some((post) => !post)) throw new Error('Firestore 공지 데이터 일부가 올바르지 않습니다.');
+  return posts.sort((a, b) => Number(b.pinned) - Number(a.pinned)
     || (Date.parse(b.createdAt) || 0) - (Date.parse(a.createdAt) || 0));
 }
 
-export function savePost(post) {
+export async function savePost(post) {
   const valid = normalizePost(post);
   if (!valid) throw new Error('제목과 본문을 확인한 뒤 다시 저장해 주세요.');
-  const posts = readPosts();
-  const next = posts.filter((item) => item.id !== post.id);
-  next.push(valid);
-  window.localStorage.setItem(config.storageKey, JSON.stringify(next));
+  await setDoc(doc(firestore, config.collectionName, valid.id), valid);
 }
 
 export function getListState(search = location.search) {

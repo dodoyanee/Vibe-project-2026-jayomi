@@ -1,6 +1,6 @@
 import { NOTICE_CONFIG as config } from '../notice-config.js';
-import { NOTICE_POSTS } from '../data/notice-data.js';
 import { readPosts, savePost, getListState, getVisiblePosts, getPageUrl, formatDate, formatFileSize, updateFiles, getFile } from './notice-store.js';
+import { NOTICE_POSTS } from '../data/notice-data.js';
 import { getSafeContent, formatSelection, getSafeLink, insertText } from './notice-rich-text.js';
 
 const ICON_NAMESPACE = 'http://www.w3.org/2000/svg';
@@ -291,7 +291,7 @@ async function persistEditor({ post, editor, files }) {
   };
   const added = files.filter((file) => file.blob);
   await updateFiles({ add: added });
-  try { savePost(value); }
+  try { await savePost(value); }
   catch (error) { await updateFiles({ remove: added.map((file) => file.id) }); throw error; }
   const removed = (post?.attachments ?? []).filter((file) => !files.some((item) => item.id === file.id));
   // Metadata is committed first, so a failed cleanup never removes a referenced attachment.
@@ -332,8 +332,8 @@ function initEditor(post, signal) {
     try {
       const saved = await persistEditor({ post, editor, files });
       location.assign(getPageUrl(config.viewPage, { id: saved.id, saved: post ? 'edited' : 'created' }));
-    } catch {
-      showMessage('저장 공간을 사용할 수 없습니다. 브라우저의 저장소 설정과 남은 공간을 확인한 뒤 다시 시도해 주세요.', true);
+    } catch (error) {
+      showMessage(`공지 저장에 실패했습니다. Firestore 연결과 보안 규칙을 확인해 주세요. ${error.message}`, true);
       submit.disabled = false;
       form.setAttribute('aria-busy', 'false');
       hook('notice-submit-label').textContent = post ? '수정 완료' : '등록하기';
@@ -352,23 +352,35 @@ export function initNoticeBoard() {
   if (!root) return () => {};
   const lifecycle = new AbortController();
   const { signal } = lifecycle;
-  let posts;
-  try { posts = readPosts(); }
-  catch { posts = NOTICE_POSTS; showMessage('저장된 글을 불러오지 못했습니다. 기본 목록을 표시합니다. 브라우저 저장소 설정을 확인해 주세요.', true); }
-  const params = new URLSearchParams(location.search);
-  const page = root.dataset.noticeView;
-  const post = posts.find((item) => item.id === params.get('id'));
+  root.setAttribute('aria-busy', 'true');
   document.querySelectorAll('[data-notice-list-link]').forEach((element) => { element.href = getPageUrl(config.listPage); });
-  if (page === 'list') initList(posts, signal);
-  else if (page !== 'write' && !post) showNotFound();
-  else if (page === 'detail') initDetail(post, posts, signal);
-  else initEditor(page === 'edit' ? post : null, signal);
-  if (params.has('saved')) {
-    showMessage(params.get('saved') === 'edited' ? '수정한 글이 현재 브라우저에 저장되었습니다.' : '새 글이 현재 브라우저에 저장되었습니다.');
-    params.delete('saved');
-    history.replaceState(null, '', `${location.pathname}?${params}`);
-  }
-  root.setAttribute('aria-busy', 'false');
+  readPosts().then((posts) => {
+    if (signal.aborted) return;
+    const params = new URLSearchParams(location.search);
+    const page = root.dataset.noticeView;
+    const post = posts.find((item) => item.id === params.get('id'));
+    if (page === 'list') initList(posts, signal);
+    else if (page !== 'write' && !post) showNotFound();
+    else if (page === 'detail') initDetail(post, posts, signal);
+    else initEditor(page === 'edit' ? post : null, signal);
+    if (params.has('saved')) {
+      showMessage(params.get('saved') === 'edited' ? '수정한 글이 Firestore에 저장되었습니다.' : '새 글이 Firestore에 저장되었습니다.');
+      params.delete('saved');
+      history.replaceState(null, '', `${location.pathname}?${params}`);
+    }
+    root.setAttribute('aria-busy', 'false');
+  }).catch((error) => {
+    if (signal.aborted) return;
+    showMessage(`공지 데이터를 불러오지 못했습니다. Firestore 연결과 보안 규칙을 확인해 주세요. ${error.message}`, true);
+    const params = new URLSearchParams(location.search);
+    const page = root.dataset.noticeView;
+    const post = NOTICE_POSTS.find((item) => item.id === params.get('id'));
+    if (page === 'list') initList(NOTICE_POSTS, signal);
+    else if (page !== 'write' && !post) showNotFound();
+    else if (page === 'detail') initDetail(post, NOTICE_POSTS, signal);
+    else initEditor(page === 'edit' ? post : null, signal);
+    root.setAttribute('aria-busy', 'false');
+  });
   window.addEventListener('pagehide', (event) => { if (!event.persisted) lifecycle.abort(); }, { once: true });
   return () => lifecycle.abort();
 }

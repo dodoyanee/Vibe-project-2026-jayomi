@@ -1,5 +1,7 @@
 export const NOTICE_CONFIG = Object.freeze({
   storageKey: 'draftx:notice:posts',
+  migrationKey: 'draftx:notice:firestore-migrated',
+  collectionName: 'notices',
   databaseName: 'draftx-notice-files',
   fileStore: 'attachments',
   pageSize: 7,
