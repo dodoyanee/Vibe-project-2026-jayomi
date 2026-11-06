@@ -273,8 +273,8 @@ async function initForm(user, profile) {
     event.preventDefault();
     if (!form.reportValidity()) return;
     showStatus('');
-    setBusy(form, true);
     const values = new FormData(form);
+    setBusy(form, true);
     try {
       if (existing) {
         await updateQuestion(id, {

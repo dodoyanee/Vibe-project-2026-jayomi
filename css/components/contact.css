@@ -3,9 +3,9 @@
 .contact-status[data-state="error"] { border-color: var(--color-error, #ff8585); }
 .contact-toolbar { display: flex; width: 100%; align-items: flex-end; justify-content: space-between; gap: var(--notice-space-4); margin-block: var(--notice-space-6); }
 .contact-toolbar .notice-filters { flex-wrap: wrap; }
-.contact-list-meta { display: flex; width: 100%; align-items: center; justify-content: space-between; gap: var(--notice-space-4); margin-block-end: var(--notice-space-4); color: var(--notice-muted); font-size: var(--notice-small-size); }
-.contact-list-meta .notice-button { color: var(--notice-white); }
 .contact-table .notice-table__number { width: 128px; }
+.contact-bottom .notice-result { color: var(--notice-muted); }
+.contact-bottom .notice-button { color: var(--notice-white); }
 .contact-answer-badge { display: inline-flex; min-height: 32px; align-items: center; padding-inline: var(--notice-space-3); border: var(--notice-line) solid var(--notice-white); border-radius: var(--radius-pill); color: var(--notice-white); font-size: var(--notice-small-size); white-space: nowrap; }
 .contact-private-label { display: block; margin-block-start: var(--notice-space-2); color: var(--notice-muted); font-size: var(--notice-small-size); }
 .contact-article { display: block; width: 100%; }
@@ -26,7 +26,6 @@
 .contact-actions { justify-content: flex-end; }
 @media (max-width: 806px) {
   .contact-toolbar { align-items: stretch; flex-direction: column; }
-  .contact-list-meta { align-items: flex-start; }
   .contact-table .notice-table__number { width: auto; }
   .contact-field { grid-template-columns: minmax(0, 1fr); gap: var(--notice-space-2); }
   .contact-answer__heading { align-items: flex-start; }
